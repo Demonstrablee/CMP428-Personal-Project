@@ -38,6 +38,7 @@ public class GameWindow2 extends JFrame implements KeyListener, Runnable, Action
     SimpleScreenManager screen = new SimpleScreenManager(); // the screen manager
     JPanel gameWindowJPanel = new JPanel(cLayout0);
     //GameLevelManager gameWindowJPanel = new GameLevelManager();
+    LevelBuilderPanel lbPane = new LevelBuilderPanel();
 
     DisplayMode displayFullScreenModes [] = {
             new DisplayMode (640, 480, 32, DisplayMode.REFRESH_RATE_UNKNOWN),
@@ -62,7 +63,7 @@ public class GameWindow2 extends JFrame implements KeyListener, Runnable, Action
         JButton [] backToPauseButtons = {new JButton("BACK"),new JButton("BACK"),new JButton("PAUSE")};
         JButton [] titleButtons = {new JButton("START"), new JButton("OPTIONS"), new JButton("QUIT")};
 
-    
+        
         // Movement Vars
         boolean[] pressing = new boolean[1024];
 
@@ -103,14 +104,15 @@ public class GameWindow2 extends JFrame implements KeyListener, Runnable, Action
         //gameWindowJPanel.add(murphysRoom,"0"); // put level into panel
         //gameWindowJPanel.add(pauseMenu,"1");
 
-        getContentPane().add(gameWindowJPanel); // put panel into jframe pane
-
+        //getContentPane().add(gameWindowJPanel); // put panel into jframe pane
+        getContentPane().add(lbPane);
+        lbPane.init();
         
-        cLayout0.show(gameWindowJPanel, "0");
+        //cLayout0.show(gameWindowJPanel, "0");
 
         // Start init method in level
-        
-        titleScreen.init();
+        //init();
+        // titleScreen.init();
         // murphysRoom.init();
         // optionsMenu.init();
         //pauseMenu.init();
@@ -128,54 +130,7 @@ public class GameWindow2 extends JFrame implements KeyListener, Runnable, Action
         for(JButton button : titleButtons){button.addActionListener(this);}
         for(JButton button : backToPauseButtons){button.addActionListener(this);}
         for(JButton button : pauseMButtons){button.addActionListener(this);}
-
-    // NOTE ADD EVERYTHING TO YOU PANELS BEFORE ADDING THEM TO THE CARDMANAGER
-
-    //  //PAUSE MENU 
-    //     int i = 1;
-    //     for(JButton button : pauseMButtons){ 
-    //             constraints = new GridBagConstraints();  
-    //             constraints.gridx = 0;
-    //             constraints. gridy = i;
-    //             button.addActionListener(this);
-    //             pauseMenu.add(button, constraints);
-    //             button.repaint();
-    //             i++;
-    //         }
-
-    //     // //SAVE MENU
-    //     constraints = new GridBagConstraints();
-    //     constraints.gridx = 0;
-    //     constraints.gridy = 1;
-    //     saveMenu.add(backToPauseButtons[0], constraints); 
-
-    //     // //OPTIONS MENU
-    //     constraints = new GridBagConstraints();
-    //     constraints.gridx = 0;
-    //     constraints.gridy = 9;
-    //     optionsMenu.add(backToPauseButtons[1], constraints); 
-
-    //     //TITLE SCREEN
-    //     constraints = new GridBagConstraints();
-    //     constraints.anchor = GridBagConstraints.PAGE_END;
-    //     constraints.gridx = 0;
-    //     constraints.gridy = 1;
-    //     titleScreen.add(titleButtons[0], constraints);
-    //     titleScreen.setBg("images\\bg_classroom01.jpg");
-        
-        
-        
-    //     constraints = new GridBagConstraints();
-    //     constraints.gridx = 0;
-    //     constraints.gridy = 2;
-    //     titleScreen.add(titleButtons[1], constraints); 
  
-    //     //Murphys Room
-    //     constraints = new GridBagConstraints();
-    //     constraints.gridx = 0;
-    //     constraints.gridy = 2;
-    //     murphysRoom.add(backToPauseButtons[2], constraints); 
-         
         
         //Menu Managment pane
         gameWindowJPanel.add(titleScreen, "0");
@@ -186,7 +141,7 @@ public class GameWindow2 extends JFrame implements KeyListener, Runnable, Action
         gameWindowJPanel.add(hall01,"5");
         gameWindowJPanel.add(hubGillet, "6");
 
-        //add(gameWindowJPanel);
+        
        
        
         // Set defaults on game start for staring windows
@@ -199,7 +154,6 @@ public class GameWindow2 extends JFrame implements KeyListener, Runnable, Action
  
     public void init()
 	{		
-		//setDoubleBuffered(true);
 		System.out.println("init in Game Window2 activated");
 		addKeyListener(this);
 
@@ -217,7 +171,7 @@ public class GameWindow2 extends JFrame implements KeyListener, Runnable, Action
     public void run() {
 
         while(!gameStarted){
-            System.out.println("Game not started ");
+            //System.out.println("Game not started ");
 
             if (pressing[UP]) p1.moveBy(0,-5);
             if (pressing[DN]) p1.moveBy(0,5);

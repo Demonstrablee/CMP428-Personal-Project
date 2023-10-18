@@ -250,8 +250,6 @@ public class Rect // Prof murphys code
 			   (x + w >= r.x      ) &&
 			   (y     <= r.y + r.h) &&
 			   (y + h >= r.y      );
-		if(result)
-		   System.out.println(result);
 
 		return result;
     }

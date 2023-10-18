@@ -2,12 +2,10 @@ package Levels.Menus;
 import javax.swing.*;
 
 import Levels.Managers.Level;
-
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class TitleScreen extends Level implements ActionListener{ 
+
+public class TitleScreen extends Level{ 
     JButton [] titleButtons;
     JLabel title = new JLabel("TITLE SCREEN");
     int dispWidth;
@@ -30,16 +28,11 @@ public class TitleScreen extends Level implements ActionListener{
                 constraints = new GridBagConstraints();  
                 constraints.gridx = 0;
                 constraints. gridy = i;
-                
                 add(button, constraints);
                 i++;
             }
         
 
-        @Override
-        public init(){
-
-        }
 
 
     }
@@ -50,11 +43,7 @@ public class TitleScreen extends Level implements ActionListener{
             //title.repaint();
             for(JButton button : titleButtons){button.repaint();}
         }
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
-        //throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
-    }
+    
         
   
    

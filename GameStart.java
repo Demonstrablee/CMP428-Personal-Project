@@ -8,6 +8,7 @@ import Levels.Managers.GameWindow2;
 public class GameStart{
    
     public static void main(String [] args){
+        new GameWindow2();
         //Testing
         // PlayerCharacter player = new PlayerCharacter("Player", 000000000L, null, false); 
         // MurphysRoom murph = new MurphysRoom(player,Color.GREEN, null, null);
@@ -19,7 +20,7 @@ public class GameStart{
 
         //new GameWindow();
 
-        new GameWindow2();
+        
 
         
 
