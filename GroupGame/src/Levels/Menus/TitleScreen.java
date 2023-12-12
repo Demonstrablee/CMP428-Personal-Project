@@ -4,18 +4,23 @@ import javax.swing.*;
 import Levels.Managers.Level2;
 
 import java.awt.*;
+import java.awt.image.ImageFilter;
+import java.awt.image.ImageProducer;
 
 
 public class TitleScreen extends Level2{ 
-    JLabel title = new JLabel("TITLE SCREEN");
+    JLabel title = new JLabel("¡VOLER!");
+
+    
     JButton[] titleButtons;
     public TitleScreen(JButton[] menuButtons){
        
         super(null,null, "titleScreen");
-        setDoubleBuffered(true);
-        
+         
         //BACKGROUND
-        setBg("bg_classroom01.jpg");
+      
+        setBg("partybackground.gif");
+        setBackground(new Color(253,208,23));
         setBounds(0, 0, 1280, 720);
        
         

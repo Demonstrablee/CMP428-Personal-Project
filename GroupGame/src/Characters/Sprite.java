@@ -7,11 +7,12 @@ public class Sprite extends Rect
 {
 	Animation[] animation; // ARRAY OF ANIMATIONS
 	
-	final static int UP = 0;
-	final static int DN = 1;
-	final static int LT = 2;
-	final static int RT = 3;
-	final static int IDLE = 4;
+	final static int IDLE = 0;
+	final static int UP = 1;
+	final static int DN = 2;
+	final static int LT = 3;
+	final static int RT = 4;
+	
 	int pose = DN;
 	
 	static double scale = 1.4;
@@ -51,6 +52,7 @@ public class Sprite extends Rect
 	public void goUP(int dy)
 	{
 		pose = UP;
+		super.goUP(dy);
 		
 		moving = true;
 		

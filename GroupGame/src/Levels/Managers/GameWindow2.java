@@ -95,7 +95,7 @@ public class GameWindow2 extends JFrame implements KeyListener, Runnable, Action
 
         this.setIconImage(appIcon); // set the app icon for the game https://stackoverflow.com/questions/209812/how-do-i-change-the-default-application-icon-in-java
        
-        setTitle("Untitled Game V2");
+        setTitle("¡VOLER!");
 
         //contentPane = this.getLayeredPane();
 
@@ -115,7 +115,7 @@ public class GameWindow2 extends JFrame implements KeyListener, Runnable, Action
         lbPane.init();// comment in and out to allow for updates to post or just run with F5
         
         
-        //SimpleSoundPlayer.playSoundForever("GroupGame/src/music/Main_Theme.wav"); // only works on mac
+        SimpleSoundPlayer.playSoundForever("GroupGame/src/music/TitleScreenTheme.wav"); // only works on mac
            
        
        
@@ -143,21 +143,21 @@ public class GameWindow2 extends JFrame implements KeyListener, Runnable, Action
         while(true){
 
              
-            if (pressing[UP]) p1.moveBy(0,-5);
-            if (pressing[DN]) p1.moveBy(0,5);
-            if (pressing[RT]) p1.moveBy(5,0);
-            if (pressing[LT]) p1.moveBy(-5,0);
+            if (pressing[UP]) p1.moveForward(5);
+            if (pressing[DN]) p1.moveForward(-5);;
+            if (pressing[RT]) p1.turnRight(3);
+            if (pressing[LT]) p1.turnLeft(3);;
 
            
 
             for(int i = 0; i < wall.length; i++)
 			{
-				if(p1.overlaps(wall[i]))
-				{
+				// if(p1.overlaps(wall[i]))
+				// {
                     
-					p1.pushedOutOf(wall[i]);
+				// 	p1.pushedOutOf(wall[i]);
 				
-				}
+				// }
             }
             repaint();
 

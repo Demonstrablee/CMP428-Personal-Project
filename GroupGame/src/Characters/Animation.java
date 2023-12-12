@@ -32,7 +32,7 @@ public class Animation
          
 		{
 			if (GameWindow2.getOs().contains("Mac")){ // if on mac
-            	//System.out.println("GroupGame/src/images/"+ name +"/" + name + "_" + pose + "/"+ name +"_" +pose +"_"+ i + "." + type);
+            	System.out.println("GroupGame/src/images/"+ name +"/" + name + "_" + pose + "/"+ name +"_" +pose +"_"+ i + "." + type);
 				image[i] = Toolkit.getDefaultToolkit().getImage("GroupGame/src/images/"+ name +"/" + name + "_" + pose + "/"+ name +"_" +pose +"_"+ i + "." + type);}
 			else{ // if you are on windows
 				//System.out.println("GroupGame\\srcimages\\"+ name +"\\" + name + "_" + pose + "\\"+ name +"_" +pose +"_"+ i + "." + type);

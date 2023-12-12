@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 
 import Characters.Sprite;
 import Characters.Characters.Enemy;
+import Characters.Characters.PlayerCharacter;
 import Characters.Characters.Student;
 
 //import Characters.Characters.PlayerCharacter;
@@ -27,7 +28,7 @@ public abstract class Level2 extends JPanel{
     int [] lExitP = new int[4];
     protected Rect dRectEx = null;
     protected Rect dRectEnter = null;
- 
+    protected static PlayerCharacter  p1 = new PlayerCharacter(400,400, 50, 50);
 
 
     // Constraints

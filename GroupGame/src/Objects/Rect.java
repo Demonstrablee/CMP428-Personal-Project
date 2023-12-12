@@ -29,17 +29,33 @@ public class Rect
 		this.w = w;
 		this.h = h;
 	}
-
-	public void moveBy(int dx, int dy)
+	
+	public void move()
 	{
-		this.x += (double)dx;
-		this.y += (double)dy;
+		x += vx;
+		y += vy;
 		
-		this.vx = (double)dx;
-		this.vy = (double)dy;
 		
-		System.out.println("x position: "+ x);
-		System.out.println("y position: "+ y);
+	}
+
+	public void goLT(int dx)
+	{
+		vx = -dx;
+	}
+	
+	public void goRT(int dx)
+	{
+		vx = dx;
+	}
+	
+	public void goUP(int dy)
+	{
+		vy = -dy;
+	}
+	
+	public void goDN(int dy)
+	{
+		vy = dy;
 	}
 	
 	public boolean wasLeftOf(Rect r)
