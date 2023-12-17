@@ -4,9 +4,9 @@ import javax.swing.JFrame;
 
 import Characters.Characters.Enemy;
 import Characters.Characters.PlayerCharacter;
-import Characters.Characters.Student;
+
 import Objects.HealthBar;
-import Objects.HealthStation;
+
 import Objects.Rect;
 
 import Objects.Wall;
@@ -67,8 +67,7 @@ public class GameWindow2 extends JFrame implements KeyListener, Runnable, Action
     HealthBar healthBar = new HealthBar(100, 100,20, 20);
     int health;
     Enemy [] enemies;
-    Student [] students;
-    HealthStation healthStation;
+
     
     Rect exit;
     Rect enter;

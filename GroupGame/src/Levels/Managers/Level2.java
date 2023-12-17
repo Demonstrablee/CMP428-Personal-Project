@@ -1,22 +1,23 @@
 package Levels.Managers;
 
-import Objects.HealthStation;
+
 import Objects.Rect;
 import Objects.Wall;
 
 import java.awt.*;
 
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
-import Characters.Sprite;
+
 import Characters.Characters.Enemy;
 import Characters.Characters.PlayerCharacter;
-import Characters.Characters.Student;
+
 
 //import Characters.Characters.PlayerCharacter;
 
 /** Initialize a level inhertiting from JPanel*/
-public abstract class Level2 extends JPanel{
+public abstract class Level2 extends JLayeredPane{
 
     // the file names of paths will change base on this
     protected String os = System.getProperty("os.name"); // check os of user
@@ -43,8 +44,8 @@ public abstract class Level2 extends JPanel{
 
     //Level Objects
     protected Wall [] wall;
-    protected HealthStation healthStation;
-    protected Student [] students;
+
+
     protected Enemy [] enemies;
 
 //CONSTRUCTORS
@@ -121,6 +122,9 @@ public abstract class Level2 extends JPanel{
         //return dRectEx;
     } 
 
+    public void reset(){
+        
+    }
 
 
 //SETTERS
@@ -165,28 +169,21 @@ public abstract class Level2 extends JPanel{
     public Enemy [] getEnemies(){
         return enemies;
     }
-    public Student [] getStudents(){
-        return students;
-    }
+  
 
     /** Get the array of walls for a the level */
     public Wall[] getWalls() {
         return wall;
     }
 
-    public HealthStation getHealthStation(){
-        return healthStation;
-    }
+
 //SET LEVEL OBJECTS
     
     public Wall[] setWalls() {
         return wall;
     }
 
-    
-    public void setHealthStation(HealthStation station){
-        this.healthStation = station ;
-    }
+
 
 
 
@@ -203,6 +200,14 @@ public abstract class Level2 extends JPanel{
         bgPath = path;
 
         bg = Toolkit.getDefaultToolkit().getImage(pathFolder + path);
+    }
+
+    /** Set the background image for a level 
+     * @param Image refrence to the image file
+    */
+    public void setBgWImage(Image background) {
+
+        bg = background;
     }
 
     /** Get the file path of the background */

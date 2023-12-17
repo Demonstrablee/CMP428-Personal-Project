@@ -7,10 +7,12 @@ import Characters.Sprite;
 
 
 public class Enemy extends Sprite{
-	static String pose [] = new String[] {"IDLE","ATTACKRT","ATTACKLT","RT","LT"};
+	static String pose [] = new String[] {"LAUGH"};
+
+	// CARS Are only idle and dealer has two
 	
-	public Enemy(String type, int x, int y, int h, int w) {
-		super(type,pose,6,0,"png",x, y, w, h);
+	public Enemy(String type, int x, int y, int h, int w, int scale) {
+		super(type,pose,2,0,"png",x, y, w, h,scale);
 		c = Color.GRAY;
 
 	}

@@ -15,14 +15,16 @@ public class Sprite extends Rect
 	
 	int pose = DN;
 	
-	static double scale = 1.4;
+	double scale = 1.4;
 	
 	public boolean moving = false;
 	
-	public Sprite(String name, String[] pose, int imagecount, int start, String filetype, int x, int y, int w, int h)
+	public Sprite(String name, String[] pose, int imagecount, int start, String filetype, int x, int y, int w, int h, int scale)
 	{
 		super(x, y, w, h);
 		
+		this.scale = scale > 0 ? scale :1.4; // if the scale you enter is greater than zero 
+
 		animation = new Animation[pose.length];  
 		
 		for(int i = 0; i < pose.length; i ++)

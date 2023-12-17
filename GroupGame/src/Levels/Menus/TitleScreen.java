@@ -4,8 +4,7 @@ import javax.swing.*;
 import Levels.Managers.Level2;
 
 import java.awt.*;
-import java.awt.image.ImageFilter;
-import java.awt.image.ImageProducer;
+
 
 
 public class TitleScreen extends Level2{ 
