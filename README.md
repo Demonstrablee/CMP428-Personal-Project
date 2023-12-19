@@ -4,10 +4,12 @@ A party pack of games loosely inspired by the game pack nature of titles such as
 mini-games of Mario party, Three games, come included in the title.
 
 BACCANO!
+
 Enter the Casino!  Face off in the game of memory against a slightly familiar foe to see who's memory is the best! 
 
 
 LONG TRIP DRIFT
+
 Back from a trip to Cancun, the last thing to do is to return your rental, but it's just your luck you've got to drive through the U.S.'s #1 state for reckless driving, try your best to return your car in working order in Long Trip Drift!
 
 
