@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 
 
 import Characters.Characters.Enemy;
-import Characters.Characters.PlayerCharacter;
+import Characters.Characters.Player;
 
 
 //import Characters.Characters.PlayerCharacter;
@@ -29,14 +29,12 @@ public abstract class Level2 extends JLayeredPane{
     int [] lExitP = new int[4];
     protected Rect dRectEx = null;
     protected Rect dRectEnter = null;
-    protected static PlayerCharacter  p1 = new PlayerCharacter(400,400, 50, 50);
+    protected static Player p1 = new Player(850,240, 90, 50);
 
 
     // Constraints
     protected GridBagConstraints constraints = new GridBagConstraints();
 
-
- 
     //Background
     protected Image bg;
     String bgPath;
@@ -184,7 +182,12 @@ public abstract class Level2 extends JLayeredPane{
     }
 
 
-
+ /**
+     * @return the levels name
+     */
+    public String getName() {
+        return name;
+    }
 
 
 

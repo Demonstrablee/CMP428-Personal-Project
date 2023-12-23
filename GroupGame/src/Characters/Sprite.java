@@ -90,7 +90,7 @@ public class Sprite extends Rect
 		pen.drawImage(temp, (int)(x), (int)(y), (int)w, (int)h, null);
 		
 		pen.setColor(c); // use the color set for each character type
-        pen.drawRect((int)(x), (int)(y), (int)w, (int)h);
+       // pen.drawRect((int)(x), (int)(y), (int)w, (int)h);
 		//pen.drawRect((int)(x - Camera.x), (int)(y - Camera.y), (int)w, (int)h);
 	}
 	

@@ -58,8 +58,7 @@ public class GameSelectMenu extends Level2{
             super.paintComponent(pen);
             //pen.clearRect(0, 0, getWidth(), getHeight());
             pen.drawImage(bg,0,0,getWidth(), getHeight(),null);
-            
-            //repaint(100,100,4000,4000);
+
             
             //for(JButton button : titleButtons){button.repaint();}
         }

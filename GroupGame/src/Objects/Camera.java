@@ -15,8 +15,8 @@ public class Camera
 
 	public static void moveForward(int d)
 	{
-		x += d * Math.cos(A * Math.PI /180);
-		y += d * Math.sin(A * Math.PI /180);
+		x += d * Math.cos(A * Math.PI /180) ;
+		y += d * Math.sin(A * Math.PI /180) ;
 	}
 
 	public static void goLT(double dx)

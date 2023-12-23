@@ -1,7 +1,7 @@
 package Levels.Managers;
 
 import Characters.Characters.Enemy;
-import Characters.Characters.PlayerCharacter;
+import Characters.Characters.Player;
 
 
 import Levels.GameLevels.LongTripDrift;
@@ -61,18 +61,12 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
 
     
     //Objects
-    PlayerCharacter p1 = Level2.p1; // so all levels can share same character
+    Player p1 = Level2.p1; // so all levels can share same character
     Wall [] wall; // get walls for refrence and collison detection
     HealthBar healthBar = new HealthBar(100, 100,20, 20);
     int health;
     Enemy [] enemies;
    
-    
-    Rect exit;
-    Rect enter;
-    int nExitOrEnterX;
-    int nExitOrEnterY;
-
     //Menus
     static TitleScreen titleScreen; // 0
     static PausePhoneMenu pauseMenu; //1
@@ -93,8 +87,6 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
     boolean isPaused; 
     /** States whether or not the game is over  */
     boolean isOver = false;
-    
-    Timer timer;
 
     static final int UP = KeyEvent.VK_UP;
     static final int DN = KeyEvent.VK_DOWN;
@@ -152,8 +144,8 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
             System.out.println("GroupGame/src/images/Phone_Blue.png");
             inGameMenuButton.setFocusable(false);  // so important  stops the button form stealing focus from the keyboard
             inGameMenuButton.setBounds(1130, 70,64,64);
-            add(inGameMenuButton);
-            inGameMenuButton.setVisible(false);
+            //add(inGameMenuButton);
+           // inGameMenuButton.setVisible(false);
        
           
             // initiallizing buttons
@@ -176,14 +168,17 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
             
             
             //ADDING Levels To Level builder Panel
-
+            // OVERLAY menu
             add(pauseMenu);
+
+            // Menus (curlevel)
             add(titleScreen);
             add(optionsMenu);
             add(saveMenu);
             add(gameOverMenu);
             add(gameSelectMenu);
 
+            // game levels (game room)
             add(wellerman);
             add(longTripDrift);
             add(baccano);
@@ -191,10 +186,9 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
             
             
             // Game State variables AT START
-            currLevel = titleScreen; // which room to draw currLevel and levLevel index are one to one (default: titleScreen)
-            gameRoom = wellerman; // track of the ingame rooms that player traverses with p1 (default; murphysRoom)
+            currLevel = longTripDrift; // which room to draw currLevel and levLevel index are one to one (default: titleScreen)
+            gameRoom = wellerman; // track of the ingame rooms that player traverses with p1 (default; wellereman)
 
-            //levIndex = currLevel.toString(); // which room to display
             isPaused =  true; // is the game paused or not (default: true)
             titleOrPause = true; // at game start options goes to pause menu (default: true)
             isOver = false; // is the game over? (only have to change this for gameover window debug) (default: false)
@@ -242,8 +236,6 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
                     // System.out.println("P1: Xpos: "+ (p1.x) + " Ypos: "+ (p1.y));
                     // MUST BE GAME ROOM since the menus dont have exits and entrances
                     wall = gameRoom.getWalls();
-                    enter = gameRoom.getEnterRect(); 
-                    exit = gameRoom.getExitRect(); 
                     enemies = gameRoom.getEnemies();
                     health = healthBar.getCurrentHealth(); // get the players health 
                      
@@ -259,13 +251,30 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
                 }      
                     //MOVEMENT
                     
-                    if (pressing[UP]) {Camera.goUP(5); p1.moveForward(-4);}
-                    if (pressing[DN]) {Camera.goDN(5); p1.moveForward(4);}
-                    if (pressing[RT]) {Camera.goRT(5); p1.turnLeft(3);}
+                    if (pressing[UP]) {
+                        System.out.println("Camera position x:"+ Camera.x + " y:"+ Camera.y);
+                        Camera.moveForward(5); 
+                        //p1.moveForward(5);
+                    }
+                    if (pressing[DN]) {
+                        System.out.println("Camera position x:"+ Camera.x + " y:"+ Camera.y);
+                        Camera.moveForward(-5); 
+                        //p1.moveForward(-5);
+                    }
+                    if (pressing[RT]) {
+                        System.out.println("Camera position x:"+ Camera.x + " y:"+ Camera.y);
+                        // if(Camera.x >= 0){
+                             Camera.turnBy(5); 
+                        // }
+                        p1.turnRight(5);}
                         
                     //if(p1.getX() > 500)Camera.goRT(3);} // this is correct 
 
-                    if (pressing[LT]) {Camera.goLT(3); p1.turnRight(3);}
+                    if (pressing[LT]) {
+                        System.out.println("Camera position x:"+ Camera.x + " y:"+ Camera.y);
+                        Camera.turnBy(-5); 
+                        p1.turnLeft(5);
+                    }
                     
 
                     // if (pressing[W]){p1.goUP(-4);}
@@ -280,13 +289,10 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
         }
     @Override
         public void paint(Graphics pen){ // WOW rather than paint AWT make this paintComponent and everything is good  
-            
             pen.clearRect(0, 0, getWidth(), getHeight());
 
             super.paint(pen);
              
-
-                
                     pen.setColor(Color.BLACK);
                 
             
@@ -326,18 +332,14 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
        
         if(e.getKeyCode() == KeyEvent.VK_P){ // if P is pressed pause the game
             if(!isPaused){
-                //currLevel.setVisible(false);
-                currLevel = pauseMenu;
-                currLevel.setVisible(true);
-                //levIndex = currLevel.toString();
+                
+                pauseMenu.setVisible(true);
                 isPaused = true; // pause the game
+
                 System.out.println("Paused via key press");
             
             }else{ // go back to the game
-                //currLevel.setVisible(false);
-                //currLevel = pauseMenu;
                 currLevel.setVisible(false); // should be pause menu
-
                 isPaused = false; // pause the game
                 System.out.println("UnPaused via key press");
         }
@@ -373,6 +375,17 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
     public void mouseExited(MouseEvent e) {
     }
 
+    private void changeLevel(Level2 level){
+        currLevel.setVisible(false); // make previous room invisible
+        currLevel = level; // last game room (currLevel is what is used to draw the levels in the paint method) change levels
+        currLevel.setVisible(true); // make current room visible
+         if(!(level.getName()).equals("pauseMenu")){ // so the overlay of the pause menu doesnt draw over all the levels 
+                pauseMenu.setVisible(false);
+            }
+        
+        
+    }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -381,48 +394,32 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
         SimpleSoundPlayer.playSound("GroupGame/src/music/button_click01.wav");
           
     if (buttonClicked == titleButtons[0]){ // go to game select
-            currLevel.setVisible(false); // make previous room invisible
-            currLevel = gameSelectMenu; // last game room (currLevel is what is used to draw the levels in the paint method) change levels
-            currLevel.setVisible(true); // make current room visible
-
-
+            changeLevel(gameSelectMenu); 
+            gameRoom.setVisible(false); // important to make whatever game is active stop showing up
+            isPaused = true;  
+              
     }
 		else if(buttonClicked == pauseMButtons[0]|| buttonClicked == gameOverButtons[0]) {// go to resume
-
-            currLevel.setVisible(false); // make previous room invisible
-            currLevel = gameRoom; // last game room (currLevel is what is used to draw the levels in the paint method) change levels
-            currLevel.setVisible(true); // make current room visible
-
+            changeLevel(gameRoom);// last game room (currLevel is what is used to draw the levels in the paint method) change levels
             if(isOver)
                 healthBar.refillHealth();   //NEED TO SET THIS TO FULL 
+                
             // which level to switch to based on what the last game room you were in
-
             isPaused = false;
             titleOrPause = false; //game started make option menu go to the pause menu
             isOver = false;
         } 
        else if(buttonClicked == pauseMButtons[1]){ // go to save 
- 
-            currLevel.setVisible(false);
-            currLevel = saveMenu;
-            currLevel.setVisible(true);
+            changeLevel(saveMenu);
      
         }
        else if(buttonClicked == titleButtons[1] || buttonClicked == pauseMButtons[2]){// go to options
-
-            currLevel.setVisible(false);
-            currLevel = optionsMenu;
-            currLevel.setVisible(true);
+            changeLevel(optionsMenu);
      
        }
        else if(buttonClicked == pauseMButtons[3] || buttonClicked == toPauseButtons[1] && titleOrPause || buttonClicked == gameOverButtons[1]|| buttonClicked == gameSelectButtons[3]){ // back to title screen
-    
-            currLevel.setVisible(false);
-            gameRoom.setVisible(false); // if the pause menu is brought up curr level changes so I have to set gameroom to false too
-            currLevel = titleScreen;
-            gameRoom = wellerman;
-            currLevel.setVisible(true);
-
+            changeLevel(titleScreen);
+           
             // reset player health
             healthBar.refillHealth(); // for long trip drift 
             isPaused = true;
@@ -433,37 +430,29 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
             System.exit(0);
         } 
        else if(buttonClicked == inGameMenuButton|| buttonClicked == toPauseButtons[0]||(buttonClicked == toPauseButtons[1] && !titleOrPause)){ // pause screen
-            if(currLevel != gameRoom) // if the last level was a menu level
-                currLevel.setVisible(false);
-                currLevel = pauseMenu;
-                currLevel.setVisible(true);
-
+            pauseMenu.setVisible(true);
             isPaused = true; // pause the game
             System.out.println("Paused");
         } 
         else if(buttonClicked == gameSelectButtons[0]){// start up baccano
-            currLevel.setVisible(false); // make previous room invisible
+            changeLevel(baccano);
+
             gameRoom = baccano; 
-            currLevel = gameRoom;
             gameRoom.reset();
-            currLevel.setVisible(true); // make current room visible
             isPaused = false;
 
         }else if (buttonClicked == gameSelectButtons[1]){ // start up wellerman
-            currLevel.setVisible(false); // make previous room invisible
+            changeLevel(wellerman);
+            
             gameRoom = wellerman;
-            currLevel = gameRoom ;
             gameRoom.reset();
-            currLevel.setVisible(true); // make current room visible
             isPaused = false;
 
         }else if (buttonClicked == gameSelectButtons[2]){ // start up long trip cliff
-            currLevel.setVisible(false); // make previous room invisible
+            changeLevel(longTripDrift);
+            
             gameRoom = longTripDrift;
-            currLevel = gameRoom;
             gameRoom.reset();
-            currLevel.setVisible(true); // make current room visible
-
             isPaused = false;
 
         }

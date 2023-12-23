@@ -3,9 +3,7 @@ package Levels.Managers;
 import javax.swing.JFrame;
 
 import Characters.Characters.Enemy;
-import Characters.Characters.PlayerCharacter;
-
-import Objects.HealthBar;
+import Characters.Characters.Player;
 
 import Objects.Rect;
 
@@ -32,7 +30,7 @@ public class GameWindow2 extends JFrame implements KeyListener, Runnable, Action
     boolean fullScreen = false; // use full screen?
 
     /// Managers
-    SimpleScreenManager screen = new SimpleScreenManager(); // the screen manager
+   // SimpleScreenManager screen = new SimpleScreenManager(); // the screen manager
     LevelBuilderPanel lbPane = new LevelBuilderPanel();
 
 
@@ -62,9 +60,9 @@ public class GameWindow2 extends JFrame implements KeyListener, Runnable, Action
     public Image appIcon = Toolkit.getDefaultToolkit().getImage("GroupGame/src/images/appIcon/");
 
         //Objects
-    PlayerCharacter p1 = new PlayerCharacter(300,300, 50,50); // so all levels can share same character
+    Player p1 = new Player(300,300, 50,50); // so all levels can share same character
     Wall [] wall; // get walls for refrence and collison detection
-    HealthBar healthBar = new HealthBar(100, 100,20, 20);
+    
     int health;
     Enemy [] enemies;
 

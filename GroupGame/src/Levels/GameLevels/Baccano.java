@@ -1,8 +1,5 @@
 package Levels.GameLevels;
-
-
 import Levels.Managers.Level2;
-import Objects.Camera;
 
 import java.awt.*;
 import java.util.Random;

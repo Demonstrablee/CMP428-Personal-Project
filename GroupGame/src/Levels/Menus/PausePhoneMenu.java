@@ -3,14 +3,14 @@ package Levels.Menus;
 import javax.swing.*;
 
 import Levels.Managers.Level2;
-
+import Levels.Managers.OverlayLevel;
 import Objects.Wall;
 
 import java.awt.*;
 
 import javax.swing.border.Border;
 
-public class PausePhoneMenu extends Level2{ 
+public class PausePhoneMenu extends OverlayLevel{ 
     JLabel title = new JLabel("PHONE");
     JButton[] pauseMButtons;
     Image phoneOutline;

@@ -46,7 +46,7 @@ public class Circle
 		y += dy;
 	}
 	
-	public void moveForward(int d)
+	public void moveForward(int d) // move in the direction of a vector
 	{
 		x += d * cosA;
 		y += d * sinA;
