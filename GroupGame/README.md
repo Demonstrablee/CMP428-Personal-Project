@@ -17,7 +17,7 @@ Sound Effect by <a href="https://pixabay.com/users/666herohero-25759907/?utm_sou
 // GTA LIBERTY CITY MAP <image src= "GroupGame/src/images/GTA1_HD_Liberty_City MAP.png">
     RockStar Games all rights reserved and any other owners
 
-This is a non commercial game made for eduactional purposes 
+This is a non commercial game made for educational purposes 
 
 Window Icon
 moon01
