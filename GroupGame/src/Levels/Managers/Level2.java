@@ -29,8 +29,8 @@ public abstract class Level2 extends JLayeredPane{
     int [] lExitP = new int[4];
     protected Rect dRectEx = null;
     protected Rect dRectEnter = null;
+    //protected static Player p1 = new Player(850,240, 90, 50);
     protected static Player p1 = new Player(850,240, 90, 50);
-
 
     // Constraints
     protected GridBagConstraints constraints = new GridBagConstraints();
@@ -51,7 +51,7 @@ public abstract class Level2 extends JLayeredPane{
         setLayout(new GridBagLayout());
         setBackground(Color.BLACK);
         setVisible(false);
-
+        setBounds(0, 0, 1280, 720);
         this.enterance = enter;
         this.exit = exit;
         this.name = name;

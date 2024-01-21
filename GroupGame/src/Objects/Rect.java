@@ -139,12 +139,20 @@ public class Rect
 		return result;
 			
     }
-	// 	public double getX() {
-	// 	return x;
-	// }
-	// public double getY() {
-	// 	return y;
-	// }
+
+	public double getX() {
+		return x;
+	}
+	public double getY() {
+		return y;
+	}
+	public double getWidth(){
+		return w;
+	}
+	public double getHeight(){
+		return h;
+	}
+
 	public void setX(double x)
 	{
 		this.x = x;
@@ -167,7 +175,8 @@ public class Rect
 	public void draw(Graphics pen)
 	{
 		pen.setColor(c);
-		pen.drawRect((int)(x - Camera.x), (int)(y-Camera.y), (int)w, (int)h);
+		//pen.drawRect((int)(x - Camera.x), (int)(y-Camera.y), (int)w, (int)h);
+		pen.drawRect((int)(x), (int)(y), (int)w, (int)h);
 		
 	}
 

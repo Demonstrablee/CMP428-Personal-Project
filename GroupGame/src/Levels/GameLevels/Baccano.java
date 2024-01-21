@@ -9,18 +9,15 @@ import javax.swing.JLabel;
 import Characters.Characters.Enemy;
 
 public class Baccano extends Level2 { 
-    JLabel title = new JLabel("BACANO");
-    Image table = Toolkit.getDefaultToolkit().getImage("GroupGame/src/images/casinoTablebg_red.jpeg");
+    JLabel title = new JLabel("BACCANO");
+    String assetDir = "GroupGame/src/images/BACCANO/"; 
+    Image table = Toolkit.getDefaultToolkit().getImage(assetDir+"casinoTablebg_red.jpeg");
+    Image casinoPepe = Toolkit.getDefaultToolkit().getImage(assetDir+"casinoPeople.jpeg");
+
     Enemy dealer = new Enemy("DuckHuntDog",400,30, 0,0, 15);
     
     public Baccano(Level2 enter, Level2 exit){
         super(enter, exit, "bacano");
-        
-        //BACKGROUND
-        setBackground(Color.BLACK); // set pane to black
-        setBg("casinoPeople.jpeg");
-
-        setBounds(0, 0, 1280, 720);
 
         //Level Exit and Enterance Set
 
@@ -40,7 +37,8 @@ public class Baccano extends Level2 {
         super.paintComponent(pen);//component that does the painting 
         Graphics2D pen2D = (Graphics2D) pen;
         //Draw Background
-        pen.drawImage(bg,0,-100,getWidth(), getHeight(),null);
+
+        pen.drawImage(casinoPepe,0,-100,getWidth(), getHeight(),null);
         
         //Draw the dealer
         dealer.draw(pen);

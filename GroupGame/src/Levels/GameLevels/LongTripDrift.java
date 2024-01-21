@@ -13,12 +13,15 @@ import java.io.File;
 
 public class LongTripDrift extends Level2 { 
     GridBagConstraints constraints = new GridBagConstraints(); // constraints you will add to each element
-    JLabel score = new JLabel("Scorejiojjipjpijjiup: "); 
-    Image map = Toolkit.getDefaultToolkit().getImage("GroupGame/src/images/GTA1_HD_Liberty_City MAP CROPPED.png");
+    JLabel score = new JLabel("Score: "); // Label showing players cars damage
+    int damageScore = 0; // how damaged it the players car
+    
+    String assetDir = "GroupGame/src/images/LTD/";
+    Image map = Toolkit.getDefaultToolkit().getImage(assetDir+"GTA1_HD_Liberty_City MAP CROPPED.png");
     final int MAP_WIDTH = 15280;
     final int MAP_HEIGHT = 11720;
     Enemy.InnerEnemy [] carEnemies = Enemy.InnerEnemy.genCarEnemys(1);
-    Image overpass = Toolkit.getDefaultToolkit().getImage("GroupGame/src/images/GTA1 Overpasses/GTA1 2 Lane Over Pass.png");
+    Image overpass = Toolkit.getDefaultToolkit().getImage(assetDir+"GTA1 Overpasses/GTA1 2 Lane Over Pass.png");
     //protected static Player p1 = new Player(950,630, 90, 50);
 
     public LongTripDrift(Level2 enter, Level2 exit){
@@ -34,6 +37,10 @@ public class LongTripDrift extends Level2 {
             new Wall(10,11375,900,50),//BOTTOM NEAR FINISH
             new Wall(630, 320, 630, 310) // BUILDINGS
             };
+
+            for(Wall wallnum: wall ){
+                System.out.println("Wall locations: ("+ wallnum.x + ", "+ wallnum.y +") wall width: "+ wallnum.w +" wall height: "+ wallnum.h);
+            }
 
 
         // then make the frame HUGE so we zoom in  setBounds(-10, 0, 20280, 17720);
@@ -66,31 +73,39 @@ public class LongTripDrift extends Level2 {
    @Override
     public void reset(){
         Camera.returnToOrigin(); // reset the camera and player starting positions
-        p1.returnToOrigin();
+        //p1.returnToOrigin();
     }
 
     @Override
     public void paintComponent(Graphics pen){  //method for painting
         super.paintComponent(pen);//component that does the painting 
    
+
+
+
+
     // Colisions  
         if (wall != null)
         for(int i = 0; i < wall.length; i++){
+            //System.out.println("Location of Wall " + i +" x: "+ wall[i].x + " y: "+ wall[i].y);
             if(p1.overlaps(wall[i])){
-                //System.out.println("Pushing player out of wall "+ i);
-                 p1.pushedOutOf(wall[i]);}      
+                System.out.println("Pushing player out of wall "+ i);
+                p1.pushedOutOf(wall[i]);
+                }      
             }
 
     //Player Damage
 
-    if (enemies != null){
-        Enemy e1 = enemies[1]; // temporary a loop will kill the player immediately
+    if (carEnemies != null){
+        Enemy.InnerEnemy e1 = carEnemies[0]; // temporary a loop will kill the player immediately
             if (p1.overlaps(e1)){
                 p1.setColor(Color.GREEN);
-                // healthBar.damageTaken();
+                damageScore++; // damage score goes up
+                System.out.println(damageScore);
+               
             }
 
-        //    if (!p1.overlaps(e1)) healthBar.damage();
+        
         
 
     }
@@ -111,14 +126,10 @@ public class LongTripDrift extends Level2 {
             walls.draw(pen);
         }
 
-        // So you cna go unde5r the over passes
+        // So you can go under the over passes
         pen.drawImage(overpass,(int)(2249 - Camera.x),(int)(3280-Camera.y),720, 295,null);
 
     
-       
-       // draw enterance and exits
-        // dRectEnter.draw(pen);
-        // dRectEx.draw(pen);
 
     }
     }

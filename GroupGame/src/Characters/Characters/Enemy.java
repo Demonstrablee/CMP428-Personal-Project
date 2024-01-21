@@ -14,7 +14,7 @@ import Objects.Rect;
 
 public class Enemy extends Sprite{
 	static String pose [][] = new String[][] {{"LAUGH"},{"IDLE"}};
-    static File [] carImages = new File("GroupGame/src/images/cars").listFiles(); // all possible cars in the game
+    static File [] carImages = new File("GroupGame/src/images/LTD/cars").listFiles(); // all possible cars in the game
 	// CARS Are only idle and dealer has laugh 
 
 	 
@@ -58,7 +58,7 @@ public class Enemy extends Sprite{
 		}
 
 		public void draw(Graphics pen){
-			Image player = Toolkit.getDefaultToolkit().getImage("GroupGame/src/images/cars/blacklambo.png");
+			Image player = Toolkit.getDefaultToolkit().getImage("GroupGame/src/images/LTD/cars/blacklambo.png");
 		 
 
 			for(int k = 0; k < carPic.length; ++k){

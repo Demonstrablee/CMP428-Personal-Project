@@ -63,8 +63,8 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
     //Objects
     Player p1 = Level2.p1; // so all levels can share same character
     Wall [] wall; // get walls for refrence and collison detection
-    HealthBar healthBar = new HealthBar(100, 100,20, 20);
-    int health;
+    
+
     Enemy [] enemies;
    
     //Menus
@@ -101,8 +101,8 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
     
     /**the currrent level that is being displayed  */
     Level2 currLevel; // for paintmethod
-    /**the level index for the current level being displayed used in the cardlayout*/
-    String levIndex; // for layout manager
+   
+  
     /** the current non-menu level selected in the game */
     Level2 gameRoom;
     /** boolean represneting if the options menu will direct to the title screen or the pause menu */
@@ -113,8 +113,6 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
     public void init()
         {   
            //setDoubleBuffered(true); (redundant)
-            
-           //NullRepaintManager.install(); // ignore repaint calls from individual Swing Components
 
            System.out.println("Init method in LevelBuilder activated");
             
@@ -186,7 +184,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
             
             
             // Game State variables AT START
-            currLevel = longTripDrift; // which room to draw currLevel and levLevel index are one to one (default: titleScreen)
+            currLevel = wellerman; // which room to draw currLevel and levLevel index are one to one (default: titleScreen)
             gameRoom = wellerman; // track of the ingame rooms that player traverses with p1 (default; wellereman)
 
             isPaused =  true; // is the game paused or not (default: true)
@@ -234,53 +232,41 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
                 // if you are not in a game menu    
                 else if(isPaused == false || isOver == false){ // Game Menu exit
                     // System.out.println("P1: Xpos: "+ (p1.x) + " Ypos: "+ (p1.y));
-                    // MUST BE GAME ROOM since the menus dont have exits and entrances
-                    wall = gameRoom.getWalls();
-                    enemies = gameRoom.getEnemies();
-                    health = healthBar.getCurrentHealth(); // get the players health 
-                     
-                   
-                    //p1.setColor(Color.RED); // Player color will change depending on if hit or not
+   
+
                     inGameMenuButton.setVisible(true);
 
-                    //GAME OVER CONDITIONS
-                    if(health == 0){
-                        isOver = true;
-                        isPaused = true;
-                    }  
+
+                  
                 }      
                     //MOVEMENT
                     
-                    if (pressing[UP]) {
-                        System.out.println("Camera position x:"+ Camera.x + " y:"+ Camera.y);
-                        Camera.moveForward(5); 
-                        //p1.moveForward(5);
-                    }
-                    if (pressing[DN]) {
-                        System.out.println("Camera position x:"+ Camera.x + " y:"+ Camera.y);
-                        Camera.moveForward(-5); 
-                        //p1.moveForward(-5);
-                    }
-                    if (pressing[RT]) {
-                        System.out.println("Camera position x:"+ Camera.x + " y:"+ Camera.y);
-                        // if(Camera.x >= 0){
-                             Camera.turnBy(5); 
-                        // }
-                        p1.turnRight(5);}
-                        
-                    //if(p1.getX() > 500)Camera.goRT(3);} // this is correct 
+                    if (pressing[UP] || pressing[W]) {
+                       // System.out.println("Camera position x:"+ Camera.x + " y:"+ Camera.y);
 
-                    if (pressing[LT]) {
-                        System.out.println("Camera position x:"+ Camera.x + " y:"+ Camera.y);
+                        Camera.moveForward(5); 
+                        p1.moveForward(2);
+                    }
+                    if (pressing[DN] || pressing[S]) {
+                        //System.out.println("Camera position x:"+ Camera.x + " y:"+ Camera.y);
+                        Camera.moveForward(-5); 
+                        p1.moveForward(-2);
+                    }
+                    if (pressing[RT] || pressing[D]) {
+                        //System.out.println("Camera position x:"+ Camera.x + " y:"+ Camera.y);
+                        Camera.turnBy(5);
+                   
+                        p1.turnRight(5);
+                    }
+                        
+                    //if(p1.getX() > 500)Camera.goRT(3);}
+
+                    if (pressing[LT]|| pressing[A]) {
+                        //System.out.println("Camera position x:"+ Camera.x + " y:"+ Camera.y);
                         Camera.turnBy(-5); 
+                
                         p1.turnLeft(5);
                     }
-                    
-
-                    // if (pressing[W]){p1.goUP(-4);}
-                    // if (pressing[A]){p1.goLT(-4);}
-                    // if (pressing[S]){p1.goDN(4);}
-                    // if (pressing[D]){p1.goRT(4);}
 
                     // if (p1.moving == true)
                     //     p1.move();
@@ -401,8 +387,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
     }
 		else if(buttonClicked == pauseMButtons[0]|| buttonClicked == gameOverButtons[0]) {// go to resume
             changeLevel(gameRoom);// last game room (currLevel is what is used to draw the levels in the paint method) change levels
-            if(isOver)
-                healthBar.refillHealth();   //NEED TO SET THIS TO FULL 
+ 
                 
             // which level to switch to based on what the last game room you were in
             isPaused = false;
@@ -421,7 +406,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
             changeLevel(titleScreen);
            
             // reset player health
-            healthBar.refillHealth(); // for long trip drift 
+           
             isPaused = true;
             isOver = false;
             titleOrPause = true; //game ended make pause menu go to the title menu

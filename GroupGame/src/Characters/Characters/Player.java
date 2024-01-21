@@ -3,11 +3,14 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Polygon;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
 
 import Characters.Sprite;
-
+import Objects.Camera;
 import Objects.Lookup;
 import Objects.Rect;
 
@@ -17,11 +20,6 @@ public class Player extends Rect{
     static String [] pose = new String[] {"IDLE"}; 
     Image player = Toolkit.getDefaultToolkit().getImage("GroupGame/src/images/ORANGECAR/ORANGECAR_IDLE/ORANGECAR_IDLE_0.png");
     
-    int delta_x;
-    int delta_y; // how much to adust the affine transformation translation by
-
-    int x;
-    int y;
 
     int [] player_x = new int []{40,-40,-40,40};
     int [] player_y = new int [] {-20,-20,20,20};
@@ -36,10 +34,13 @@ public class Player extends Rect{
     int x_;
     int y_;
 
+    // Polygon representation of the player
+    Polygon playerPoly = new Polygon(x_points, x_points, 4);
 
     int originX;
     int originY;
-    AffineTransform playerRotate = new AffineTransform();
+
+    AffineTransform playerTransform = new AffineTransform();
 
 
     // for rotation
@@ -48,48 +49,67 @@ public class Player extends Rect{
 	double sinA = 0;
 
     public Player(int x, int y, int w, int h) {
-        //super(x + 200, y -300 , w, h);
         super(x, y, w, h);
-       // super("ORANGECAR", pose, 1, 0, "png", x, y, w, h,0);
 
-       
-        this.delta_x = x ;
-        this.delta_y = y ;
         originX = x;
         originY = y;
 
 
-       
-        playerRotate.translate(x, y); // place the player at the start
-        //playerRotate.rotate(A);
+        playerTransform.translate(x, y); // place the player at the start
+
    
+    }
+    public boolean overlaps(Rect r){
+
+        
+        //return playerPoly.intersects((int)r.getX() - Camera.x, (int)r.getY() - Camera. y,(int)r.getWidth(), (int)r.getHeight());
+    return playerPoly.intersects((int)r.getX(), (int)r.getY(),(int)r.getWidth(), (int)r.getHeight());
+  
     }
 
     public void moveForward(int d) // delta change 
 	{
-        x += d * cosA;
-		y += d * sinA;
+        x += (int)(d * cosA);
+		y += (int)(d * sinA);
 
-		delta_x = (int) (d * cosA);
-		delta_y = (int) (d * sinA);
+		// delta_x = (int) (d * cosA);
+		// delta_y = (int) (d * sinA);
+
+      
+     
+        playerTransform.translate(d, 0); // works when (1,0) (affine transform seems to do the vector stuf itself)
         
-        playerRotate.translate(delta_x, delta_y);
-        System.out.println(delta_x);
-        System.out.println(delta_y);
+        // print 
+        System.out.println("Player A: "+ A);   
+        for(int i = 0;i <4; i++){
+            System.out.println("Vetex of Polygon Player: "+ x_points[i] + ", "+ y_points[i]);
+        }
 	}
+ 
 
     public void turnLeft(int dA)
 	{
-		A -= dA; // in degrees
+		A -= dA; // in degrees for polygon
 		
 		if(A < 0)  A += 360;
  
-		playerRotate.rotate(Math.toRadians(-dA)); // turn by delta a degrees from where you are
-	    playerRotate.translate(-4, 0);
-        
 
         cosA = Lookup.cos[A];
 		sinA = Lookup.sin[A];
+
+        //Rotate Player image
+		playerTransform.rotate(-Lookup.radianMeasureOf[dA]); // turn by delta a degrees from where you are
+	   
+        //Then Translate
+       // playerRotate.translate(-4, 0);
+       
+
+        //print
+         System.out.println("Player A: "+ A);
+         for(int i = 0;i <4; i++){
+            System.out.println("Vetex of Polygon Player: "+ x_points[i] + ", "+ y_points[i]);
+        }
+    
 	}
 	
 	public void turnRight(int dA)
@@ -98,13 +118,27 @@ public class Player extends Rect{
 		
 		if(A > 359)   A -= 360;
 
-		playerRotate.rotate(Math.toRadians(dA));
-        playerRotate.translate(4, 0);
-        
-		cosA = Lookup.cos[A];
+        cosA = Lookup.cos[A];
 		sinA = Lookup.sin[A];
+
+        //Rotate Player image
+		playerTransform.rotate(Lookup.radianMeasureOf[dA]);
+
+        //Then Translate
+        //playerRotate.translate(4, 0);
+
+        //print
+        System.out.println("Player A: "+ A);
+        for(int i = 0;i <4; i++){
+            System.out.println("Vetex of Polygon Player: "+ x_points[i] + ", "+ y_points[i]);
+        }
+     
+       
+	 
 	}
 
+
+    /* Return the player to the origin  */
     public void returnToOrigin(){
 
         // A = 0;
@@ -117,9 +151,9 @@ public class Player extends Rect{
 
 @Override
     public void draw(Graphics pen){
-        super.draw(pen);
+        this.setColor(Color.GREEN);
         
-        Graphics2D pen2D = (Graphics2D) pen;// cast into 2d pen
+        Graphics2D pen2D = (Graphics2D) pen; // cast into 2d pen (needed for affine transformation)
        
         for (int i = 0; i < 4; i++){
         
@@ -131,20 +165,32 @@ public class Player extends Rect{
             rotation_y = (int) ((x_ * sinA) + (y_ * cosA));
 
             //THEN TRANSLATE
-            // x_points[i] = rotation_x + x + 600;
-            // y_points[i] = rotation_y + y + 250;
+            x_points[i] = (int) (rotation_x + x + 60);
+            y_points[i] = (int)(rotation_y + y + 70);
 
-            x_points[i] = rotation_x + x;
-            y_points[i] = rotation_y + y;
+            // x_points[i] = (int)(rotation_x + x);
+            // y_points[i] = (int)(rotation_y + y);
+             
+
 
         }
+        // Point to the updated polygon points for the players Polygon 
+        playerPoly.xpoints = x_points;
+        playerPoly.ypoints = y_points;
+
+
+
+        pen.setColor(Color.red);
+       // pen.drawRect((int)x, (int)y, (int)w, (int)h);
+
         pen.setColor(Color.GREEN);
-        pen.drawPolygon(x_points, y_points, 4);
-        //pen2D.drawImage(player, x, y, null);
-        //playerRotate.rotate(Math.toRadians(-3));
-        //pen2D.drawRect(x, y, (int)w, (int)h);
-        
-        pen2D.drawImage(player,playerRotate, null);
+
+        // Draw players polygon
+        pen.drawPolygon(playerPoly);
+        //pen.drawPolygon(x_points, y_points, 4);
+
+        // Draw image of the player
+        //pen2D.drawImage(player,playerTransform, null);
         
        
 

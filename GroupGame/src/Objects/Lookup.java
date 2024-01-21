@@ -4,6 +4,7 @@ public class Lookup
 {
 	public static double[] cos = generateCos();
 	public static double[] sin = generateSin();
+	public static double [] radianMeasureOf = genRad();
 	
 	public static double[] generateCos()
 	{
@@ -28,5 +29,21 @@ public class Lookup
 		
 		return sin;
 	}
+
+
+	//all angle mesures in radians 
+	public static double[] genRad()
+	{
+		double[] radOf = new double[360];
+		
+		for(int A = 0; A < 360; A++)
+		{	
+			radOf[A] = Math.toRadians(A);
+		}
+		
+		return radOf;
+	}
+
+
 
 }
