@@ -18,7 +18,7 @@ public class PausePhoneMenu extends OverlayLevel{
         super(null,null, "pauseMenu");
 
         //BACKGROUND
-        setBg("bg_pause02.jpg");
+    
         
         setBounds(450,10,250,720); // set the bounds of the 
         //phoneOutline = Toolkit.getDefaultToolkit().getImage("GroupGame/src/images/outline_phone.png");

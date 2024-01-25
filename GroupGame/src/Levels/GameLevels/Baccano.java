@@ -4,6 +4,7 @@ import Levels.Managers.Level2;
 import java.awt.*;
 import java.util.Random;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 
 import Characters.Characters.Enemy;
@@ -14,10 +15,10 @@ public class Baccano extends Level2 {
     Image table = Toolkit.getDefaultToolkit().getImage(assetDir+"casinoTablebg_red.jpeg");
     Image casinoPepe = Toolkit.getDefaultToolkit().getImage(assetDir+"casinoPeople.jpeg");
 
-    Enemy dealer = new Enemy("DuckHuntDog",400,30, 0,0, 15);
+    Enemy dealer = new Enemy("DuckHuntDog",this.getLevelName(),400,30, 0,0, 15);
     
-    public Baccano(Level2 enter, Level2 exit){
-        super(enter, exit, "bacano");
+    public Baccano(JButton exitButton){
+        super(null, null, "BACCANO");
 
         //Level Exit and Enterance Set
 

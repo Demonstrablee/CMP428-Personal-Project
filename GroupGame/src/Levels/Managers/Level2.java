@@ -25,6 +25,8 @@ public abstract class Level2 extends JLayeredPane{
     //Level Vars
     private Level2 enterance = null; // node ahead
     private Level2 exit = null; // node behind
+    public String fontsDir = "GroupGame/src/fonts/";
+    
     int [] lEnterP = new int [4]; // describes the rect that acts as the entrance for the level
     int [] lExitP = new int[4];
     protected Rect dRectEx = null;
@@ -185,7 +187,7 @@ public abstract class Level2 extends JLayeredPane{
  /**
      * @return the levels name
      */
-    public String getName() {
+    public String getLevelName() {
         return name;
     }
 

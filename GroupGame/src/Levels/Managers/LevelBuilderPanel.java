@@ -2,9 +2,11 @@ package Levels.Managers;
 
 import Characters.Characters.Enemy;
 import Characters.Characters.Player;
-
-
 import Levels.GameLevels.LongTripDrift;
+import Levels.GameLevels.LongTripDrift.DownAction;
+import Levels.GameLevels.LongTripDrift.LeftAction;
+import Levels.GameLevels.LongTripDrift.RightAction;
+import Levels.GameLevels.LongTripDrift.UpAction;
 import Levels.GameLevels.Baccano;
 import Levels.GameLevels.Wellerman;
 import Levels.Menus.GameOverMenu;
@@ -14,12 +16,8 @@ import Levels.Menus.PausePhoneMenu;
 import Levels.Menus.SaveMenu;
 import Levels.Menus.TitleScreen;
 import Objects.Camera;
-import Objects.HealthBar;
-
-
-import Objects.Rect;
 import Objects.Wall;
-
+import fonts.fontsRegistry;
 
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -28,12 +26,13 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.*;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLayeredPane;
-
-import javax.swing.Timer;
+import javax.swing.KeyStroke;
 import javax.swing.border.Border;
 
 ;
@@ -43,18 +42,23 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
     
     Thread t;
  
-
+    //ACTIONS
+    Action upAction;
+    Action downAction;
+    Action leftAction;
+    Action rightAction;
     
     //Buttons
-    Image phone = Toolkit.getDefaultToolkit().getImage("GroupGame/src/images/Phone_Blue.png").getScaledInstance(66, 64, Image.SCALE_SMOOTH);
-    ImageIcon phoneIcon = new ImageIcon(phone);
-    JButton inGameMenuButton = new JButton(phoneIcon);
    
     static JButton [] titleButtons = new JButton[3];
     static JButton [] pauseMButtons = new JButton[5];
     static JButton [] toPauseButtons = new JButton[2];
     static JButton [] gameOverButtons = new JButton[3];
     static JButton [] gameSelectButtons = new JButton[4]; // the games you can select from 
+
+    static  JButton [] longTripDriftB = new JButton[2]; // buttons to exit
+    JButton wellermanExitB;
+    JButton baccanoExitB;
 
     //Layout
     CardLayout cLayout0 = new CardLayout();
@@ -76,9 +80,9 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
     static GameSelectMenu gameSelectMenu;
 
     //Levels
-    static Wellerman wellerman = new Wellerman(null, null); //4
-    static LongTripDrift longTripDrift = new LongTripDrift(null, null); //5
-    static Baccano baccano = new Baccano(null, null);; // 6
+    static Wellerman wellerman; //4
+    static LongTripDrift longTripDrift; //5
+    static Baccano baccano;  // 6
     
     // Movement vars
     boolean[] pressing = new boolean[1024];
@@ -115,14 +119,21 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
            //setDoubleBuffered(true); (redundant)
 
            System.out.println("Init method in LevelBuilder activated");
+
+
+           // MUST HAPPEN BEFORE LOAD ELEMENTS (needed for games to load)
+           fontsRegistry.registerFonts(); // register the fonts used in the games 
             
            loadElements();
            
-           addKeyListener(this);
+           //addKeyListener(this);
 
-           addMouseListener(this);
+           
+ 
 
-           requestFocus();
+           //addMouseListener(this);
+
+           //requestFocus();
             
            t = new Thread(this);
             
@@ -137,13 +148,6 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
         public void loadElements(){
              
             setBounds(0, 0, 1280, 720); // display size
-
-            inGameMenuButton.addActionListener(this);
-            System.out.println("GroupGame/src/images/Phone_Blue.png");
-            inGameMenuButton.setFocusable(false);  // so important  stops the button form stealing focus from the keyboard
-            inGameMenuButton.setBounds(1130, 70,64,64);
-            //add(inGameMenuButton);
-           // inGameMenuButton.setVisible(false);
        
           
             // initiallizing buttons
@@ -154,6 +158,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
             createButton(new String [] {buttonN[7],buttonN[3],buttonN[2]}, gameOverButtons);
             createButton(new String [] {buttonN[8],buttonN[9],buttonN[10],buttonN[4]}, gameSelectButtons);
            
+            createButton(new String[] {buttonN[2],buttonN[2]},longTripDriftB);
 
             //Intializing
             titleScreen = new TitleScreen(titleButtons);
@@ -163,8 +168,16 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
             gameOverMenu = new GameOverMenu(gameOverButtons);
             gameSelectMenu = new GameSelectMenu(gameSelectButtons);
 
-            
-            
+
+            wellermanExitB = createButton();
+            wellerman = new Wellerman(wellermanExitB);
+
+            baccanoExitB = createButton();
+            baccano = new Baccano(baccanoExitB);
+
+            longTripDrift = new LongTripDrift(longTripDriftB);
+      
+
             //ADDING Levels To Level builder Panel
             // OVERLAY menu
             add(pauseMenu);
@@ -181,14 +194,25 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
             add(longTripDrift);
             add(baccano);
             
+               //instances
+        upAction = new UpAction();
+        downAction = new DownAction();
+        leftAction = new LeftAction();
+        rightAction = new RightAction();
+
+        p1.getInputMap().put(KeyStroke.getKeyStroke("UP"),"upAction"); //assign the up action key to the keyword "upaction"
+        p1.getActionMap().put("upAction",upAction); // when"upAction" keyword is triggred do the action in the var called upAction
+
+        p1.getInputMap().put(KeyStroke.getKeyStroke("DOWN"),"downAction"); //assign the up action key to the keyword "upaction"
+        p1.getActionMap().put("downAction",downAction); // when"upAction" keyword is triggred do the action in the var called upAction
             
             
             // Game State variables AT START
-            currLevel = wellerman; // which room to draw currLevel and levLevel index are one to one (default: titleScreen)
+            currLevel = longTripDrift; // which room to draw currLevel and levLevel index are one to one (default: titleScreen)
             gameRoom = wellerman; // track of the ingame rooms that player traverses with p1 (default; wellereman)
 
-            isPaused =  true; // is the game paused or not (default: true)
-            titleOrPause = true; // at game start options goes to pause menu (default: true)
+            isPaused = false; // is the game paused or not (default: true)
+            titleOrPause = false; // at game start options goes to pause menu (default: true)
             isOver = false; // is the game over? (only have to change this for gameover window debug) (default: false)
              
             currLevel.setVisible(true);
@@ -201,7 +225,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
             System.out.println("Game Started");
             while(true){ //game loop
                  
-                gameLoop();
+               //gameLoop();
 
                 repaint(); // draw the panel
 
@@ -216,57 +240,38 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
             
         }
 
+
+
         public void gameLoop(){
-                if(isOver){
-                    isPaused = true; // so it works in testing and in game
-                    //gameRoom = gameOverMenu; // its a menu after all
-                    currLevel.setVisible(false);
-                    currLevel = gameOverMenu;
-                    currLevel.setVisible(true);
-                    
-                }
-                if(isPaused){ 
-                    inGameMenuButton.setVisible(false);
-                }
-
-                // if you are not in a game menu    
-                else if(isPaused == false || isOver == false){ // Game Menu exit
-                    // System.out.println("P1: Xpos: "+ (p1.x) + " Ypos: "+ (p1.y));
-   
-
-                    inGameMenuButton.setVisible(true);
-
-
-                  
-                }      
+                   
                     //MOVEMENT
                     
-                    if (pressing[UP] || pressing[W]) {
-                       // System.out.println("Camera position x:"+ Camera.x + " y:"+ Camera.y);
+                    // if (pressing[UP] || pressing[W]) {
+                    //    // System.out.println("Camera position x:"+ Camera.x + " y:"+ Camera.y);
 
-                        Camera.moveForward(5); 
-                        p1.moveForward(2);
-                    }
-                    if (pressing[DN] || pressing[S]) {
-                        //System.out.println("Camera position x:"+ Camera.x + " y:"+ Camera.y);
-                        Camera.moveForward(-5); 
-                        p1.moveForward(-2);
-                    }
-                    if (pressing[RT] || pressing[D]) {
-                        //System.out.println("Camera position x:"+ Camera.x + " y:"+ Camera.y);
-                        Camera.turnBy(5);
+                    //     Camera.moveForward(5); 
+                    //     p1.moveForward(2);
+                    // }
+                    // if (pressing[DN] || pressing[S]) {
+                    //     //System.out.println("Camera position x:"+ Camera.x + " y:"+ Camera.y);
+                    //     Camera.moveForward(-5); 
+                    //     p1.moveForward(-2);
+                    // }
+                    // if (pressing[RT] || pressing[D]) {
+                    //     //System.out.println("Camera position x:"+ Camera.x + " y:"+ Camera.y);
+                    //     Camera.turnBy(5);
                    
-                        p1.turnRight(5);
-                    }
+                    //     p1.turnRight(5);
+                    // }
                         
-                    //if(p1.getX() > 500)Camera.goRT(3);}
+                    // //if(p1.getX() > 500)Camera.goRT(3);}
 
-                    if (pressing[LT]|| pressing[A]) {
-                        //System.out.println("Camera position x:"+ Camera.x + " y:"+ Camera.y);
-                        Camera.turnBy(-5); 
+                    // if (pressing[LT]|| pressing[A]) {
+                    //     //System.out.println("Camera position x:"+ Camera.x + " y:"+ Camera.y);
+                    //     Camera.turnBy(-5); 
                 
-                        p1.turnLeft(5);
-                    }
+                    //     p1.turnLeft(5);
+                    // }
 
                     // if (p1.moving == true)
                     //     p1.move();
@@ -303,6 +308,14 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
                 buttons[i] = nButton; // add button to array
             }
         }
+        // make a singular button // mostly for exiting screens
+        public JButton createButton(){
+        JButton button = new JButton();
+        button.addActionListener(this);
+        button.setFocusable(false);
+
+        return button;
+        }
        
      //KEY LISTENER
     @Override
@@ -314,28 +327,28 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
     public void keyPressed(KeyEvent e) {
         //System.out.println(e.getKeyCode());  
 
-        pressing[e.getKeyCode()] = true;
+        // pressing[e.getKeyCode()] = true;
        
-        if(e.getKeyCode() == KeyEvent.VK_P){ // if P is pressed pause the game
-            if(!isPaused){
+    //     if(e.getKeyCode() == KeyEvent.VK_P){ // if P is pressed pause the game
+    //         if(!isPaused){
                 
-                pauseMenu.setVisible(true);
-                isPaused = true; // pause the game
+    //             pauseMenu.setVisible(true);
+    //             isPaused = true; // pause the game
 
-                System.out.println("Paused via key press");
+    //             System.out.println("Paused via key press");
             
-            }else{ // go back to the game
-                currLevel.setVisible(false); // should be pause menu
-                isPaused = false; // pause the game
-                System.out.println("UnPaused via key press");
-        }
-    }
+    //         }else{ // go back to the game
+    //             currLevel.setVisible(false); // should be pause menu
+    //             isPaused = false; // pause the game
+    //             System.out.println("UnPaused via key press");
+    //     }
+    // }
 
 
     }
     @Override
     public void keyReleased(KeyEvent e) {
-        pressing[e.getKeyCode()] = false;
+       // pressing[e.getKeyCode()] = false;
         //p1.moving = false;
     }
 
@@ -365,7 +378,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
         currLevel.setVisible(false); // make previous room invisible
         currLevel = level; // last game room (currLevel is what is used to draw the levels in the paint method) change levels
         currLevel.setVisible(true); // make current room visible
-         if(!(level.getName()).equals("pauseMenu")){ // so the overlay of the pause menu doesnt draw over all the levels 
+         if(!(level.getLevelName()).equals("pauseMenu")){ // so the overlay of the pause menu doesnt draw over all the levels 
                 pauseMenu.setVisible(false);
             }
         
@@ -379,7 +392,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
         Object buttonClicked = e.getSource();
         SimpleSoundPlayer.playSound("GroupGame/src/music/button_click01.wav");
           
-    if (buttonClicked == titleButtons[0]){ // go to game select
+    if (buttonClicked == titleButtons[0] || buttonClicked == wellermanExitB || buttonClicked == baccanoExitB || buttonClicked == longTripDriftB[0] ||  buttonClicked == longTripDriftB[1]  ){ // go to game select
             changeLevel(gameSelectMenu); 
             gameRoom.setVisible(false); // important to make whatever game is active stop showing up
             isPaused = true;  
@@ -414,7 +427,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
        else if(buttonClicked == pauseMButtons[4]|| buttonClicked == titleButtons[2]|| buttonClicked == gameOverButtons[2] ){ // quit
             System.exit(0);
         } 
-       else if(buttonClicked == inGameMenuButton|| buttonClicked == toPauseButtons[0]||(buttonClicked == toPauseButtons[1] && !titleOrPause)){ // pause screen
+       else if(buttonClicked == toPauseButtons[0]||(buttonClicked == toPauseButtons[1] && !titleOrPause)){ // pause screen
             pauseMenu.setVisible(true);
             isPaused = true; // pause the game
             System.out.println("Paused");
@@ -431,6 +444,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
             
             gameRoom = wellerman;
             gameRoom.reset();
+            wellerman.waterTimer.start(); // so timer doesnt go on in the title scren
             isPaused = false;
 
         }else if (buttonClicked == gameSelectButtons[2]){ // start up long trip cliff
@@ -444,7 +458,45 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
        
         
 
+        
         }
+
+        //KEY BINDINGS TO CONTROL CHARACTER MOVEMENT
+    public class UpAction extends AbstractAction{ //https://www.youtube.com/watch?v=IyfB0u9g2x0&t=636s
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+          System.out.println("UP ARROW WAS PRESSED");
+        }
+        
+    }
+
+    public class DownAction extends AbstractAction{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("DOWN ARROW WAS PRESSED");
+        }
+        
+    }
+
+    public class RightAction extends AbstractAction{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("RIGHT ARROW WAS PRESSED");
+        }
+       
+    }
+
+    public class LeftAction extends AbstractAction{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("LEFT ARROW WAS PRESSED");
+        }
+        
+    }
 
   
 }

@@ -1,20 +1,26 @@
 package Levels.GameLevels;
 import javax.swing.*;
+import javax.swing.text.JTextComponent.KeyBinding;
 
-import Characters.Characters.Player;
 import Characters.Characters.Enemy;
 import Levels.Managers.Level2;
 import Objects.Camera;
 import Objects.Wall;
+import fonts.fontsRegistry;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 
 
 public class LongTripDrift extends Level2 { 
-    GridBagConstraints constraints = new GridBagConstraints(); // constraints you will add to each element
-    JLabel score = new JLabel("Score: "); // Label showing players cars damage
+ 
+    //SCORE
     int damageScore = 0; // how damaged it the players car
+    JLabel scoreLabel = new JLabel("Score: "+ damageScore, SwingConstants.CENTER); // Label showing players cars damage
+    
     
     String assetDir = "GroupGame/src/images/LTD/";
     Image map = Toolkit.getDefaultToolkit().getImage(assetDir+"GTA1_HD_Liberty_City MAP CROPPED.png");
@@ -24,47 +30,70 @@ public class LongTripDrift extends Level2 {
     Image overpass = Toolkit.getDefaultToolkit().getImage(assetDir+"GTA1 Overpasses/GTA1 2 Lane Over Pass.png");
     //protected static Player p1 = new Player(950,630, 90, 50);
 
-    public LongTripDrift(Level2 enter, Level2 exit){
-        super(enter, exit, "Long Trip");
-    
+    //ACTIONS
+    Action upAction;
+    Action downAction;
+    Action leftAction;
+    Action rightAction;
 
+     // Movement vars
+     boolean[] pressing = new boolean[1024];
+
+    static final int UP = KeyEvent.VK_UP;
+    static final int DN = KeyEvent.VK_DOWN;
+    static final int LT = KeyEvent.VK_LEFT;
+    static final int RT = KeyEvent.VK_RIGHT;
+    static final int Q = KeyEvent.VK_Q;
+
+    static final int W = KeyEvent.VK_W;
+    static final int A = KeyEvent.VK_A;
+    static final int S = KeyEvent.VK_S;
+    static final int D = KeyEvent.VK_D;
+
+    public LongTripDrift(JButton [] exitButton){
+        super(null, null, "Long Trip");
+
+        setLayout(null);
+
+        // then make the frame HUGE so we zoom in  setBounds(-10, 0, 20280, 17720);
+        setBounds(-10, 0, MAP_WIDTH, MAP_HEIGHT); // SO IMPORTANT THE LEVEL WONT APPEAR UNLESS THESE ARE SET
+        
         //BACKGROUND
         setBgWImage(map);
 
+    
+        //instances
+        upAction = new UpAction();
+        downAction = new DownAction();
+        leftAction = new LeftAction();
+        rightAction = new RightAction();
+
+        scoreLabel.getInputMap().put(KeyStroke.getKeyStroke("UP"),"upAction"); //assign the up action key to the keyword "upaction"
+        scoreLabel.getActionMap().put("upAction",upAction); // when"upAction" keyword is triggred do the action in the var called upAction
+
+        //BINDING ACTIONS
+
+
+
+
+    
         // place boundarys on the entire map
-            wall = new Wall[]{new Wall(10,90,8000,50),//top
+        wall = new Wall[]{new Wall(10,90,8000,50),//top
             new Wall(50,0,90,11375), // LEFT
             new Wall(10,11375,900,50),//BOTTOM NEAR FINISH
             new Wall(630, 320, 630, 310) // BUILDINGS
             };
 
-            for(Wall wallnum: wall ){
-                System.out.println("Wall locations: ("+ wallnum.x + ", "+ wallnum.y +") wall width: "+ wallnum.w +" wall height: "+ wallnum.h);
-            }
-
-
-        // then make the frame HUGE so we zoom in  setBounds(-10, 0, 20280, 17720);
-        setBounds(-10, 0, MAP_WIDTH, MAP_HEIGHT); // SO IMPORTANT THE LEVEL WONT APPEAR UNLESS THESE ARE SET
+        for(Wall wallnum: wall ){
+                //System.out.println("Wall locations: ("+ wallnum.x + ", "+ wallnum.y +") wall width: "+ wallnum.w +" wall height: "+ wallnum.h);
+        }
         
-       
-        score.setBackground(Color.RED);
-        score.setOpaque(true);
-        score.setBounds((int)(100 -Camera.x), (int)(0 -Camera.y),60,60);
-        score.add(this);
-
-
-        //wall = new Wall[]{new Wall(0, 50, 1920, 80), new Wall(0, 500, 1920, 80)};
-       
-        //ENTERANCE AND EXITS
-        // setLevelEnterPos(new int[] {200,490,100,25});
-        // setLevelExitPos(new int[] {900,300,25,100});
-        
-        
-        // Setting enemys array
-         
-        // constraints.gridx = 0;
-        // constraints.gridy = 0;
-        // add(title, constraints);
+        // Adding Score Label to Screen
+        scoreLabel.setBackground(Color.RED);
+        scoreLabel.setOpaque(true);
+        scoreLabel.setBounds((int)(100 -Camera.x), (int)(0 -Camera.y),200,60);
+        scoreLabel.setFont(fontsRegistry.arcadePixel);
+        add(scoreLabel);
 
         
         System.out.println("Camera position x:"+ Camera.x + " y:"+ Camera.y);
@@ -81,25 +110,26 @@ public class LongTripDrift extends Level2 {
         super.paintComponent(pen);//component that does the painting 
    
 
-
-
+  
+    // Move the Player
+     
 
     // Colisions  
-        if (wall != null)
-        for(int i = 0; i < wall.length; i++){
-            //System.out.println("Location of Wall " + i +" x: "+ wall[i].x + " y: "+ wall[i].y);
-            if(p1.overlaps(wall[i])){
-                System.out.println("Pushing player out of wall "+ i);
-                p1.pushedOutOf(wall[i]);
-                }      
-            }
+        // if (wall != null)
+        // for(int i = 0; i < wall.length; i++){
+        //     //System.out.println("Location of Wall " + i +" x: "+ wall[i].x + " y: "+ wall[i].y);
+        //     if(p1.overlaps(wall[i])){
+        //         System.out.println("Pushing player out of wall "+ i);
+        //         p1.pushedOutOf(wall[i]);
+        //         }      
+        //     }
 
     //Player Damage
 
     if (carEnemies != null){
         Enemy.InnerEnemy e1 = carEnemies[0]; // temporary a loop will kill the player immediately
             if (p1.overlaps(e1)){
-                p1.setColor(Color.GREEN);
+                //p1.setColor(Color.GREEN);
                 damageScore++; // damage score goes up
                 System.out.println(damageScore);
                
@@ -131,7 +161,46 @@ public class LongTripDrift extends Level2 {
 
     
 
+
     }
+
+    //KEY BINDINGS TO CONTROL CHARACTER MOVEMENT
+    public class UpAction extends AbstractAction{ //https://www.youtube.com/watch?v=IyfB0u9g2x0&t=636s
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+          System.out.println("UP ARROW WAS PRESSED");
+        }
+        
+    }
+
+    public class DownAction extends AbstractAction{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("DOWN ARROW WAS PRESSED");
+        }
+        
+    }
+
+    public class RightAction extends AbstractAction{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("RIGHT ARROW WAS PRESSED");
+        }
+       
+    }
+
+    public class LeftAction extends AbstractAction{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("LEFT ARROW WAS PRESSED");
+        }
+        
+    }
+    
     }
 
     

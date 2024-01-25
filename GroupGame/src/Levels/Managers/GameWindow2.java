@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.Toolkit;
 
 public class GameWindow2 extends JFrame implements KeyListener, Runnable, ActionListener{
     Thread t;
@@ -57,7 +58,7 @@ public class GameWindow2 extends JFrame implements KeyListener, Runnable, Action
     }
 
 
-    public Image appIcon = Toolkit.getDefaultToolkit().getImage("GroupGame/src/images/appIcon/");
+    public Image appIcon = Toolkit.getDefaultToolkit().getImage("GroupGame/src/images/appIcon/paper_plane.png");
 
         //Objects
     Player p1 = new Player(300,300, 50,50); // so all levels can share same character

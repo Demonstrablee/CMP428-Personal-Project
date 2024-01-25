@@ -19,7 +19,7 @@ public class Sprite extends Rect
 	
 	public boolean moving = false;
 	
-	public Sprite(String name, String[] pose, int imagecount, int start, String filetype, int x, int y, int w, int h, int scale)
+	public Sprite(String name,String gameName, String[] pose, int imagecount, int start, String filetype, int x, int y, int w, int h, int scale)
 	{
 		super(x, y, w, h);
 		
@@ -29,7 +29,7 @@ public class Sprite extends Rect
 		
 		for(int i = 0; i < pose.length; i ++)
 		{
-			animation[i] = new Animation(name, pose[i], imagecount, start,  18, filetype);
+			animation[i] = new Animation(name, gameName, pose[i], imagecount, start,  18, filetype);
 		}
 	}
 	/**Change the animation to move to the left */

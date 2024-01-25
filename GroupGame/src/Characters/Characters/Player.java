@@ -1,25 +1,27 @@
 package Characters.Characters;
 import java.awt.Color;
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Polygon;
-import java.awt.Rectangle;
+
 import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Rectangle2D;
 
-import Characters.Sprite;
-import Objects.Camera;
+import javax.swing.*;
 import Objects.Lookup;
 import Objects.Rect;
 
 
-public class Player extends Rect{
+
+
+public class Player extends JComponent{
     // THESE POSES MUST BE IN THE CORRECT ORDER TO WORK IN THE ANIMATION CLASS {UP, DOWN, LEFT, RIGHT, IDLE} YOU Can name them whatever but the order contributes to what animation is played
     static String [] pose = new String[] {"IDLE"}; 
-    Image player = Toolkit.getDefaultToolkit().getImage("GroupGame/src/images/ORANGECAR/ORANGECAR_IDLE/ORANGECAR_IDLE_0.png");
-    
+    Image player = Toolkit.getDefaultToolkit().getImage("GroupGame/src/images/LTD/ORANGECAR/ORANGECAR_IDLE/ORANGECAR_IDLE_0.png");
+    int x;
+    int y;
 
     int [] player_x = new int []{40,-40,-40,40};
     int [] player_y = new int [] {-20,-20,20,20};
@@ -49,7 +51,7 @@ public class Player extends Rect{
 	double sinA = 0;
 
     public Player(int x, int y, int w, int h) {
-        super(x, y, w, h);
+        super();
 
         originX = x;
         originY = y;
@@ -149,9 +151,9 @@ public class Player extends Rect{
 
     }
 
-@Override
+
     public void draw(Graphics pen){
-        this.setColor(Color.GREEN);
+        //this.setColor(Color.GREEN);
         
         Graphics2D pen2D = (Graphics2D) pen; // cast into 2d pen (needed for affine transformation)
        
@@ -190,7 +192,7 @@ public class Player extends Rect{
         //pen.drawPolygon(x_points, y_points, 4);
 
         // Draw image of the player
-        //pen2D.drawImage(player,playerTransform, null);
+        pen2D.drawImage(player,playerTransform, null);
         
        
 

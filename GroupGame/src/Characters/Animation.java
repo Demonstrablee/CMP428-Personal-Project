@@ -1,5 +1,5 @@
 package Characters;
-import Levels.Managers.GameWindow2;
+
 /**
     The Animation class manages a series of images (frames) and
     the amount of time to display each frame.
@@ -17,7 +17,7 @@ public class Animation
 	
 	private int start = 0;
 	
-	public Animation(String name,String pose, int count, int start, int duration, String type)
+	public Animation(String name,String gameName,String pose, int count, int start, int duration, String type)
 	{
 		this.start    = start;
 		
@@ -28,18 +28,16 @@ public class Animation
 		image = new Image[count];
 		
 
-		for(int i = 0; i < count; i++)
-         
-		{
-			if (GameWindow2.getOs().contains("Mac")){ // if on mac
-            	System.out.println("GroupGame/src/images/"+ name +"/" + name + "_" + pose + "/"+ name +"_" +pose +"_"+ i + "." + type);
-				image[i] = Toolkit.getDefaultToolkit().getImage("GroupGame/src/images/"+ name +"/" + name + "_" + pose + "/"+ name +"_" +pose +"_"+ i + "." + type);}
-			else{ // if you are on windows
-				//System.out.println("GroupGame\\srcimages\\"+ name +"\\" + name + "_" + pose + "\\"+ name +"_" +pose +"_"+ i + "." + type);
-				image[i] = Toolkit.getDefaultToolkit().getImage("GroupGame\\srcimages\\"+ name +"\\" + name + "_" + pose + "\\"+ name +"_" +pose +"_"+ i + "." + type);
+		for(int i = 0; i < count; i++){
+		// 	if (GameWindow2.getOs().contains("Mac")){ // if on mac
+        //     	System.out.println("GroupGame/src/images/"+ name +"/" + name + "_" + pose + "/"+ name +"_" +pose +"_"+ i + "." + type);
+		 		image[i] = Toolkit.getDefaultToolkit().getImage("GroupGame/src/images/"+ gameName +"/" + name +"/" + name + "_" + pose + "/"+ name +"_" +pose +"_"+ i + "." + type);
+		// 	else{ // if you are on windows
+				System.out.println("GroupGame\\src\\images\\"+ gameName +"\\" + name + "_" + pose + "\\"+ name +"_" +pose +"_"+ i + "." + type);
+				//image[i] = Toolkit.getDefaultToolkit().getImage("GroupGame\\src\\images\\"+ gameName+ "\\" + name +"\\" + name + "_" + pose + "\\"+ name +"_" +pose +"_"+ i + "." + type);
 		
 			}
-		}
+		// }
 	}
 	
 	

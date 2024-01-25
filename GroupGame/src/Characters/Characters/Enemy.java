@@ -19,8 +19,8 @@ public class Enemy extends Sprite{
 
 	 
 	
-	public Enemy(String type, int x, int y, int h, int w, int scale) {
-		super(type, pose[0] ,2,0,"png",x, y, w, h,scale);
+	public Enemy(String type,String gameName, int x, int y, int h, int w, int scale) {
+		super(type,gameName, pose[0] ,2,0,"png",x, y, w, h,scale);
 		c = Color.GRAY;
 
 	}

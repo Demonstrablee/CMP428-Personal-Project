@@ -21,7 +21,7 @@ public class GameOverMenu extends Level2 {
         //BACKGROUND
         //setBg("black01.jpg");
         setBounds(0, 0, 1280, 720);
-        
+        setBackground(new Color(10,10,10,100)); //TODO PLAY WITH THIS COLOR
 
         
         // Add Buttons 
