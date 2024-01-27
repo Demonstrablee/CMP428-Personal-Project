@@ -3,10 +3,7 @@ package Levels.Managers;
 import Characters.Characters.Enemy;
 import Characters.Characters.Player;
 import Levels.GameLevels.LongTripDrift;
-import Levels.GameLevels.LongTripDrift.DownAction;
-import Levels.GameLevels.LongTripDrift.LeftAction;
-import Levels.GameLevels.LongTripDrift.RightAction;
-import Levels.GameLevels.LongTripDrift.UpAction;
+
 import Levels.GameLevels.Baccano;
 import Levels.GameLevels.Wellerman;
 import Levels.Menus.GameOverMenu;
@@ -22,17 +19,15 @@ import fonts.fontsRegistry;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Toolkit;
+
 import java.awt.event.*;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
+
 import javax.swing.JButton;
 import javax.swing.JLayeredPane;
-import javax.swing.KeyStroke;
 import javax.swing.border.Border;
 
 ;
@@ -126,14 +121,12 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
             
            loadElements();
            
-           //addKeyListener(this);
-
-           
+           addKeyListener(this);
  
 
            //addMouseListener(this);
 
-           //requestFocus();
+           requestFocus();
             
            t = new Thread(this);
             
@@ -195,20 +188,27 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
             add(baccano);
             
                //instances
-        upAction = new UpAction();
-        downAction = new DownAction();
-        leftAction = new LeftAction();
-        rightAction = new RightAction();
+        // upAction = new UpAction();
+        // downAction = new DownAction();
+        // leftAction = new LeftAction();
+        // rightAction = new RightAction();
 
-        p1.getInputMap().put(KeyStroke.getKeyStroke("UP"),"upAction"); //assign the up action key to the keyword "upaction"
-        p1.getActionMap().put("upAction",upAction); // when"upAction" keyword is triggred do the action in the var called upAction
+        // p1.getInputMap().put(KeyStroke.getKeyStroke('w'),"upAction"); //assign the up action key to the keyword "upaction"
+        // p1.getActionMap().put("upAction",upAction); // when"upAction" keyword is triggred do the action in the var called upAction
 
-        p1.getInputMap().put(KeyStroke.getKeyStroke("DOWN"),"downAction"); //assign the up action key to the keyword "upaction"
-        p1.getActionMap().put("downAction",downAction); // when"upAction" keyword is triggred do the action in the var called upAction
+        // p1.getInputMap().put(KeyStroke.getKeyStroke('s'),"downAction"); //assign the up action key to the keyword "upaction"
+        // p1.getActionMap().put("downAction",upAction); // when"upAction" keyword is triggred do the action in the var called upAction
             
-            
+        // p1.getInputMap().put(KeyStroke.getKeyStroke('a'), "leftAction");
+
+		// p1.getActionMap().put("leftAction", leftAction);
+
+		// p1.getInputMap().put(KeyStroke.getKeyStroke('d'), "rightAction");
+
+		// p1.getActionMap().put("rightAction", rightAction);
+
             // Game State variables AT START
-            currLevel = longTripDrift; // which room to draw currLevel and levLevel index are one to one (default: titleScreen)
+            currLevel = baccano; // which room to draw currLevel and levLevel index are one to one (default: titleScreen)
             gameRoom = wellerman; // track of the ingame rooms that player traverses with p1 (default; wellereman)
 
             isPaused = false; // is the game paused or not (default: true)
@@ -225,7 +225,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
             System.out.println("Game Started");
             while(true){ //game loop
                  
-               //gameLoop();
+                gameLoop();
 
                 repaint(); // draw the panel
 
@@ -246,45 +246,39 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
                    
                     //MOVEMENT
                     
-                    // if (pressing[UP] || pressing[W]) {
-                    //    // System.out.println("Camera position x:"+ Camera.x + " y:"+ Camera.y);
+                    if (pressing[UP] || pressing[W]) {
+                       // System.out.println("Camera position x:"+ Camera.x + " y:"+ Camera.y);
 
-                    //     Camera.moveForward(5); 
-                    //     p1.moveForward(2);
-                    // }
-                    // if (pressing[DN] || pressing[S]) {
-                    //     //System.out.println("Camera position x:"+ Camera.x + " y:"+ Camera.y);
-                    //     Camera.moveForward(-5); 
-                    //     p1.moveForward(-2);
-                    // }
-                    // if (pressing[RT] || pressing[D]) {
-                    //     //System.out.println("Camera position x:"+ Camera.x + " y:"+ Camera.y);
-                    //     Camera.turnBy(5);
+                        Camera.moveForward(5); 
+                       // p1.moveForward(2);
+                    }
+                    if (pressing[DN] || pressing[S]) {
+                        //System.out.println("Camera position x:"+ Camera.x + " y:"+ Camera.y);
+                        Camera.moveForward(-5); 
+                        //p1.moveForward(-2);
+                    }
+                    if (pressing[RT] || pressing[D]) {
+                        //System.out.println("Camera position x:"+ Camera.x + " y:"+ Camera.y);
+                        Camera.turnBy(5);
                    
-                    //     p1.turnRight(5);
-                    // }
+                        p1.turnRight(5);
+                    }
                         
-                    // //if(p1.getX() > 500)Camera.goRT(3);}
+                    //if(p1.getX() > 500)Camera.goRT(3);}
 
-                    // if (pressing[LT]|| pressing[A]) {
-                    //     //System.out.println("Camera position x:"+ Camera.x + " y:"+ Camera.y);
-                    //     Camera.turnBy(-5); 
-                
-                    //     p1.turnLeft(5);
-                    // }
+                    if (pressing[LT]|| pressing[A]) {
+                        //System.out.println("Camera position x:"+ Camera.x + " y:"+ Camera.y);
+                        Camera.turnBy(-5); 
+                        p1.turnLeft(5);
+                    }
 
-                    // if (p1.moving == true)
-                    //     p1.move();
                    
                    
         }
     @Override
         public void paint(Graphics pen){ // WOW rather than paint AWT make this paintComponent and everything is good  
             pen.clearRect(0, 0, getWidth(), getHeight());
-
             super.paint(pen);
-             
-                    pen.setColor(Color.BLACK);
                 
             
 	    }
@@ -325,30 +319,30 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
 
     @Override
     public void keyPressed(KeyEvent e) {
-        //System.out.println(e.getKeyCode());  
+        System.out.println(e.getKeyChar());  
 
-        // pressing[e.getKeyCode()] = true;
+        pressing[e.getKeyCode()] = true;
        
-    //     if(e.getKeyCode() == KeyEvent.VK_P){ // if P is pressed pause the game
-    //         if(!isPaused){
+        if(e.getKeyCode() == KeyEvent.VK_P){ // if P is pressed pause the game
+            if(!isPaused){
                 
-    //             pauseMenu.setVisible(true);
-    //             isPaused = true; // pause the game
+                pauseMenu.setVisible(true);
+                isPaused = true; // pause the game
 
-    //             System.out.println("Paused via key press");
+                System.out.println("Paused via key press");
             
-    //         }else{ // go back to the game
-    //             currLevel.setVisible(false); // should be pause menu
-    //             isPaused = false; // pause the game
-    //             System.out.println("UnPaused via key press");
-    //     }
-    // }
+            }else{ // go back to the game
+                currLevel.setVisible(false); // should be pause menu
+                isPaused = false; // pause the game
+                System.out.println("UnPaused via key press");
+        }
+    }
 
 
     }
     @Override
     public void keyReleased(KeyEvent e) {
-       // pressing[e.getKeyCode()] = false;
+       pressing[e.getKeyCode()] = false;
         //p1.moving = false;
     }
 
@@ -381,7 +375,6 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
          if(!(level.getLevelName()).equals("pauseMenu")){ // so the overlay of the pause menu doesnt draw over all the levels 
                 pauseMenu.setVisible(false);
             }
-        
         
     }
 
@@ -461,42 +454,42 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
         
         }
 
-        //KEY BINDINGS TO CONTROL CHARACTER MOVEMENT
-    public class UpAction extends AbstractAction{ //https://www.youtube.com/watch?v=IyfB0u9g2x0&t=636s
+    //     //KEY BINDINGS TO CONTROL CHARACTER MOVEMENT
+    // public class UpAction extends AbstractAction{ //https://www.youtube.com/watch?v=IyfB0u9g2x0&t=636s
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
-          System.out.println("UP ARROW WAS PRESSED");
-        }
+    //     @Override
+    //     public void actionPerformed(ActionEvent e) {
+    //       System.out.println("UP ARROW WAS PRESSED");
+    //     }
         
-    }
+    // }
 
-    public class DownAction extends AbstractAction{
+    // public class DownAction extends AbstractAction{
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            System.out.println("DOWN ARROW WAS PRESSED");
-        }
+    //     @Override
+    //     public void actionPerformed(ActionEvent e) {
+    //         System.out.println("DOWN ARROW WAS PRESSED");
+    //     }
         
-    }
+    // }
 
-    public class RightAction extends AbstractAction{
+    // public class RightAction extends AbstractAction{
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            System.out.println("RIGHT ARROW WAS PRESSED");
-        }
+    //     @Override
+    //     public void actionPerformed(ActionEvent e) {
+    //         System.out.println("RIGHT ARROW WAS PRESSED");
+    //     }
        
-    }
+    // }
 
-    public class LeftAction extends AbstractAction{
+    // public class LeftAction extends AbstractAction{
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            System.out.println("LEFT ARROW WAS PRESSED");
-        }
+    //     @Override
+    //     public void actionPerformed(ActionEvent e) {
+    //         System.out.println("LEFT ARROW WAS PRESSED");
+    //     }
         
-    }
+    // }
 
   
 }

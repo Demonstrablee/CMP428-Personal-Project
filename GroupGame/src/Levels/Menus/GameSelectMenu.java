@@ -15,7 +15,7 @@ public class GameSelectMenu extends Level2 implements MouseListener{
     JLabel title = new JLabel("Choose a Game");
     JButton [] menuButton;
     //https://stackoverflow.com/questions/1090098/newline-in-jlabel
-    String [] tooltips = new String[]{
+    String [] descriptions = new String[]{
     "<html>Enter the Casino!  Face off in the game of wits against <br/>a slightly familiar foe to see who will go bust! </html>",
     "<html> As a plumber of the U.S international Space Station your countries astronauts need you. Take up a wrench against time and lay a path before the outer space is wasted!</html>",
     "<html>Back from a trip to Cancun, the last thing to do is to return your rental, but it's just your luck you've got to drive through the U.S's #1 state for reckless driving, try your best to return your car in working order in Long Trip Drift!</html>"
@@ -87,7 +87,8 @@ public class GameSelectMenu extends Level2 implements MouseListener{
 
        int i = 1;
         for(JButton button : menuButton){ 
-                if (i< 4)button.setToolTipText(tooltips[i-1]);
+                
+
                 constraints = new GridBagConstraints();  
                 constraints.gridx = 0;
                 constraints. gridy = i;
@@ -146,9 +147,23 @@ public class GameSelectMenu extends Level2 implements MouseListener{
 
         if(button == menuButton[0]){
            // System.out.println("Button Entered 0");
-            imagePane.setIcon(thumbNails[0]);
+            imagePane.setIcon(thumbNails[2]);//Error till I add the image to the folder
+            description.setText(descriptions[0]); 
+            
         }
-        description.setText(button.getToolTipText()); 
+        if(button == menuButton[1]){
+            // System.out.println("Button Entered 0");
+             imagePane.setIcon(thumbNails[1]);
+             description.setText(descriptions[1]); 
+            
+         }
+         if(button == menuButton[2]){
+            // System.out.println("Button Entered 0");
+             imagePane.setIcon(thumbNails[0]);
+             description.setText(descriptions[2]); 
+            
+         }
+       
         
     }
 

@@ -7,6 +7,7 @@ import java.awt.Image;
 import java.awt.Polygon;
 
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
 import java.awt.geom.AffineTransform;
 
 import javax.swing.*;
@@ -16,12 +17,19 @@ import Objects.Rect;
 
 
 
-public class Player extends JComponent{
+public class Player extends Rect{
     // THESE POSES MUST BE IN THE CORRECT ORDER TO WORK IN THE ANIMATION CLASS {UP, DOWN, LEFT, RIGHT, IDLE} YOU Can name them whatever but the order contributes to what animation is played
     static String [] pose = new String[] {"IDLE"}; 
     Image player = Toolkit.getDefaultToolkit().getImage("GroupGame/src/images/LTD/ORANGECAR/ORANGECAR_IDLE/ORANGECAR_IDLE_0.png");
-    int x;
-    int y;
+   
+      //ACTIONS
+    Action upAction;
+    Action downAction;
+    Action leftAction;
+    Action rightAction;
+   
+    // int x;
+    // int y;
 
     int [] player_x = new int []{40,-40,-40,40};
     int [] player_y = new int [] {-20,-20,20,20};
@@ -51,7 +59,7 @@ public class Player extends JComponent{
 	double sinA = 0;
 
     public Player(int x, int y, int w, int h) {
-        super();
+        super(x, y, w, h);
 
         originX = x;
         originY = y;
@@ -59,7 +67,21 @@ public class Player extends JComponent{
 
         playerTransform.translate(x, y); // place the player at the start
 
+        // this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('w'),"upAction"); //assign the up action key to the keyword "upaction"
+        // this.getActionMap().put("upAction",upAction); // when"upAction" keyword is triggred do the action in the var called upAction
+
+        // this.getInputMap().put(KeyStroke.getKeyStroke('s'),"downAction");
+        // this.getActionMap().put("downAction",upAction); // when"upAction" keyword is triggred do the action in the var called upAction
+            
+        // this.getInputMap().put(KeyStroke.getKeyStroke('a'), "leftAction");
+
+		// this.getActionMap().put("leftAction", leftAction);
+
+		// this.getInputMap().put(KeyStroke.getKeyStroke('d'), "rightAction");
+
+		// this.getActionMap().put("rightAction", rightAction);
    
+      
     }
     public boolean overlaps(Rect r){
 
@@ -151,6 +173,7 @@ public class Player extends JComponent{
 
     }
 
+    
 
     public void draw(Graphics pen){
         //this.setColor(Color.GREEN);
@@ -188,7 +211,7 @@ public class Player extends JComponent{
         pen.setColor(Color.GREEN);
 
         // Draw players polygon
-        pen.drawPolygon(playerPoly);
+       // pen.drawPolygon(playerPoly);
         //pen.drawPolygon(x_points, y_points, 4);
 
         // Draw image of the player
@@ -198,7 +221,43 @@ public class Player extends JComponent{
 
     }
 
+        //KEY BINDINGS TO CONTROL CHARACTER MOVEMENT
+        public class UpAction extends AbstractAction{ //https://www.youtube.com/watch?v=IyfB0u9g2x0&t=636s
 
+            @Override
+            public void actionPerformed(ActionEvent e) {
+              System.out.println("UP ARROW WAS PRESSED");
+            }
+            
+        }
+    
+        public class DownAction extends AbstractAction{
+    
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("DOWN ARROW WAS PRESSED");
+            }
+            
+        }
+    
+        public class RightAction extends AbstractAction{
+    
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("RIGHT ARROW WAS PRESSED");
+            }
+           
+        }
+    
+        public class LeftAction extends AbstractAction{
+    
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("LEFT ARROW WAS PRESSED");
+            }
+            
+        }
+    
 
     
    
@@ -206,3 +265,4 @@ public class Player extends JComponent{
 
     
 }
+

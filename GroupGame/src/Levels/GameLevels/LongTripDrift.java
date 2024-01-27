@@ -18,8 +18,8 @@ import java.io.File;
 public class LongTripDrift extends Level2 { 
  
     //SCORE
-    int damageScore = 0; // how damaged it the players car
-    JLabel scoreLabel = new JLabel("Score: "+ damageScore, SwingConstants.CENTER); // Label showing players cars damage
+    int damageScore = 100; // how damaged it the players car
+    JLabel scoreLabel = new JLabel("Damage: -$"+ damageScore, SwingConstants.CENTER); // Label showing players cars damage
     
     
     String assetDir = "GroupGame/src/images/LTD/";
@@ -61,20 +61,7 @@ public class LongTripDrift extends Level2 {
         //BACKGROUND
         setBgWImage(map);
 
-    
-        //instances
-        upAction = new UpAction();
-        downAction = new DownAction();
-        leftAction = new LeftAction();
-        rightAction = new RightAction();
-
-        scoreLabel.getInputMap().put(KeyStroke.getKeyStroke("UP"),"upAction"); //assign the up action key to the keyword "upaction"
-        scoreLabel.getActionMap().put("upAction",upAction); // when"upAction" keyword is triggred do the action in the var called upAction
-
-        //BINDING ACTIONS
-
-
-
+        //add(p1);
 
     
         // place boundarys on the entire map
@@ -89,12 +76,14 @@ public class LongTripDrift extends Level2 {
         }
         
         // Adding Score Label to Screen
-        scoreLabel.setBackground(Color.RED);
+        scoreLabel.setBackground(Color.white);
         scoreLabel.setOpaque(true);
-        scoreLabel.setBounds((int)(100 -Camera.x), (int)(0 -Camera.y),200,60);
+        scoreLabel.setBounds((int)(100 -Camera.x), (int)(0 -Camera.y),250,60);
         scoreLabel.setFont(fontsRegistry.arcadePixel);
+        scoreLabel.setBorder(BorderFactory.createLineBorder(Color.black, 5));
         add(scoreLabel);
 
+        
         
         System.out.println("Camera position x:"+ Camera.x + " y:"+ Camera.y);
     }
@@ -164,42 +153,6 @@ public class LongTripDrift extends Level2 {
 
     }
 
-    //KEY BINDINGS TO CONTROL CHARACTER MOVEMENT
-    public class UpAction extends AbstractAction{ //https://www.youtube.com/watch?v=IyfB0u9g2x0&t=636s
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-          System.out.println("UP ARROW WAS PRESSED");
-        }
-        
-    }
-
-    public class DownAction extends AbstractAction{
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            System.out.println("DOWN ARROW WAS PRESSED");
-        }
-        
-    }
-
-    public class RightAction extends AbstractAction{
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            System.out.println("RIGHT ARROW WAS PRESSED");
-        }
-       
-    }
-
-    public class LeftAction extends AbstractAction{
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            System.out.println("LEFT ARROW WAS PRESSED");
-        }
-        
-    }
     
     }
 
