@@ -131,7 +131,8 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
            t = new Thread(this);
             
            t.start();
-        
+            
+           
 
         }
 
@@ -383,10 +384,11 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
     public void actionPerformed(ActionEvent e) {
        
         Object buttonClicked = e.getSource();
-        SimpleSoundPlayer.playSound("GroupGame/src/music/button_click01.wav");
+        GameWindow2.buttonPress = true;
           
     if (buttonClicked == titleButtons[0] || buttonClicked == wellermanExitB || buttonClicked == baccanoExitB || buttonClicked == longTripDriftB[0] ||  buttonClicked == longTripDriftB[1]  ){ // go to game select
             changeLevel(gameSelectMenu); 
+            GameWindow2.track = 1; // change the music playing 
             gameRoom.setVisible(false); // important to make whatever game is active stop showing up
             isPaused = true;  
               
@@ -427,14 +429,14 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
         } 
         else if(buttonClicked == gameSelectButtons[0]){// start up baccano
             changeLevel(baccano);
-
+            GameWindow2.track = 2; // change the music playing 
             gameRoom = baccano; 
             gameRoom.reset();
             isPaused = false;
 
         }else if (buttonClicked == gameSelectButtons[1]){ // start up wellerman
             changeLevel(wellerman);
-            
+            GameWindow2.track = 4; // change the music playing 
             gameRoom = wellerman;
             gameRoom.reset();
             wellerman.waterTimer.start(); // so timer doesnt go on in the title scren
@@ -442,14 +444,14 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
 
         }else if (buttonClicked == gameSelectButtons[2]){ // start up long trip cliff
             changeLevel(longTripDrift);
-            
+            GameWindow2.track = 3; // change the music playing 
             gameRoom = longTripDrift;
             gameRoom.reset();
             isPaused = false;
 
         }
        
-        
+        GameWindow2.buttonPress = false; // so the sound doesnt keep looping
 
         
         }

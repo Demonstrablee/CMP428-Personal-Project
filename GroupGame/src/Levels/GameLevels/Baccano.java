@@ -1,4 +1,5 @@
 package Levels.GameLevels;
+import Levels.Managers.GameWindow2;
 import Levels.Managers.Level2;
 import Levels.Managers.SimpleSoundPlayer;
 import fonts.fontsRegistry;
@@ -24,6 +25,7 @@ public class Baccano extends Level2 implements ActionListener {
     String assetDir = "GroupGame/src/images/BACCANO/"; 
     Image table = Toolkit.getDefaultToolkit().getImage(assetDir+"casinoTablebg_red.jpeg");
     Image casinoPepe = Toolkit.getDefaultToolkit().getImage(assetDir+"casinoPeople.jpeg");
+ 
 
     Enemy dealer = new Enemy("DuckHuntDog",this.getLevelName(),400,30, 0,0, 15);
     
@@ -49,15 +51,20 @@ public class Baccano extends Level2 implements ActionListener {
     //IMAGES
     String diceDir = "GroupGame/src/images/BACCANO/Dice/";
     ImageIcon [] dice = new ImageIcon[6];
+    
+    String cardDir = "GroupGame/src/images/BACCANO/Playing Cards copy/";
+   // File [] cardFile = cardDir.listFiles();
+    ImageIcon [] card = new ImageIcon[16];
 
-    File cardDir = new File("GroupGame/src/images/BACCANO/Playing Cards");
-    File [] cardFile = cardDir.listFiles();
-    ImageIcon [] card = new ImageIcon[cardFile.length];
 
     //DRAW CARD BUTTON
     JButton drawButton = new JButton();
     Image cardBImage = Toolkit.getDefaultToolkit().getImage("GroupGame/src/images/BACCANO/card-back2.png").getScaledInstance(100, 150, Image.SCALE_SMOOTH); 
     ImageIcon cardBack = new ImageIcon(cardBImage);
+
+    //CARD TYPES //https://www.youtube.com/watch?v=LxXWTXOny3A&t=18s
+    String deck [] = new String[]{"CA","CJ","CK","CA","DA","DJ","DK","DQ","HA","HJ","HK","HQ","SA","SJ","SK","SQ"};
+
 
     //RANDOM GENERATOR
     Random rand = new Random();
@@ -65,9 +72,9 @@ public class Baccano extends Level2 implements ActionListener {
     int diceRoll2 = 0;
 
     //Game State Variables
-    JButton [] playerCards = new JButton [52]; // oversized array (52 CARDS IN A DECK)
+    JButton [] playerCards = new JButton [20]; // oversized array (52 CARDS IN A DECK)
     int playerCardsSize = 9; // CANNOT START AT ZERO (LOSE CONDITION)
-    JButton [] dealerCards = new JButton[52]; // oversized array (never gonna see this)
+    JButton [] dealerCards = new JButton[20]; // oversized array (never gonna see this)
     int dealerCardsSize = 9; // CANNOT START AT ZERO (WIN CONDITION)
 
     JButton [] playerDice = new JButton[6];
@@ -101,21 +108,21 @@ public class Baccano extends Level2 implements ActionListener {
 
           //Load in the images
         for(int i = 0; i< dice.length; i++){
-           System.out.println(diceDir+ (i+1) + ".png "+ i);
+          // System.out.println(diceDir+ (i+1) + ".png "+ i);
             Image d = Toolkit.getDefaultToolkit().createImage(diceDir+ (i+1) + ".png").getScaledInstance(90, 90, Image.SCALE_SMOOTH); ;
             dice[i] = new ImageIcon(d);
         }
 
-        for(int i = 0; i< cardFile.length; i++){
-            //System.out.println(cardFile[i] + " "+ i);
-            Image c = Toolkit.getDefaultToolkit().createImage(cardFile[i]+"").getScaledInstance(100, 150, Image.SCALE_SMOOTH); ;
+        for(int i = 0; i< card.length; i++){
+            System.out.println(cardDir+ "0"+(i+1)+ ".png "+ i);
+            Image c = Toolkit.getDefaultToolkit().createImage(cardDir+ "0"+ (i+1)+".png").getScaledInstance(100, 150, Image.SCALE_SMOOTH); ;
             card[i] = new ImageIcon(c);
         }
 
 
         // ADD PANELS
         playersHand.setBackground(Color.YELLOW);
-        playersHand.setOpaque(false);
+       // playersHand.setOpaque(false);
         playersHand.setBounds(100, 500, 970, 200);
         add(playersHand);
 
@@ -161,6 +168,7 @@ public class Baccano extends Level2 implements ActionListener {
         //DRAW CARD Button
         drawButton.setBounds(1130, 440, 100, 150);
         drawButton.addActionListener(this);
+        drawButton.setToolTipText("DRAW"); //to stop the errors in the action listner and explain the buttons use
         //drawButton.setBorderPainted(false);
 
         drawButton.setIcon(cardBack);
@@ -250,8 +258,12 @@ public class Baccano extends Level2 implements ActionListener {
        //PLAYERS CARDS
         for(int h = 0; h< playerCardsSize; h++){
             playerCards[h] = new JButton();
-            playerCards[h].setPreferredSize((new Dimension(100, 150)) );
-            playerCards[h].setIcon(card[h]); //TODO MAKE RANDOM  CARDS FILL A PLAYERS HAND and prob give them tool tips
+            playerCards[h].setPreferredSize((new Dimension(100, 150)));
+            playerCards[h].addActionListener(this);
+
+            int cardVal = rand.nextInt(0,16); // pos in deck array (card and deck arrays should correspond)
+            playerCards[h].setIcon(card[cardVal]); 
+            playerCards[h].setToolTipText(deck[cardVal]);
             playersHand.add(playerCards[h]);
         }
 
@@ -440,8 +452,42 @@ public class Baccano extends Level2 implements ActionListener {
     }
     private void drawCard(){}
 
-    private void playCard(){
+    private void playCard(JButton card){
+        switch (card.getToolTipText()) {
+            case "HQ": //Queens
+            case "SQ":
+            case "DQ":
+            case "CQ":
+                //Pull a random card from the other players deck
+                break;
 
+            case "HK"://Kings
+            case "SK":
+            case "DK":
+            case "CK":
+                //
+                break;
+            case "HJ"://Jacks
+            case "SJ":
+            case "DJ":
+            case "CJ":
+                
+                break;
+        
+            case "HA": //HEARTS DIAMONDS ACE
+            case "DA":
+                    //ROLL DICE
+                    rollDice();
+                break;
+
+
+            case "CA": //CLUB SPADES ACE
+            case "SA":
+                    // KNOCK OUT OTHER PLAYERS DOUBLES
+
+                break;
+            
+        }
     }
 
     private void dealerPlays(){
@@ -453,7 +499,7 @@ public class Baccano extends Level2 implements ActionListener {
                 break;
 
                 case 2: //ACTION 2: PLAY CARD
-                    playCard();
+                    playCard(dealerCards[rand.nextInt(0,dealerCardsSize)]);
                 break;
 
                 case 3:  //ACTION 3: ROLL DICE
@@ -476,10 +522,12 @@ public class Baccano extends Level2 implements ActionListener {
     public void actionPerformed(ActionEvent e) {
        JButton buttonClicked = (JButton) e.getSource();
 
-       if(buttonClicked == drawButton){
+       if(buttonClicked.getToolTipText().equalsIgnoreCase("HA") || buttonClicked.getToolTipText().equalsIgnoreCase("DA")){
             activePlayState = (activePlayState == PLAYERS_TURN) ? DEALERS_TURN: PLAYERS_TURN;
 
             //SimpleSoundPlayer.playSound("GroupGame/src/music/actionSounds/rolling-dice-pixelbay.wav"); // Cant run music here
+            //SimpleSoundPlayer.playSound("GroupGame/src/music/actionSounds/flipcard-(pixelbay).wav"); 
+
             rollDice();
             System.out.println("Draw Card Turn Ended. State ["+ activePlayState +"] is now Active " );
        }if(playerDiceDub == 6){ // when all the die are full 

@@ -21,7 +21,8 @@ public class GameWindow2 extends JFrame implements KeyListener, Runnable, Action
     
     static String os = System.getProperty("os.name"); // check os of user
 
-
+    public static int track = 1; // control the music playing
+    public static boolean buttonPress = false;
   
 
 
@@ -112,8 +113,8 @@ public class GameWindow2 extends JFrame implements KeyListener, Runnable, Action
         
         lbPane.init();// comment in and out to allow for updates to post or just run with F5
         
-        
-        SimpleSoundPlayer.playSoundForever("GroupGame/src/music/TitleScreenTheme.wav"); // only works on mac
+        init(); // manages the music
+        //SimpleSoundPlayer.playSoundForever("GroupGame/src/music/TitleScreenTheme.wav"); // only works on mac
            
        
        
@@ -135,28 +136,36 @@ public class GameWindow2 extends JFrame implements KeyListener, Runnable, Action
 
  	}
 
-    @Override // Game loop
+    @Override // Music management
     public void run() {
 
-        while(true){
+        while(true){ // TODO the song is going to play out totally until it is finished then switch
+            // button pressing sound
+            if(buttonPress == true) SimpleSoundPlayer.playSound("GroupGame/src/music/actionSounds/click (pixabay).wav");
 
-             
-            if (pressing[UP]) p1.moveForward(5);
-            if (pressing[DN]) p1.moveForward(-5);;
-            if (pressing[RT]) p1.turnRight(3);
-            if (pressing[LT]) p1.turnLeft(3);;
+            switch (track) {
+                case 1://Title screen
+                SimpleSoundPlayer.playSound("GroupGame/src/music/as-smart-as-a-cat (pixabay).wav"); // only works on mac
+                    break;
+            
+                case 2:// baccano
+                    SimpleSoundPlayer.playSound("GroupGame/src/music/gangsta-music-theme-kriss (pixabay).wav"); // only works on mac
+                    break;
+                
+                case 3:// Long trip drift
+                    SimpleSoundPlayer.playSound("GroupGame/src/music/The Best Jazz Club In New Orleans (pixabay).wav");
+                    break;
 
-           
+                case 4: // wellerman
+                    SimpleSoundPlayer.playSound("GroupGame/src/music/space-chillout (pixabay).wav");
+                    break;
 
-            for(int i = 0; i < wall.length; i++)
-			{
-				// if(p1.overlaps(wall[i]))
-				// {
-                    
-				// 	p1.pushedOutOf(wall[i]);
-				
-				// }
+                default:
+                    SimpleSoundPlayer.playSound("GroupGame/src/music/actionSounds/click (pixabay).wav"); // only works on mac
+                    break;
             }
+
+            
             repaint();
 
             try{
@@ -168,7 +177,7 @@ public class GameWindow2 extends JFrame implements KeyListener, Runnable, Action
 
         }
          
-    } 
+    }
 
       /**
      * @return the user Opeation System 
