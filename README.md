@@ -16,4 +16,4 @@ Back from a trip to Cancun, the last thing to do is to return your rental, but i
 
 WELLERMAN
 ![](GroupGame/src/images/gameThumbs/WellermanThumb.png)
-As a plumber of the U.S international Space Station your countries astronauts need you. Take up a wrench against time and lay a path before the outer space is wasted! 
+As a plumber of the U.S international Space Station your countries astronauts need you. Take up a wrench against time and lay a path before outer space is wasted! 

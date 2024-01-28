@@ -17,7 +17,7 @@ public class GameSelectMenu extends Level2 implements MouseListener{
     //https://stackoverflow.com/questions/1090098/newline-in-jlabel
     String [] descriptions = new String[]{
     "<html>Enter the Casino!  Face off in the game of wits against <br/>a slightly familiar foe to see who will go bust! </html>",
-    "<html> As a plumber of the U.S international Space Station your countries astronauts need you. Take up a wrench against time and lay a path before the outer space is wasted!</html>",
+    "<html> As a plumber of the U.S international Space Station your countries astronauts need you. Take up a wrench against time and lay a path before outer space is wasted!</html>",
     "<html>Back from a trip to Cancun, the last thing to do is to return your rental, but it's just your luck you've got to drive through the U.S's #1 state for reckless driving, try your best to return your car in working order in Long Trip Drift!</html>"
 
     };
