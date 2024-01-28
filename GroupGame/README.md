@@ -23,7 +23,11 @@ rolling-dice-pixabay (dice roll 2 by Pixabay)
 Sound Effect from <a href="https://pixabay.com/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=102706">Pixabay</a>
 //ASSETS
 // GTA LIBERTY CITY MAP <image src= "GroupGame/src/images/GTA1_HD_Liberty_City MAP.png">
-    RockStar Games all rights reserved to Grand Theft Auto and any other owners
+// Links to Maps by Zewnya https://steamcommunity.com/sharedfiles/filedetails/?id=415301938 
+Credits
+Main Buildings and pickups maps – Jart.
+HD maps – lacent.
+    Rockstar Games all rights reserved to Grand Theft Auto and any other owners
 
 This is a non commercial game made for educational purposes 
 
