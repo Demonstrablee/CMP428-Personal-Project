@@ -3,17 +3,17 @@ Try and Fill up the highest value doubles before the dealer!
 --- CARDS ---
     QUEEN - ask a player for a card of their choice
     KING - ask another player for a card of your choice (chance they dont have it)
-    JACK - Steal an apponents doubles 
+    JACK - Steal an opponents doubles 
     ACE (HEARTS/DIAMONDS) - Roll 2 dice 
     ACE (CLUB/SPADE) - Knock out a players doubles (can be your own)
 
 -- GAMEPLAY --
     1. Draw a card to end you turn
-    2. Play cards and do actions to mess with the opponents doubles and cards;
+    2. Play cards and do actions to mess with your opponents doubles and cards;
 
 -- WIN --
-   1. Have the highest roll of doubles AND have atleast 1 card in you hand
-   2. Make your opponet lose all their cards
+   1. Have the highest roll of doubles AND have at least 1 card in you hand
+   2. Make your opponent lose all their cards
 
 -- LOSE --
     1. Lose all your cards
