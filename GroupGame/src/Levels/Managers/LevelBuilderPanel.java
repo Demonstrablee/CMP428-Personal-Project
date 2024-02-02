@@ -320,7 +320,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
 
     @Override
     public void keyPressed(KeyEvent e) {
-        System.out.println(e.getKeyChar());  
+        //System.out.println(e.getKeyChar());  
 
         pressing[e.getKeyCode()] = true;
        

@@ -113,7 +113,7 @@ public class GameWindow2 extends JFrame implements KeyListener, Runnable, Action
         
         lbPane.init();// comment in and out to allow for updates to post or just run with F5
         
-        init(); // manages the music
+       // init(); // manages the music
         //SimpleSoundPlayer.playSoundForever("GroupGame/src/music/TitleScreenTheme.wav"); // only works on mac
            
        

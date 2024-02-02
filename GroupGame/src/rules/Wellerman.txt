@@ -1,0 +1,16 @@
+The International space stations plubining isn't going to fix itself
+
+-- GAMEPLAY --
+    PLACE PIPES
+        build out the pipe work for the plumbing interchanging pipes to get to the end destination
+    KEEP AHEAD OF THE WATER FLOW 
+        keep ahead of the water flow you don't want that fluid leaking out into the vaccume of space
+
+-- WIN --
+    reach the end destination and the water flows into the end pipe
+
+-- LOSE --
+    the water flow reaches a pipe with no connection or the end is not reached
+
+-- NOTE --
+    placing pipes ontop of other pipes will screase your overall score

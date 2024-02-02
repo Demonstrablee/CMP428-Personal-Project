@@ -1,0 +1,37 @@
+Try and Fill up the highest value doubles before the dealer!
+
+--- CARDS ---
+    QUEEN - ask a player for a card of their choice
+    KING - ask another player for a card of your choice (chance they dont have it)
+    JACK - Steal an apponents doubles 
+    ACE (HEARTS/DIAMONDS) - Roll 2 dice 
+    ACE (CLUB/SPADE) - Knock out a players doubles (can be your own)
+
+-- GAMEPLAY --
+    1. Draw a card to end you turn
+    2. Play cards and do actions to mess with the opponents doubles and cards;
+
+-- WIN --
+   1. Have the highest roll of doubles AND have atleast 1 card in you hand
+   2. Make your opponet lose all their cards
+
+-- LOSE --
+    1. Lose all your cards
+    2. You don't end the game with the highest score in doubles 
+
+-- TIE --
+    1. You and the dealer have no cards
+    2. You and the dealer have the same double score
+
+-- NOTE --
+    Even if you end the game collected all your doubles having all 6 slots full 
+    1. YOU MUST have a total score HIGHER than that of the dealer at the end of the game to win
+        Ex. If you roll all ones 6 ones and the dealer has only one double 6's you still Lose
+    2. RETAIN YOUR CARDS if your last play will make you lose your last card you will still lose 
+        since at the end you have no cards, AKA your winning move cannot make your hand empty or
+        you will lose
+    
+
+    
+
+
