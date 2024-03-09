@@ -96,8 +96,9 @@ public class Baccano extends Level2 implements ActionListener {
     private final int DEALERS_TURN = 2;
     private final int WIN = 3;
     private final int LOSE = 4;
+    private final int TIE = 5;
      
-    int activePlayState = 1;  // 0- Start ; 1- Players Turn, 2- Dealers Turn, 3 - WIN OVER, 4- LOSE OVER
+    int activePlayState = TIE;  // 0- Start ; 1- Players Turn, 2- Dealers Turn, 3 - WIN OVER, 4- LOSE OVER 5- TIE
 
 
     public Baccano(JButton exitButton){
@@ -368,7 +369,10 @@ public class Baccano extends Level2 implements ActionListener {
         }
 
         //determine who won the game
+        
         activePlayState = playerScore > dealerScore ? WIN : LOSE;
+        activePlayState = playerScore == dealerScore ? TIE : activePlayState; // checking if the game is a tie 
+
         System.out.println("Player Score: " + playerScore); 
         System.out.println("Dealer Score: " + dealerScore); 
     }
@@ -438,7 +442,14 @@ public class Baccano extends Level2 implements ActionListener {
                 dealerDie1Button.setVisible(false);
                 dealerDie2Button.setVisible(false);
                 dealerCardButton.setVisible(false);
-          
+            case TIE:
+                gameOPanel.setBackground(new Color(200,200,0,200));
+                gameOLabel.setText("TIE");
+                gameOPanel.setVisible(true);
+
+                dealerDie1Button.setVisible(false);
+                dealerDie2Button.setVisible(false);
+                dealerCardButton.setVisible(false);
             break;
 
             default: // game is ongoing

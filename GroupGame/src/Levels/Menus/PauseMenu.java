@@ -5,24 +5,35 @@ import javax.swing.*;
 import Levels.Managers.Level2;
 import Levels.Managers.OverlayLevel;
 import Objects.Wall;
+import fonts.fontsRegistry;
 
 import java.awt.*;
 
 import javax.swing.border.Border;
 
-public class PausePhoneMenu extends OverlayLevel{ 
-    JLabel title = new JLabel("PHONE");
+public class PauseMenu extends OverlayLevel{ 
+    JLabel title = new JLabel("PAUSE");
     JButton[] pauseMButtons;
     Image phoneOutline;
-    public PausePhoneMenu(JButton [] pauseButtons){ // This is the Phone
+    JPanel panel = new JPanel();
+
+    public PauseMenu(JButton [] pauseButtons){ // This is the Phone
         super(null,null, "pauseMenu");
 
         //BACKGROUND
     
-        
-        setBounds(450,10,250,720); // set the bounds of the 
-        //phoneOutline = Toolkit.getDefaultToolkit().getImage("GroupGame/src/images/outline_phone.png");
-        wall = new Wall[]{new Wall(10, 101, 100, 80)}; // temp to make errors stop
+        setBounds(0,0,1280,720); // set the bounds of the 
+        setLayout(null);
+
+        //Panel settings
+
+        panel.setBounds(0,0,1280,720);
+        panel.setLayout(new GridBagLayout());
+        panel.setBackground(new Color(0,0,0,170));
+
+        //title edits
+        title.setFont(fontsRegistry.arcadePixel.deriveFont(70f));
+        title.setForeground(Color.WHITE);
 
         // adding components to the screen
         this.pauseMButtons = pauseButtons;
@@ -32,7 +43,7 @@ public class PausePhoneMenu extends OverlayLevel{
         constraints.anchor = GridBagConstraints.PAGE_START;
         constraints.gridx = 0;
         constraints.gridy = 0;
-        add(title,constraints);
+        panel.add(title,constraints);
      
         int i = 1;
         for(JButton button : this.pauseMButtons){ 
@@ -40,13 +51,15 @@ public class PausePhoneMenu extends OverlayLevel{
                 constraints.gridx = 0;
                 constraints. gridy = i;
                 constraints.insets = new Insets(3, 5, 5, 5);
-                add(button, constraints);
+                panel.add(button, constraints);
                 i++;
             }
-        Border phone = BorderFactory.createLineBorder(Color.RED,10); //https://www.youtube.com/watch?v=Eb2QydjQvV4
-        this.setBorder(phone); // add the boarder to this JPanel
+
+
+        add(panel);
     }
    
+    
 
     @Override
     public void paintComponent(Graphics pen){  //method for painting
@@ -54,7 +67,7 @@ public class PausePhoneMenu extends OverlayLevel{
        // pen.clearRect(0, 0, getWidth(), getHeight());
         
         //Draw Background
-        pen.drawImage(bg,getWidth()/2 - 250,0,500, getHeight(),null);
+        //pen.drawImage(bg,getWidth()/2 - 250,0,500, getHeight(),null);
     
         // pen.drawRect(getWidth()/2 - 250,0,500,getHeight());
         //Draw Buttons and Title

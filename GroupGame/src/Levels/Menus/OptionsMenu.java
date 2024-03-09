@@ -1,11 +1,12 @@
 package Levels.Menus;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
-
+import java.awt.GridBagLayout;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSlider;
 
@@ -36,6 +37,7 @@ public class OptionsMenu extends Level2 {
 
     GridBagConstraints constraints = new GridBagConstraints(); // constraints you will add to each element
     
+    JPanel pane = new JPanel();
 
 
     public OptionsMenu(JButton backButtons){
@@ -43,8 +45,11 @@ public class OptionsMenu extends Level2 {
         
         //BACKGROUND
         setBg("bg_classroom03.jpg"); 
-        setBounds(0, 0, 1280, 720);
-        setVisible(false);
+        setLayout(null);
+ 
+        pane.setBounds(0, 0, 1280, 720);
+        pane.setLayout(new GridBagLayout());
+        pane.setBackground(Color.green);
         
         //Get Buttons
         this.backButton = backButtons;
@@ -53,70 +58,70 @@ public class OptionsMenu extends Level2 {
         constraints.anchor = GridBagConstraints.PAGE_START;
         constraints.gridx = 1;
         constraints.gridy = 0;
-        add(title, constraints);
+        pane.add(title, constraints);
 
         //SUBTITLES
         constraints.anchor = GridBagConstraints.LINE_START;
         constraints.gridx = 1;
         constraints.gridy = 1;
         subs.setFocusable(false);
-        add(subs, constraints);
+        pane.add(subs, constraints);
 
         // RESOLUTION ADJUST
         constraints = new GridBagConstraints();
         constraints.gridx = 2;
         constraints.gridy = 3;
         resoR.setFocusable(false);
-        add(resoR, constraints);
+        pane.add(resoR, constraints);
 
         constraints = new GridBagConstraints();
         constraints.gridx = 1;
         constraints.gridy = 3;
-        add(resoLabel, constraints);
+        pane.add(resoLabel, constraints);
 
         constraints = new GridBagConstraints();
         constraints.gridx = 0;
         constraints.gridy = 3;
         resoL.setFocusable(false);
-        add(resoL, constraints);
+        pane.add(resoL, constraints);
 
         constraints = new GridBagConstraints();
         constraints.gridx = 1;
         constraints.gridy = 4;
         confirmButton.setFocusable(false);
-        add(confirmButton, constraints);
+        pane.add(confirmButton, constraints);
 
         // VOLUME ADJUST
-         constraints = new GridBagConstraints();
+        constraints = new GridBagConstraints();
         constraints.gridx = 1;
         constraints.gridy = 5;
-        add(musicLabel, constraints);
+        pane.add(musicLabel, constraints);
 
         constraints = new GridBagConstraints();
         constraints.gridx = 1;
         constraints.gridy = 6;
         musicSlider.setFocusable(false);
-        add(musicSlider, constraints);
+        pane.add(musicSlider, constraints);
 
         constraints = new GridBagConstraints();
         constraints.gridx = 1;
         constraints.gridy = 7;
-        add(diaLabel, constraints);
+        pane.add(diaLabel, constraints);
 
         constraints = new GridBagConstraints();
         constraints.gridx = 1;
         constraints.gridy = 8;
         diaSlider.setFocusable(false);
-        add(diaSlider, constraints);
+        pane.add(diaSlider, constraints);
 
 
         constraints = new GridBagConstraints();
         constraints.gridx = 1;
         constraints.gridy = 9;
         // set not focusable in the array that created the buttons
-        add(this.backButton, constraints);
+        pane.add(this.backButton, constraints);
 
-        
+        add(pane);
     }
 
    

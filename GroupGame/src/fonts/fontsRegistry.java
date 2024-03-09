@@ -11,8 +11,9 @@ public class fontsRegistry {
     public static Font arcadePixel;
     public static Font optimusPrecepts;
     public static Font oldEnglishPixel;
+    public static Font titleFont;
 
-    static String fontNames [] = new String [] {"PixelifySans-VariableFont_wght.ttf","OptimusPrinceps.ttf","OldEnglishGothicPixelRegular-ow2Bo.ttf"};
+    static String fontNames [] = new String [] {"PixelifySans-VariableFont_wght.ttf","OptimusPrinceps.ttf","OldEnglishGothicPixelRegular-ow2Bo.ttf","Matador-YzDj.ttf"};
 
     static GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment(); //get the graphics for the computer 
     public static void registerFonts(){
@@ -51,6 +52,20 @@ public class fontsRegistry {
            
             } catch (FontFormatException | IOException e) {
                 System.out.println("---Font: "+ fontNames[2] +" could not be Registered---");
+                e.printStackTrace();
+            
+            }
+
+
+
+            try {
+                
+                titleFont = Font.createFont(Font.TRUETYPE_FONT, new File(fontsDir+ fontNames[3])).deriveFont(30f);
+                ge.registerFont(titleFont); // register the font for use
+                System.out.println("Font: "+ fontNames[3] +" sucessfully Registered!");
+           
+            } catch (FontFormatException | IOException e) {
+                System.out.println("---Font: "+ fontNames[3] +" could not be Registered---");
                 e.printStackTrace();
             
             }

@@ -9,7 +9,7 @@ import Levels.GameLevels.Wellerman;
 import Levels.Menus.GameOverMenu;
 import Levels.Menus.GameSelectMenu;
 import Levels.Menus.OptionsMenu;
-import Levels.Menus.PausePhoneMenu;
+import Levels.Menus.PauseMenu;
 import Levels.Menus.SaveMenu;
 import Levels.Menus.TitleScreen;
 import Objects.Camera;
@@ -46,7 +46,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
     //Buttons
    
     static JButton [] titleButtons = new JButton[3];
-    static JButton [] pauseMButtons = new JButton[5];
+    static JButton [] pauseMButtons = new JButton[4];
     static JButton [] toPauseButtons = new JButton[2];
     static JButton [] gameOverButtons = new JButton[3];
     static JButton [] gameSelectButtons = new JButton[4]; // the games you can select from 
@@ -68,7 +68,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
    
     //Menus
     static TitleScreen titleScreen; // 0
-    static PausePhoneMenu pauseMenu; //1
+    static PauseMenu pauseMenu; //1
     static OptionsMenu optionsMenu; // 2
     static SaveMenu saveMenu; //3
     static GameOverMenu gameOverMenu;
@@ -105,7 +105,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
     /** the current non-menu level selected in the game */
     Level2 gameRoom;
     /** boolean represneting if the options menu will direct to the title screen or the pause menu */
-    boolean titleOrPause;
+    boolean titleOrGame;
 
    
 
@@ -147,7 +147,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
             // initiallizing buttons
             String [] buttonN = new String[] {"RESUME", "OPTIONS", "QUIT", "RETURN TO TITLE", "BACK", "SAVE GAME", "START", "TRY AGAIN","BACCANO!", "WELLERMAN","LONG TRIP DRIFT" };
             createButton(new String [] {buttonN[6],buttonN[1],buttonN[2]}, titleButtons); // TITLE SCREEN
-            createButton(new String [] {buttonN[0],buttonN[5],buttonN[1],buttonN[3], buttonN[2]}, pauseMButtons); //PAUSE MENU 
+            createButton(new String [] {buttonN[0],buttonN[1],buttonN[3], buttonN[2]}, pauseMButtons); //PAUSE MENU 
             createButton(new String [] {buttonN[4],buttonN[4]}, toPauseButtons); // SAVE AND OPTIONS
             createButton(new String [] {buttonN[7],buttonN[3],buttonN[2]}, gameOverButtons);
             createButton(new String [] {buttonN[8],buttonN[9],buttonN[10],buttonN[4]}, gameSelectButtons);
@@ -156,7 +156,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
 
             //Intializing
             titleScreen = new TitleScreen(titleButtons);
-            pauseMenu = new PausePhoneMenu(pauseMButtons);
+            pauseMenu = new PauseMenu(pauseMButtons);
             optionsMenu = new OptionsMenu(toPauseButtons[1]);
             saveMenu = new SaveMenu(toPauseButtons[0]); 
             gameOverMenu = new GameOverMenu(gameOverButtons);
@@ -178,7 +178,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
 
             // Menus (curlevel)
             add(titleScreen);
-            add(optionsMenu);
+            add(optionsMenu, JLayeredPane.DRAG_LAYER);
             add(saveMenu);
             add(gameOverMenu);
             add(gameSelectMenu);
@@ -209,11 +209,11 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
 		// p1.getActionMap().put("rightAction", rightAction);
 
             // Game State variables AT START
-            currLevel = baccano; // which room to draw currLevel and levLevel index are one to one (default: titleScreen)
+            currLevel = titleScreen; // which room to draw currLevel and levLevel index are one to one (default: titleScreen)
             gameRoom = wellerman; // track of the ingame rooms that player traverses with p1 (default; wellereman)
 
             isPaused = false; // is the game paused or not (default: true)
-            titleOrPause = false; // at game start options goes to pause menu (default: true)
+            titleOrGame = true; // at game start options goes to pause menu (default: true)
             isOver = false; // is the game over? (only have to change this for gameover window debug) (default: false)
              
             currLevel.setVisible(true);
@@ -324,16 +324,16 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
 
         pressing[e.getKeyCode()] = true;
        
-        if(e.getKeyCode() == KeyEvent.VK_P){ // if P is pressed pause the game
+        if(e.getKeyCode() == KeyEvent.VK_P && currLevel != titleScreen && currLevel != gameSelectMenu){ // if P is pressed pause the game
             if(!isPaused){
                 
                 pauseMenu.setVisible(true);
                 isPaused = true; // pause the game
-
+                titleOrGame = false; // game has already started (gonna need to go back to game)
                 System.out.println("Paused via key press");
             
             }else{ // go back to the game
-                currLevel.setVisible(false); // should be pause menu
+                pauseMenu.setVisible(false);
                 isPaused = false; // pause the game
                 System.out.println("UnPaused via key press");
         }
@@ -399,30 +399,31 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
                 
             // which level to switch to based on what the last game room you were in
             isPaused = false;
-            titleOrPause = false; //game started make option menu go to the pause menu
+            titleOrGame = false; //game started make option menu go to the game with pause mnenu overlay
             isOver = false;
         } 
-       else if(buttonClicked == pauseMButtons[1]){ // go to save 
-            changeLevel(saveMenu);
-     
-        }
-       else if(buttonClicked == titleButtons[1] || buttonClicked == pauseMButtons[2]){// go to options
-            changeLevel(optionsMenu);
+       
+       else if(buttonClicked == titleButtons[1] || buttonClicked == pauseMButtons[1]){// go to options
+            //changeLevel(optionsMenu);
+            optionsMenu.setVisible(true);
      
        }
-       else if(buttonClicked == pauseMButtons[3] || buttonClicked == toPauseButtons[1] && titleOrPause || buttonClicked == gameOverButtons[1]|| buttonClicked == gameSelectButtons[3]){ // back to title screen
-            changeLevel(titleScreen);
+       else if(buttonClicked == pauseMButtons[2] || buttonClicked == toPauseButtons[1] && titleOrGame || buttonClicked == gameOverButtons[1]|| buttonClicked == gameSelectButtons[3]){ // back to title screen
+        optionsMenu.setVisible(false);
+        changeLevel(titleScreen);
            
             // reset player health
            
             isPaused = true;
             isOver = false;
-            titleOrPause = true; //game ended make pause menu go to the title menu
+            titleOrGame = true; //game ended make pause menu go to the title menu
         }
-       else if(buttonClicked == pauseMButtons[4]|| buttonClicked == titleButtons[2]|| buttonClicked == gameOverButtons[2] ){ // quit
+       else if(buttonClicked == pauseMButtons[3]|| buttonClicked == titleButtons[2]|| buttonClicked == gameOverButtons[2] ){ // quit
             System.exit(0);
         } 
-       else if(buttonClicked == toPauseButtons[0]||(buttonClicked == toPauseButtons[1] && !titleOrPause)){ // pause screen
+       else if(buttonClicked == toPauseButtons[0]||(buttonClicked == toPauseButtons[1] && !titleOrGame)){ // go to pause screen
+            optionsMenu.setVisible(false);
+
             pauseMenu.setVisible(true);
             isPaused = true; // pause the game
             System.out.println("Paused");
