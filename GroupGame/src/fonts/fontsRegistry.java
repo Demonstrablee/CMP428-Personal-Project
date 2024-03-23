@@ -19,7 +19,7 @@ public class fontsRegistry {
     public static void registerFonts(){
     //Import and registering custom font
         //ARCADE FONT
-         
+        System.out.println("--------------------------- FONT REGISTRY LOAD IN --------------------------- ");
             try { //https://www.youtube.com/watch?v=43duJsYmhxQ 
                 
                 arcadePixel = Font.createFont(Font.TRUETYPE_FONT, new File(fontsDir+ fontNames[0])).deriveFont(30f);
@@ -70,7 +70,7 @@ public class fontsRegistry {
             
             }
 
-
+        System.out.println("--------------------------- FONT REGISTRY LOAD IN 100% --------------------------- ");
 
 
 

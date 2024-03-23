@@ -47,7 +47,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
    
     static JButton [] titleButtons = new JButton[3];
     static JButton [] pauseMButtons = new JButton[4];
-    static JButton [] toPauseButtons = new JButton[2];
+    static JButton optionsPauseButton = new JButton ();
     static JButton [] gameOverButtons = new JButton[3];
     static JButton [] gameSelectButtons = new JButton[4]; // the games you can select from 
 
@@ -70,7 +70,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
     static TitleScreen titleScreen; // 0
     static PauseMenu pauseMenu; //1
     static OptionsMenu optionsMenu; // 2
-    static SaveMenu saveMenu; //3
+
     static GameOverMenu gameOverMenu;
     static GameSelectMenu gameSelectMenu;
 
@@ -148,7 +148,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
             String [] buttonN = new String[] {"RESUME", "OPTIONS", "QUIT", "RETURN TO TITLE", "BACK", "SAVE GAME", "START", "TRY AGAIN","BACCANO!", "WELLERMAN","LONG TRIP DRIFT" };
             createButton(new String [] {buttonN[6],buttonN[1],buttonN[2]}, titleButtons); // TITLE SCREEN
             createButton(new String [] {buttonN[0],buttonN[1],buttonN[3], buttonN[2]}, pauseMButtons); //PAUSE MENU 
-            createButton(new String [] {buttonN[4],buttonN[4]}, toPauseButtons); // SAVE AND OPTIONS
+            optionsPauseButton = createButton(); // OPTIONS
             createButton(new String [] {buttonN[7],buttonN[3],buttonN[2]}, gameOverButtons);
             createButton(new String [] {buttonN[8],buttonN[9],buttonN[10],buttonN[4]}, gameSelectButtons);
            
@@ -157,8 +157,8 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
             //Intializing
             titleScreen = new TitleScreen(titleButtons);
             pauseMenu = new PauseMenu(pauseMButtons);
-            optionsMenu = new OptionsMenu(toPauseButtons[1]);
-            saveMenu = new SaveMenu(toPauseButtons[0]); 
+            optionsMenu = new OptionsMenu(optionsPauseButton);
+  
             gameOverMenu = new GameOverMenu(gameOverButtons);
             gameSelectMenu = new GameSelectMenu(gameSelectButtons);
 
@@ -179,7 +179,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
             // Menus (curlevel)
             add(titleScreen);
             add(optionsMenu, JLayeredPane.DRAG_LAYER);
-            add(saveMenu);
+       
             add(gameOverMenu);
             add(gameSelectMenu);
 
@@ -209,11 +209,11 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
 		// p1.getActionMap().put("rightAction", rightAction);
 
             // Game State variables AT START
-            currLevel = titleScreen; // which room to draw currLevel and levLevel index are one to one (default: titleScreen)
-            gameRoom = wellerman; // track of the ingame rooms that player traverses with p1 (default; wellereman)
+            currLevel = baccano; // which room to draw currLevel and levLevel index are one to one (default: titleScreen)
+            gameRoom = baccano; // track of the ingame rooms that player traverses with p1 (default; wellereman)
 
             isPaused = false; // is the game paused or not (default: true)
-            titleOrGame = true; // at game start options goes to pause menu (default: true)
+            titleOrGame = false; // at game start options goes to pause menu (default: true)
             isOver = false; // is the game over? (only have to change this for gameover window debug) (default: false)
              
             currLevel.setVisible(true);
@@ -408,7 +408,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
             optionsMenu.setVisible(true);
      
        }
-       else if(buttonClicked == pauseMButtons[2] || buttonClicked == toPauseButtons[1] && titleOrGame || buttonClicked == gameOverButtons[1]|| buttonClicked == gameSelectButtons[3]){ // back to title screen
+       else if(buttonClicked == pauseMButtons[2] || buttonClicked == optionsPauseButton && titleOrGame || buttonClicked == gameOverButtons[1]|| buttonClicked == gameSelectButtons[3]){ // back to title screen
         optionsMenu.setVisible(false);
         changeLevel(titleScreen);
            
@@ -421,7 +421,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
        else if(buttonClicked == pauseMButtons[3]|| buttonClicked == titleButtons[2]|| buttonClicked == gameOverButtons[2] ){ // quit
             System.exit(0);
         } 
-       else if(buttonClicked == toPauseButtons[0]||(buttonClicked == toPauseButtons[1] && !titleOrGame)){ // go to pause screen
+       else if(buttonClicked == optionsPauseButton && !titleOrGame){ // go to pause screen
             optionsMenu.setVisible(false);
 
             pauseMenu.setVisible(true);

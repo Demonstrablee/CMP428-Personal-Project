@@ -322,7 +322,7 @@ public class Wellerman extends Level2 implements ActionListener{
         placeStartandEnd();
         fillHopper();
         waterTimer = new Timer(milisec, waterRises); // initiate the timer
-        //waterTimer.start(); // start the water filling! (has to start from button press since it goes on from title screen)
+        //waterTimer.start(); // start the water filling! (has to start from button press its in level builder stats a soon as the game is selceted)
           
 
     }

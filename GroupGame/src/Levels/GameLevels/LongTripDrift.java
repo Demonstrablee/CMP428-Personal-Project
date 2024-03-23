@@ -1,18 +1,15 @@
 package Levels.GameLevels;
 import javax.swing.*;
-import javax.swing.text.JTextComponent.KeyBinding;
+
 
 import Characters.Characters.Enemy;
 import Levels.Managers.Level2;
 import Objects.Camera;
 import Objects.Wall;
 import fonts.fontsRegistry;
-
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.io.File;
+
 
 
 public class LongTripDrift extends Level2 { 

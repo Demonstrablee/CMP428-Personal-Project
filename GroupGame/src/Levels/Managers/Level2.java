@@ -3,13 +3,9 @@ package Levels.Managers;
 
 import Objects.Rect;
 import Objects.Wall;
-
 import java.awt.*;
 
 import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
-
-
 import Characters.Characters.Enemy;
 import Characters.Characters.Player;
 

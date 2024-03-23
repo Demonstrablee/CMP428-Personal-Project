@@ -40,7 +40,7 @@ public class OptionsMenu extends Level2 {
     JPanel pane = new JPanel();
 
 
-    public OptionsMenu(JButton backButtons){
+    public OptionsMenu(JButton backButton){
         super(null,null, "optionsMenu"); // no enterance exit logic just using card manager in levelbuilder
         
         //BACKGROUND
@@ -52,7 +52,8 @@ public class OptionsMenu extends Level2 {
         pane.setBackground(Color.green);
         
         //Get Buttons
-        this.backButton = backButtons;
+        this.backButton = backButton;
+        backButton.setText("BACK");
 
         //TITLE
         constraints.anchor = GridBagConstraints.PAGE_START;

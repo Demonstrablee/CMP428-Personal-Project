@@ -49,7 +49,7 @@ public class Enemy extends Sprite{
 				enemyCars = new Enemy.InnerEnemy[numEnemyCars]; // just to start with 20 emeny cars
 	 
 				for (int i = 0; i < numEnemyCars; i++){
-					System.out.println(carImages[genRand.nextInt(carImages.length)]);
+					//System.out.println(carImages[genRand.nextInt(carImages.length)]);
 					carPic[i] = Toolkit.getDefaultToolkit().getImage(carImages[genRand.nextInt(carImages.length)] + "");
 					enemyCars[i] = new Enemy.InnerEnemy(950,630,50,90);
 				}
@@ -58,7 +58,7 @@ public class Enemy extends Sprite{
 		}
 
 		public void draw(Graphics pen){
-			Image player = Toolkit.getDefaultToolkit().getImage("GroupGame/src/images/LTD/cars/blacklambo.png");
+			//Image player = Toolkit.getDefaultToolkit().getImage("GroupGame/src/images/LTD/cars/blacklambo.png");
 		 
 
 			for(int k = 0; k < carPic.length; ++k){

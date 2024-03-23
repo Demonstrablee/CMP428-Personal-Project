@@ -2,14 +2,11 @@
 package Levels.Menus;
 import javax.swing.*;
 
-import Levels.Managers.Level2;
 import Levels.Managers.OverlayLevel;
-import Objects.Wall;
 import fonts.fontsRegistry;
-
 import java.awt.*;
 
-import javax.swing.border.Border;
+
 
 public class PauseMenu extends OverlayLevel{ 
     JLabel title = new JLabel("PAUSE");

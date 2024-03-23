@@ -33,7 +33,7 @@ public class Animation
         //     	System.out.println("GroupGame/src/images/"+ name +"/" + name + "_" + pose + "/"+ name +"_" +pose +"_"+ i + "." + type);
 		 		image[i] = Toolkit.getDefaultToolkit().getImage("GroupGame/src/images/"+ gameName +"/" + name +"/" + name + "_" + pose + "/"+ name +"_" +pose +"_"+ i + "." + type);
 		// 	else{ // if you are on windows
-				System.out.println("GroupGame\\src\\images\\"+ gameName +"\\" + name + "_" + pose + "\\"+ name +"_" +pose +"_"+ i + "." + type);
+				//System.out.println("GroupGame\\src\\images\\"+ gameName +"\\" + name + "_" + pose + "\\"+ name +"_" +pose +"_"+ i + "." + type);
 				//image[i] = Toolkit.getDefaultToolkit().getImage("GroupGame\\src\\images\\"+ gameName+ "\\" + name +"\\" + name + "_" + pose + "\\"+ name +"_" +pose +"_"+ i + "." + type);
 		
 			}
