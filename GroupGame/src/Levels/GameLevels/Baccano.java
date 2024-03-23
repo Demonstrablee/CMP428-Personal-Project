@@ -523,12 +523,7 @@ public class Baccano extends Level2 implements ActionListener {
             case "SQ":
             case "DQ":
             case "CQ":
-
-                if (activePlayState == PLAYERS_TURN)
-                    queenAction(dealerCards, dealerCardsSize, playerCards, playerCardsSize);
-                else
-                    queenAction(playerCards, playerCardsSize, dealerCards, dealerCardsSize);
-
+                    queenAction();
                 break;
 
             case "HK":// Kings : swap hands with other player
@@ -538,18 +533,11 @@ public class Baccano extends Level2 implements ActionListener {
 
                 System.out.println("PLAYERS SWAP CARDS");
 
-                System.out.print("Players Cards: ");
-                printCards(playerCards);
-                System.out.print("Dealer Cards: ");
-                printCards(dealerCards);
+                playerVDealerPrint();
 
                 kingAction();
 
-                System.out.print("Players Cards: ");
-                printCards(playerCards);
-                System.out.print("Dealer Cards: ");
-                printCards(dealerCards);
-
+                playerVDealerPrint();
                 break;
             case "HJ":// Jacks : steal one of opponets doubles
             case "SJ":
@@ -679,26 +667,40 @@ public class Baccano extends Level2 implements ActionListener {
 
     }
 
-    private void queenAction(JButton[] theif, int theifSize, JButton[] vict, int victSize) { // Pull a random card from
-                                                                                             // other players hand
+    private void queenAction() { // Pull a random card from
+
+        int victSize = activePlayState== PLAYERS_TURN ? playerCardsSize : dealerCardsSize;
         // choose a random card
-        int cardStolenIndex = rand.nextInt(victSize); // 0 to however many cards the victim has
+        int cardStolenIndex = 0; // 0 to however many cards the victim has
         System.out.println("QUEEN IS PLAYED");
 
+        playerVDealerPrint(); // Before
         // pull that out of one players hand and put it into the others
-        if (theifSize != theif.length) { // if your array is not full (if it is you get NOTHING! Your fault)
-            theif[theifSize + 1] = vict[cardStolenIndex]; // give the theif the card
-
-            // restructure vict's array
-            for (int i = cardStolenIndex; i < victSize; ++i) { // TODO MAY CAUSE OUT OF BOUNDS CHECK IT
-                vict[i] = vict[i + 1]; // shift array elements down one
+        if (playerCardsSize <= playerCards.length -1 && activePlayState == PLAYERS_TURN) { // if your array is not full (if it is you get NOTHING! Your fault)
+            while("NA".equals(dealerCards[cardStolenIndex].getToolTipText())){ //  TO AVOID STEALING NOTHING
+                cardStolenIndex = rand.nextInt(victSize);
             }
-            victSize = victSize - 1; // lost one card
+            System.out.println("Stolen Card Index: " + cardStolenIndex);
+            playerCards[playerCardsSize].setToolTipText(dealerCards[cardStolenIndex].getToolTipText()); // give the theif the card
+            dealerCards[cardStolenIndex].setToolTipText("NA");
+            playerCardsSize++;
 
-        } else {
+
+
+        } else if (dealerCardsSize <= dealerCards.length -1 && activePlayState == DEALERS_TURN){ // have to check its dealers turn (otherwise player action could result in player losing cards)
+            while("NA".equals(playerCards[cardStolenIndex].getToolTipText())){ // TO AVOID STEALING NOTHING
+                cardStolenIndex = rand.nextInt(victSize);
+            }
+            dealerCards[dealerCardsSize].setToolTipText(playerCards[cardStolenIndex].getToolTipText()); // give the theif the card
+            playerCards[cardStolenIndex].setToolTipText("NA");
+            dealerCardsSize++;
+        }
+        else {
             System.out.println("YOUR DECK IS FULL. YOU GET NOTHING, LOSE YOUR TURN");
         }
+        updateDisplayed();
 
+        playerVDealerPrint();// after
     }
 
     private void jackAction(JButton[] theifsDoubles, JButton[] victDoubles) { // steal opponetns doubles
@@ -726,13 +728,15 @@ public class Baccano extends Level2 implements ActionListener {
     private void printCards(JButton[] cards) {
         System.out.print("{");
         for (int i = 0; i < cards.length; i++) {
-            if (cards[i] == null)
-                break; // leave the loop everything after is null
+            if(i == cards.length-1){
+                System.out.print(cards[i].getToolTipText());
+                break;
+            }
             System.out.print(cards[i].getToolTipText() + ",");
 
         }
 
-        System.out.println(" }");
+        System.out.println("}");
     }
     private void updateDisplayed(){
         String tip;
@@ -747,6 +751,13 @@ public class Baccano extends Level2 implements ActionListener {
                 //playerCards[i].setToolTipText(tip); // update for players card tooltips
             }
         }
+    }
+
+    private void playerVDealerPrint(){
+        System.out.print("Players Cards: ");
+        printCards(playerCards);
+        System.out.print("Dealers Cards: ");
+        printCards(dealerCards);
     }
 
     @Override
