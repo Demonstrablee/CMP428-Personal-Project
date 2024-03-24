@@ -91,7 +91,7 @@ public class Baccano extends Level2 implements ActionListener {
 
     // TRACKS ARRAY ABOVE HOW FULL
     int playerDiceDub = 0;
-    int dealerDiceDub = 6;
+    int dealerDiceDub = 0;
 
     JLabel turnLabel = new JLabel("PLAYERS TURN", SwingConstants.CENTER);
 
@@ -160,7 +160,7 @@ public class Baccano extends Level2 implements ActionListener {
 
         // ADD PANELS
         playersHand.setBackground(Color.YELLOW);
-        // playersHand.setOpaque(false);
+        playersHand.setOpaque(false);
         playersHand.setBounds(100, 500, 970, 200);
         add(playersHand);
 
@@ -283,7 +283,7 @@ public class Baccano extends Level2 implements ActionListener {
             dealerDice[k] = new JButton();
             dealerDice[k].setBorderPainted(false);
             dealerDice[k].setPreferredSize(new Dimension(60, 55));
-            dealerDice[k].setToolTipText("6");
+            dealerDice[k].setToolTipText("NA");
 
             constraints = new GridBagConstraints();
             constraints.gridx = k;
