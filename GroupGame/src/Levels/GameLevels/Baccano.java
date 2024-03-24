@@ -341,7 +341,7 @@ public class Baccano extends Level2 implements ActionListener {
     ActionListener makeDealerWait = new ActionListener() {
         public void actionPerformed(ActionEvent e) {
             // what does it do
-            int action = rand.nextInt(1, 4); // 1- (action 1) 2- (action 2) 3- (action 3)
+            int action = 3;//rand.nextInt(1, 4); // 1- (action 1) 2- (action 2) 3- (action 3)
 
             switch (action) {
                 case 1:// ACTION 1: DRAW CARD TO END TURN
@@ -357,7 +357,7 @@ public class Baccano extends Level2 implements ActionListener {
                     dealerCardButton.setIcon(dealerCards[num].getIcon()); // SET the icon to
                     dealerCardButton.setVisible(true); // show card
                     playCardAction(dealerCards[num]);
-                    
+
                     break;
 
                 case 3: // TEMPORARY ACTION 3: ROLL DICE (the only way to do this in game is to play ace
@@ -396,7 +396,7 @@ public class Baccano extends Level2 implements ActionListener {
         diceRoll1 = rand.nextInt(1, 6); // 1-6 inclusive die (the indexes are 0-5)
         diceRoll2 = rand.nextInt(1, 6); // 1-6 inclusive
 
-        playDie1Button.setVisible(true);
+        playDie1Button.setVisible(true); // show the dice
         playDie2Button.setVisible(true);
 
         playDie1Button.setIcon(dice[diceRoll1]);
@@ -551,17 +551,12 @@ public class Baccano extends Level2 implements ActionListener {
                 gameOLabel.setText("YOU LOSE");
                 gameOPanel.setVisible(true);
         }
-        // playDie1Button.setVisible(false);
-        // playDie2Button.setVisible(false);
-        // dealerCardButton.setVisible(false);
+
         // case TIE:
         // gameOPanel.setBackground(new Color(200, 200, 0, 200));
         // gameOLabel.setText("TIE");
         // gameOPanel.setVisible(true);
 
-        // playDie1Button.setVisible(false);
-        // playDie2Button.setVisible(false);
-        // dealerCardButton.setVisible(false);
         // break;
 
         // default: // game is ongoing
@@ -618,10 +613,10 @@ public class Baccano extends Level2 implements ActionListener {
             case "SQ":
             case "DQ":
             case "CQ":
-                queenAction();
+                queenAction(); // -1 QUEEN + RANDOM CARD = 0
                 break;
 
-            case "HK":// Kings : swap hands with other player
+            case "HK":// Kings : swap hands with other player - KING (FROM OG HAND)
             case "SK":
             case "DK":
             case "CK":
@@ -629,50 +624,53 @@ public class Baccano extends Level2 implements ActionListener {
                 System.out.println("PLAYERS SWAP CARDS");
 
                 playerVDealerPrint();
-
+                cardButton.setToolTipText("NA"); // TO DELETE Card BEFORE SWITCHING HANDS
                 kingAction();
 
                 playerVDealerPrint();
                 break;
-            case "HJ":// Jacks : steal one of opponets doubles
+            case "HJ":// Jacks : steal one of opponets doubles -JACK
             case "SJ":
             case "DJ":
             case "CJ":
+                cardButton.setToolTipText("NA");
                 jackAction();
                 break;
 
-            case "HA": // HEARTS DIAMONDS ACE
+            case "HA": // HEARTS DIAMONDS ACE -ACE
             case "DA": // roll 2 dice
+                cardButton.setToolTipText("NA");
                 aceHeartsDiamondsAction();
                 break;
 
-            case "CA": // CLUB SPADES ACE
+            case "CA": // CLUB SPADES ACE -ACE
             case "SA":
                 // KNOCK OUT OTHER PLAYERS DOUBLES
+                cardButton.setToolTipText("NA"); // lose the card
                 aceClubSpadeAction();
                 break;
-            default: // draw card
+            case "DRAW": // draw card
                 drawCard();
                 break;
         }
         // REMOVE CARD FROM ARRAY
-        for (int i = 0; i < MAX_CARDS; i++) { // find the card that I need to remove
-            if (playerCards[i] == cardButton)
-                playerCards[i].setToolTipText("NA");
-            else if (dealerCards[i] == cardButton) {
-                dealerCards[i].setToolTipText("NA");
+        // for (int i = 0; i < MAX_CARDS; i++) { // find the card that I need to remove
+        // if (playerCards[i] == cardButton){
+        // playerCards[i].setToolTipText("NA");
+        // break;
+        // }
+        // else if (dealerCards[i] == cardButton) {
+        // dealerCards[i].setToolTipText("NA");
+        // break;
 
-            }
-        }
+        // }
+        // }
         updateDisplayedCards(); // NEEDED FOR EVERY METHOD
 
     }
 
     private void dealerPlays() {
-        System.out.println("DEALER IS THINKING...");
         dealerActionTimer.start();
-        
-
     }
 
     // ACTION METHODS (so player and dealer can do them)
@@ -683,6 +681,11 @@ public class Baccano extends Level2 implements ActionListener {
         // SimpleSoundPlayer.playSound("GroupGame/src/music/actionSounds/rolling-dice-pixelbay.wav");
         // // Cant run music here
         // SimpleSoundPlayer.playSound("GroupGame/src/music/actionSounds/flipcard-(pixelbay).wav");
+        if (activePlayState == PLAYERS_TURN)
+            playerCardsSize--; // lose the card you just played
+        else
+            dealerCardsSize--;
+
         rollTheDice();
 
     }
@@ -703,6 +706,7 @@ public class Baccano extends Level2 implements ActionListener {
 
                 if (dealerDiceDub <= 0) {
                     System.out.println("THE DEALER CANT LOSE ANYTHING, LOSE YOUR TURN");
+                    playerCardsSize--;
                     break;
                 } // dont even do anything since you cant steal anything
                 while (tip.equals("NA")) { // AVOID STEALING NOTHING
@@ -713,6 +717,7 @@ public class Baccano extends Level2 implements ActionListener {
                 dealerDice[doublesIndex].setToolTipText("NA"); // take out the stolen dice
                 dealerDice[doublesIndex + 1].setToolTipText("NA"); // take out the stolen dice
                 dealerDiceDub -= 2; // LOSE TWO DICE
+                playerCardsSize--; // lose the Jack you just played
 
                 break;
 
@@ -721,6 +726,7 @@ public class Baccano extends Level2 implements ActionListener {
 
                 if (playerDiceDub <= 0) {
                     System.out.println("THE PLAYER CANT LOSE ANYTHING, LOSE YOUR TURN");
+                    dealerCardsSize--;
                     break;
                 } // dont even do anything since you cant steal anything
                 while (tip.equals("NA")) { // AVOID STEALING NOTHING
@@ -731,11 +737,12 @@ public class Baccano extends Level2 implements ActionListener {
                 playerDice[doublesIndex].setToolTipText("NA"); // take out the stolen dice
                 playerDice[doublesIndex + 1].setToolTipText("NA"); // take out the stolen dice
                 playerDiceDub -= 2; // LOSE TWO DICE
-
+                dealerCardsSize--; // lose the jack you just played
                 break;
 
         }
         updateDisplayedDice();
+        wait.start();
     }
 
     /** Swap your hands with another player */
@@ -756,7 +763,9 @@ public class Baccano extends Level2 implements ActionListener {
 
         // SWAP SIZES AFTER
         playerCardsSize = dealerCardsSize;
-        dealerCardsSize = tempSize;
+        dealerCardsSize = tempSize - 1; // played the king card so reciver of hand lost a card
+
+        wait.start();
 
     }
 
@@ -782,7 +791,8 @@ public class Baccano extends Level2 implements ActionListener {
                                                                                                         // card
             dealerCards[cardStolenIndex].setToolTipText("NA");
 
-            playerCardsSize++; // gain a card
+            // playerCardsSize++; // gain a card cancels out since basically the queen is
+            // replaced with stolen card
             dealerCardsSize--; // lose a card
 
         } else if (dealerCardsSize <= dealerCards.length - 1 && activePlayState == DEALERS_TURN) { // have to check its
@@ -799,14 +809,18 @@ public class Baccano extends Level2 implements ActionListener {
                                                                                                         // theif the
                                                                                                         // card
             playerCards[cardStolenIndex].setToolTipText("NA");
-            dealerCardsSize++; // gain a card
+            // dealerCardsSize++; // gain a card
             playerCardsSize--; // lose a card
-        } else {
+        } else { // dealer or the players array is full on their turn as they play the queen
             System.out.println("YOUR DECK IS FULL. YOU GET NOTHING, LOSE YOUR TURN");
+            if (activePlayState == PLAYERS_TURN)
+                playerCardsSize--;
+            else
+                dealerCardsSize--;
         }
-        updateDisplayedCards();
 
         playerVDealerPrint();// after
+        wait.start();
     }
 
     /** Steal an opponents doubles */
@@ -823,10 +837,12 @@ public class Baccano extends Level2 implements ActionListener {
             case PLAYERS_TURN:
                 System.out.printf("Dealer Doubles: (%d, %d)\n", doublesIndex, doublesIndex + 1);
 
-                if (playerDiceDub == 6 || dealerDiceDub <= 0) {
+                if (dealerDiceDub <= 0) {
                     System.out.println("YOU CANT STEAL ANYTHING LOSE YOUR TURN");
+                    dealerCardsSize--;
                     break;
                 } // dont even do anything since you cant steal anything
+
                 while (tip.equals("NA")) { // AVOID STEALING NOTHING
                     doublesIndex = rand.nextInt(3) * 2; // generate a new one
                     tip = dealerDice[doublesIndex].getToolTipText();
@@ -845,6 +861,8 @@ public class Baccano extends Level2 implements ActionListener {
                         dealerDice[doublesIndex].setToolTipText("NA"); // take out the stolen dice
                         dealerDice[doublesIndex + 1].setToolTipText("NA"); // take out the stolen dice
                         dealerDiceDub -= 2; // LOSE TWO DICE
+
+                        playerCardsSize--; // lose the card you just played
                         break;
                     }
 
@@ -854,10 +872,12 @@ public class Baccano extends Level2 implements ActionListener {
 
             case DEALERS_TURN:
                 System.out.printf("Player Doubles: (%d, %d)\n", doublesIndex, doublesIndex + 1);
-                if (dealerDiceDub == 6 || playerDiceDub <= 0) {
+                if (playerDiceDub <= 0) {
                     System.out.println("YOU CANT STEAL ANYTHING LOSE YOUR TURN");
+                    dealerCardsSize--; // lost your card for your mistake
                     break;
                 } // dont even do anything since you cant steal anything
+
                 while (tip.equals("NA")) { // AVOID STEALING NOTHING
                     doublesIndex = rand.nextInt(3) * 2; // generate a new one
                     tip = playerDice[doublesIndex].getToolTipText();
@@ -875,6 +895,8 @@ public class Baccano extends Level2 implements ActionListener {
                         playerDice[doublesIndex].setToolTipText("NA"); // take out the stolen dice
                         playerDice[doublesIndex + 1].setToolTipText("NA"); // take out the stolen dice
                         playerDiceDub -= 2; // LOSE TWO DICE
+
+                        dealerCardsSize--; // lose the card you just played
                         break;
                     }
 
@@ -883,6 +905,7 @@ public class Baccano extends Level2 implements ActionListener {
 
         }
         updateDisplayedDice();
+        wait.start();
     }
 
     // HELPER METHODS
@@ -907,13 +930,20 @@ public class Baccano extends Level2 implements ActionListener {
         System.out.println("---------------CARDS--------------------");
         System.out.print("Players Cards: ");
         printCardsOrDoubles(playerCards);
+        System.out.printf("Player Total Cards: %d /%d\n", playerCardsSize, playerCards.length);
+
         System.out.print("Dealers Cards: ");
         printCardsOrDoubles(dealerCards);
+        System.out.printf("Dealer Total Cards: %d /%d\n", dealerCardsSize, playerCards.length);
+
         System.out.println("---------------DICE--------------------");
         System.out.print("Players Dice: ");
         printCardsOrDoubles(playerDice);
+        System.out.printf("Player Total Dice: %d /%d\n", playerDiceDub, playerDice.length);
+
         System.out.print("Dealers Dices: ");
         printCardsOrDoubles(dealerDice);
+        System.out.printf("Dealer Total Dices: %d /%d\n", dealerDiceDub, dealerDice.length);
         System.out.println("-----------------------------------");
 
     }
@@ -1014,6 +1044,7 @@ public class Baccano extends Level2 implements ActionListener {
 
         System.out.println("-----------------------------------------------------");
         System.out.println("Draw Card Turn Ended. DEALERS TURN");
+        System.out.println("DEALER IS THINKING...");
 
     }
 
