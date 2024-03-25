@@ -186,13 +186,13 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
         add(baccano);
 
         // Game State variables AT START
-        rulesMenu.setVisible(true);
-        currLevel = baccano; // which room to draw currLevel and levLevel index are one to one (default:
+        
+        currLevel = titleScreen; // which room to draw currLevel and levLevel index are one to one (default:
                              // titleScreen)
-        gameRoom = baccano; // track of the ingame rooms that player traverses with p1 (default; wellereman)
+        gameRoom = baccano; // track of the in game rooms that player traverses with p1 (default; wellereman)
 
         isPaused = false; // is the game paused or not (default: true)
-        titleOrGame = false; // at game start options goes to pause menu (default: true)
+        titleOrGame = true; // at game start options goes to pause menu (default: true)
         isOver = false; // is the game over? (only have to change this for gameover window debug)
                         // (default: false)
 
@@ -388,6 +388,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
         else if (buttonClicked == titleButtons[1] || buttonClicked == pauseMButtons[1]) {// go to options
             // changeLevel(optionsMenu);
             optionsMenu.setVisible(true);
+            pauseMenu.setVisible(false);
 
         } else if (buttonClicked == pauseMButtons[2] || buttonClicked == optionsPauseButton && titleOrGame
                 || buttonClicked == gameSelectButtons[3]) { // back to title screen
