@@ -307,7 +307,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
         public JButton createButton(){
         JButton button = new JButton();
         button.addActionListener(this);
-        button.setFocusable(false);
+        button.setFocusable(false); // STOP FROM stealing focus from keyboard inputs
 
         return button;
         }
