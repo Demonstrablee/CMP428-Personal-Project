@@ -3,29 +3,22 @@ package Levels.Managers;
 import Characters.Characters.Enemy;
 import Characters.Characters.Player;
 import Levels.GameLevels.LongTripDrift;
-
 import Levels.GameLevels.Baccano;
 import Levels.GameLevels.Wellerman;
 import Levels.Menus.RulesMenu;
 import Levels.Menus.GameSelectMenu;
 import Levels.Menus.OptionsMenu;
 import Levels.Menus.PauseMenu;
-
 import Levels.Menus.TitleScreen;
 import Objects.Camera;
 import Objects.Wall;
 import fonts.fontsRegistry;
-
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Graphics;
-
 import java.awt.event.*;
-
-import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
-
 import javax.swing.JButton;
 import javax.swing.JLayeredPane;
 import javax.swing.border.Border;

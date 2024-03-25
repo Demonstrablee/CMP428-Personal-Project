@@ -3,7 +3,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
 import java.util.Random;
 
 import javax.swing.BorderFactory;
@@ -150,7 +149,7 @@ public class Wellerman extends Level2 implements ActionListener{
     // Hopper
         JPanel hopperPane = new JPanel();
 
- //TODO: GAME OVER
+    // GAME OVER
         JPanel gameOPanel = new JPanel();
     
         JLabel gameOLabel = new JLabel("WASS", SwingConstants.CENTER);
@@ -286,7 +285,7 @@ public class Wellerman extends Level2 implements ActionListener{
                 constraints.ipadx = 30;
                 constraints.ipady = 40;
                 constraints.insets = new Insets(-1, -1, -1, -1);
-                //TODO: Add some design elements to the buttons to make them look better
+                
                 // grid[col][row].setContentAreaFilled(false);
                 // grid[col][row].setOpaque(false);
                 Border buttonBorder = BorderFactory.createBevelBorder(1);

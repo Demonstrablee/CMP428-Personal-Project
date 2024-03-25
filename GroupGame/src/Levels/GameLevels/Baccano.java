@@ -1,19 +1,13 @@
 package Levels.GameLevels;
 
 import Levels.Managers.Level2;
-import Levels.Managers.SimpleSoundPlayer;
 import fonts.fontsRegistry;
-
 import java.awt.*;
-import java.awt.Desktop.Action;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import java.util.Arrays;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.Random;
-
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -1055,43 +1049,6 @@ public class Baccano extends Level2 implements ActionListener {
         }
     }
 
-    // cant even recall why I wrote this method for the dice (kinda looke like the
-    // updateDisplayed Dice Method I just wrote)
-    private void checkPlayersDiceFull(JButton buttonClicked) { // TODO want to be able to update the players dice after
-        // they are full
-        if (playerDiceDub == 6) { // when all the die are full
-            for (int i = 0; i < playerDice.length; i++) {
-                if (playDie1Button.getToolTipText().equals(playDie2Button.getToolTipText())) {// if there are doubles
-                    ImageIcon die = new ImageIcon(
-                            dice[diceRoll1].getImage().getScaledInstance(60, 65, Image.SCALE_SMOOTH));
-                    if (buttonClicked == playerDice[0] || buttonClicked == playerDice[1]) { // if a die in a pair is
-                        // clicked
-                        playerDice[0].setIcon(die);
-                        playerDice[0].setToolTipText(playDie1Button.getToolTipText());
-
-                        playerDice[1].setIcon(die);
-                        playerDice[1].setToolTipText(playDie1Button.getToolTipText());
-                        System.out.println("DICE [0] AND [1] UPDATED");
-                    } else if (buttonClicked == playerDice[2] || buttonClicked == playerDice[3]) {
-                        playerDice[2].setIcon(die);
-                        playerDice[2].setToolTipText(playDie1Button.getToolTipText());
-
-                        playerDice[3].setIcon(die);
-                        playerDice[3].setToolTipText(playDie1Button.getToolTipText());
-                        System.out.println("DICE [2] AND [3] UPDATED");
-                    } else if (buttonClicked == playerDice[4] || buttonClicked == playerDice[5]) {
-                        playerDice[4].setIcon(die);
-                        playerDice[4].setToolTipText(playDie1Button.getToolTipText());
-
-                        playerDice[5].setIcon(die);
-                        playerDice[5].setToolTipText(playDie1Button.getToolTipText());
-                        System.out.println("DICE [4] AND [5] UPDATED");
-                    }
-                }
-            }
-        }
-
-    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
