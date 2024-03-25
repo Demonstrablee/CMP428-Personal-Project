@@ -180,7 +180,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
 
         // Game State variables AT START
         
-        currLevel = gameSelectMenu; // which room to draw currLevel and levLevel index are one to one (default:
+        currLevel = titleScreen; // which room to draw currLevel and levLevel index are one to one (default:
                              // titleScreen)
         gameRoom = baccano; // track of the in game rooms that player traverses with p1 (default; wellereman)
 
