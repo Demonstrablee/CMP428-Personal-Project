@@ -68,11 +68,11 @@ public class PauseMenu extends OverlayLevel{
     
         // pen.drawRect(getWidth()/2 - 250,0,500,getHeight());
         //Draw Buttons and Title
-        title.repaint();
-        for(JButton button : pauseMButtons){
-            button.repaint();
+        // title.repaint();
+        // for(JButton button : pauseMButtons){
+        //     button.repaint();
             
-        }
+        // }
        
         
     }
