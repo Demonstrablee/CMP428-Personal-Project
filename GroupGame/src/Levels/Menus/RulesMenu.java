@@ -80,7 +80,7 @@ public class RulesMenu extends OverlayLevel {
         constraints.gridx = 0;
         constraints.gridy = 1;
         // constraints.insets = new Insets(3, 5, 5, 5);
-        //constraints.ipadx = 900; // expand the textbox out
+        constraints.ipadx = 900; // expand the textbox out
 
         pane.add(rules, constraints);
 
@@ -94,12 +94,12 @@ public class RulesMenu extends OverlayLevel {
         constraints.ipady = 3;
         pane.add(back, constraints);
 
-        setMenu(0); // set default
+        //setMenu(0); // set default
     }
 
     public void setMenu(int menuSelection) {
         currMenu = menuSelection;
-
+        clearText(); // clear what is already in the rules text
         try (Scanner sc1 = new Scanner(rulesTexts[currMenu])) {
             while (sc1.hasNextLine()) {
                 rulesText += sc1.nextLine() + "<br>";
@@ -111,6 +111,9 @@ public class RulesMenu extends OverlayLevel {
         }
 
         rules.setText(rulesText + " <html>"); // set the rules text
+    }
+    private void clearText(){
+        rulesText = "<html> ";
     }
 
     @Override

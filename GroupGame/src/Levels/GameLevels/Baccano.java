@@ -111,7 +111,7 @@ public class Baccano extends Level2 implements ActionListener {
     Dictionary<String, Integer> carding = new Hashtable<>();
 
     public Baccano(JButton exitButton) {
-        super(null, null, "BACCANO");
+       super(null, null, "BACCANO"); 
         setLayout(null);
 
         // LOAD IN
