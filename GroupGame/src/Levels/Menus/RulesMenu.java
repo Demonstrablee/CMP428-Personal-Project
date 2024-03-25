@@ -32,7 +32,7 @@ public class RulesMenu extends OverlayLevel {
 
     int currMenu = 0; // which menu to display
 
-    Font arcade = fontsRegistry.arcadePixel.deriveFont(50f);
+    Font arcade = fontsRegistry.arcadePixel.deriveFont(60f);
 
     // Read in the text for the rules from the rules.txt
     File file1 = new File("GroupGame/src/rules/Baccano.txt");
@@ -41,19 +41,14 @@ public class RulesMenu extends OverlayLevel {
     File rulesTexts[] = new File[] { file1, file2, file3 };
 
     JLabel rules = new JLabel();
-    String rulesText = "<html>    JLabel rules = new JLabel();\n" + //
-            "        String rulesText = <br/>JLabel rules = new JLabel();\\n" + //
-            "\" + //\n" + //
-            "                \"        String rulesText = <br/>JLabel rules = new JLabel();\\n" + //
-            "\" + //\n" + //
-            "                \"        String rulesText = <br/>";
+    String rulesText = "<html> ";
 
     public RulesMenu(JButton back) {
         super(null, null, null);
 
         // BACKGROUND
         background.setBounds(0, 0, 1280, 720);
-        background.setBackground(new Color(0,0,0,170));
+        background.setBackground(new Color(0, 0, 0, 170));
         add(background);
 
         // setBg("black01.jpg");
@@ -61,9 +56,9 @@ public class RulesMenu extends OverlayLevel {
         setBounds(0, 0, 1280, 720);
 
         pane.setBackground(new Color(100, 10, 10, 100));
-        pane.setBounds(400, 0, 500, 720);
+        pane.setBounds(400, 0, 600, 700);
 
-        add(pane,JLayeredPane.DRAG_LAYER);
+        add(pane, JLayeredPane.DRAG_LAYER);
 
         // adding components to the screen
         title.setFont(arcade);
@@ -75,7 +70,7 @@ public class RulesMenu extends OverlayLevel {
         pane.add(title, constraints);
 
         // RULES TEXT
-        rules.setBounds(0, 0, 100, 50);
+
         // rules.setFont(arcade);
         rules.setForeground(Color.WHITE);
         rules.setBackground(Color.black);
@@ -86,19 +81,21 @@ public class RulesMenu extends OverlayLevel {
         constraints.gridx = 0;
         constraints.gridy = 1;
         // constraints.insets = new Insets(3, 5, 5, 5);
+        //constraints.ipadx = 900; // expand the textbox out
+
         pane.add(rules, constraints);
 
         // Button Customization
         constraints = new GridBagConstraints();
         constraints.gridx = 0;
         constraints.gridy = 2;
-        constraints.insets = new Insets(3, 5, 5, 5);
+        constraints.insets = new Insets(3, 5, 0, 5);
         back.setText("BACK");
+        constraints.ipadx = 5;
+        constraints.ipady = 3;
         pane.add(back, constraints);
 
-        //add(pane);
-
-        rules.setText(rulesText); // set default
+        setMenu(0); // set default
     }
 
     public void setMenu(int menuSelection) {

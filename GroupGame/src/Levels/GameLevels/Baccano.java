@@ -361,8 +361,8 @@ public class Baccano extends Level2 implements ActionListener {
     ActionListener makeDealerWait = new ActionListener() {
         public void actionPerformed(ActionEvent e) {
             // what does it do
-            int action = 2;// rand.nextInt(1, 4); // 1- (action 1) 2- (action 2) 3- (action 3)
-            int num ;
+            int action =  rand.nextInt(1, 3); // 1- (action 1) 2- (action 2) 
+            int num;
             switch (action) {
                 case 1:// ACTION 1: DRAW CARD TO END TURN
                     System.out.println("THE DEALER DRAWS A CARD");
@@ -394,11 +394,13 @@ public class Baccano extends Level2 implements ActionListener {
 
                     break;
 
+                /** TESTING FEATURE
                 case 3: // TEMPORARY ACTION 3: ROLL DICE (the only way to do this in game is to play ace
                         // hearts or diamond)
                     System.out.println("THE DEALER ROLLS THE DICE");
                     rollTheDice();
                     break;
+                    */
             }
 
             // return back to players turn
