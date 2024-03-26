@@ -43,7 +43,7 @@ public class RulesMenu extends OverlayLevel {
     String rulesText = "<html> ";
 
     public RulesMenu(JButton back) {
-        super(null, null, null);
+        super("rulesMenu");
 
         // BACKGROUND
         background.setBounds(0, 0, 1280, 720);
@@ -120,7 +120,7 @@ public class RulesMenu extends OverlayLevel {
     public void paintComponent(Graphics pen) { // method for painting
         super.paintComponent(pen);
 
-        pen.drawImage(bg, 0, 0, getWidth(), getHeight(), null);
+        
 
     }
 

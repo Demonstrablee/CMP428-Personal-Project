@@ -49,12 +49,9 @@ public class OptionsMenu extends Level2 implements ActionListener {
     Font arcade = fontsRegistry.arcadePixel.deriveFont(30f);
 
     public OptionsMenu(JButton backButton){
-        super(null,null, "optionsMenu"); // no enterance exit logic just using card manager in levelbuilder
+        super("optionsMenu"); // no enterance exit logic just using card manager in levelbuilder
         
         //BACKGROUND
-        setBg("bg_classroom03.jpg"); 
-        setLayout(null);
- 
         pane.setBounds(0, 0, 1280, 720);
         pane.setLayout(new GridBagLayout());
         pane.setBackground(new Color(90,70,60,170));

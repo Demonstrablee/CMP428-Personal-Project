@@ -15,7 +15,7 @@ public class PauseMenu extends OverlayLevel{
     JPanel panel = new JPanel();
 
     public PauseMenu(JButton [] pauseButtons){ // This is the Phone
-        super(null,null, "pauseMenu");
+        super("pauseMenu");
 
         //BACKGROUND
     

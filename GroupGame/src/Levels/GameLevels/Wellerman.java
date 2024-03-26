@@ -158,17 +158,8 @@ public class Wellerman extends Level2 implements ActionListener{
         JButton restartButton = new JButton();
 
     public Wellerman(JButton exitButton){
-        super(null, null, "wellerman");
+        super("Wellerman");
         setLayout(null); // so I can use the pos from the set bounds functions to place compnents all over the panel
-
-        //Import and registering custom font
-        // try { //https://www.youtube.com/watch?v=43duJsYmhxQ 
-        //     arcadeFont = Font.createFont(Font.TRUETYPE_FONT, new File(fontsDir+"PixelifySans-VariableFont_wght.ttf")).deriveFont(30f);
-        //     GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment(); //get the graphics for the computer 
-        //     ge.registerFont(arcadeFont); // register the font for use
-        // } catch (FontFormatException | IOException e) {
-        //     e.printStackTrace();
-        // }
 
         // generate image icons for all pipes
         for(int i = 0; i < emptyPipes.length; ++i){

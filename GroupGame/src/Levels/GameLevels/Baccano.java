@@ -25,7 +25,7 @@ public class Baccano extends Level2 implements ActionListener {
     Image table = Toolkit.getDefaultToolkit().getImage(assetDir + "casinoTablebg_red.jpeg");
     Image casinoPepe = Toolkit.getDefaultToolkit().getImage(assetDir + "casinoPeople.jpeg");
 
-    Enemy dealer = new Enemy("DuckHuntDog", this.getLevelName(), 400, 30, 0, 0, 15); // SUMMONING THE DEALER
+    Enemy dealer = new Enemy("DuckHuntDog", "Baccano", 400, 30, 0, 0, 15); // SUMMONING THE DEALER
 
     // LABELS
     JLabel dealersLabel = new JLabel("Dealers Doubles");
@@ -111,8 +111,8 @@ public class Baccano extends Level2 implements ActionListener {
     Dictionary<String, Integer> carding = new Hashtable<>();
 
     public Baccano(JButton exitButton) {
-       super(null, null, "BACCANO"); 
-        setLayout(null);
+       super("Baccano"); 
+
 
         // LOAD IN
 

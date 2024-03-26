@@ -1,6 +1,4 @@
 package Levels.Managers;
-
-import Characters.Characters.Enemy;
 import Characters.Characters.Player;
 import Levels.GameLevels.LongTripDrift;
 import Levels.GameLevels.Baccano;
@@ -11,7 +9,6 @@ import Levels.Menus.OptionsMenu;
 import Levels.Menus.PauseMenu;
 import Levels.Menus.TitleScreen;
 import Objects.Camera;
-import Objects.Wall;
 import fonts.fontsRegistry;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -26,7 +23,7 @@ import javax.swing.border.Border;
 ;
 
 /** Initialize a level inhertiting from JPanel */
-public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runnable, ActionListener, MouseListener {
+public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runnable, ActionListener {
 
     Thread t;
 
@@ -53,22 +50,18 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
 
     // Objects
     Player p1 = Level2.p1; // so all levels can share same character
-    Wall[] wall; // get walls for refrence and collison detection
-
-    Enemy[] enemies;
 
     // Menus
-    static TitleScreen titleScreen; // 0
-    static PauseMenu pauseMenu; // 1
-    static OptionsMenu optionsMenu; // 2
-
+    static TitleScreen titleScreen; 
+    static PauseMenu pauseMenu; 
+    static OptionsMenu optionsMenu;
     static RulesMenu rulesMenu;
     static GameSelectMenu gameSelectMenu;
 
     // Levels
-    static Wellerman wellerman; // 4
-    static LongTripDrift longTripDrift; // 5
-    static Baccano baccano; // 6
+    static Wellerman wellerman; 
+    static LongTripDrift longTripDrift; 
+    static Baccano baccano; 
 
     // Movement vars
     boolean[] pressing = new boolean[1024];
@@ -78,6 +71,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
     /** States whether or not the game is over */
     boolean isOver = false;
 
+    // Movement Variables
     static final int UP = KeyEvent.VK_UP;
     static final int DN = KeyEvent.VK_DOWN;
     static final int LT = KeyEvent.VK_LEFT;
@@ -95,7 +89,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
     /** the current non-menu level selected in the game */
     Level2 gameRoom;
     /**
-     * boolean represneting if the options menu will direct to the title screen or
+     * boolean that determines if the options menu will direct to the title screen or
      * the pause menu
      */
     boolean titleOrGame;
@@ -180,7 +174,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
 
         // Game State variables AT START
         
-        currLevel = titleScreen; // which room to draw currLevel and levLevel index are one to one (default:
+        currLevel = longTripDrift; // which room to draw currLevel and levLevel index are one to one (default:
                              // titleScreen)
         gameRoom = baccano; // track of the in game rooms that player traverses with p1 (default; wellereman)
 
@@ -213,7 +207,6 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
     }
 
     public void gameLoop() {
-
         // MOVEMENT
 
         if (pressing[UP] || pressing[W]) {
@@ -230,11 +223,8 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
         if (pressing[RT] || pressing[D]) {
             // System.out.println("Camera position x:"+ Camera.x + " y:"+ Camera.y);
             Camera.turnBy(5);
-
             p1.turnRight(5);
         }
-
-        // if(p1.getX() > 500)Camera.goRT(3);}
 
         if (pressing[LT] || pressing[A]) {
             // System.out.println("Camera position x:"+ Camera.x + " y:"+ Camera.y);
@@ -322,26 +312,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
         // p1.moving = false;
     }
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-    }
+   
 
     private void changeLevel(Level2 level) {
         currLevel.setVisible(false); // make previous room invisible

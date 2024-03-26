@@ -36,7 +36,7 @@ public class GameSelectMenu extends Level2 implements MouseListener {
 
     public GameSelectMenu(JButton[] menuButtons) {
 
-        super(null, null, "gameSelect");
+        super("gameSelect");
         this.menuButton = menuButtons;
         setLayout(null);
 
@@ -98,7 +98,7 @@ public class GameSelectMenu extends Level2 implements MouseListener {
 
         for (JButton button : menuButton) {
 
-            constraints = new GridBagConstraints(); // TODO MAKE THEM APPEAR IN ROWS 2 X 2
+            constraints = new GridBagConstraints();
             constraints.gridx = 0;
             constraints.gridy = i;
 
