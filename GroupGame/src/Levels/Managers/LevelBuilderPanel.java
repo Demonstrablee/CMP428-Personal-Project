@@ -1,5 +1,6 @@
 package Levels.Managers;
-import Characters.Characters.Player;
+
+import Characters.Characters.Car;
 import Levels.GameLevels.LongTripDrift;
 import Levels.GameLevels.Baccano;
 import Levels.GameLevels.Wellerman;
@@ -14,6 +15,8 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.*;
+import java.util.Random;
+
 import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -49,19 +52,19 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
     CardLayout cLayout0 = new CardLayout();
 
     // Objects
-    Player p1 = Level2.p1; // so all levels can share same character
+    Car p1 = Level2.p1; // so all levels can share same character
 
     // Menus
-    static TitleScreen titleScreen; 
-    static PauseMenu pauseMenu; 
+    static TitleScreen titleScreen;
+    static PauseMenu pauseMenu;
     static OptionsMenu optionsMenu;
     static RulesMenu rulesMenu;
     static GameSelectMenu gameSelectMenu;
 
     // Levels
-    static Wellerman wellerman; 
-    static LongTripDrift longTripDrift; 
-    static Baccano baccano; 
+    static Wellerman wellerman;
+    static LongTripDrift longTripDrift;
+    static Baccano baccano;
 
     // Movement vars
     boolean[] pressing = new boolean[1024];
@@ -89,7 +92,8 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
     /** the current non-menu level selected in the game */
     Level2 gameRoom;
     /**
-     * boolean that determines if the options menu will direct to the title screen or
+     * boolean that determines if the options menu will direct to the title screen
+     * or
      * the pause menu
      */
     boolean titleOrGame;
@@ -173,10 +177,11 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
         add(baccano);
 
         // Game State variables AT START
-        
-        currLevel = longTripDrift; // which room to draw currLevel and levLevel index are one to one (default:
-                             // titleScreen)
-        gameRoom = baccano; // track of the in game rooms that player traverses with p1 (default; wellereman)
+
+        currLevel = baccano; // which room to draw currLevel and levLevel index are one to one (default:
+        // titleScreen)
+        gameRoom = baccano; // track of the in game rooms that player traverses with p1 (default;
+                            // wellereman)
 
         isPaused = false; // is the game paused or not (default: true)
         titleOrGame = true; // at game start options goes to pause menu (default: true)
@@ -208,30 +213,55 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
 
     public void gameLoop() {
         // MOVEMENT
+        Random rand = new Random();
 
-        if (pressing[UP] || pressing[W]) {
-            // System.out.println("Camera position x:"+ Camera.x + " y:"+ Camera.y);
+        // if(isPaused== false){ // car be tweaking
 
-            Camera.moveForward(5);
-            // p1.moveForward(2);
-        }
-        if (pressing[DN] || pressing[S]) {
-            // System.out.println("Camera position x:"+ Camera.x + " y:"+ Camera.y);
-            Camera.moveForward(-5);
-            // p1.moveForward(-2);
-        }
-        if (pressing[RT] || pressing[D]) {
-            // System.out.println("Camera position x:"+ Camera.x + " y:"+ Camera.y);
-            Camera.turnBy(5);
-            p1.turnRight(5);
-        }
+        // switch (rand.nextInt(0,4)) {
+        // case 0:
+        // longTripDrift.moveEnemysForward();
+        // break;
+        // case 1:
+        // longTripDrift.moveEnemysBackward();
+        // break;
 
-        if (pressing[LT] || pressing[A]) {
-            // System.out.println("Camera position x:"+ Camera.x + " y:"+ Camera.y);
-            Camera.turnBy(-5);
-            p1.turnLeft(5);
-        }
+        // case 2:
+        // longTripDrift.turnEnemysRight();
+        // break;
+        // case 3:
+        // longTripDrift.turnEnemysLeft();
+        // break;
 
+        // }
+        // }
+
+        if (isPaused == false) {
+            if (pressing[UP] || pressing[W]) {
+                // System.out.println("Camera position x:"+ Camera.x + " y:"+ Camera.y);
+                Camera.moveForward(5);
+
+                // p1.moveForward(2);
+            }
+            if (pressing[DN] || pressing[S]) {
+                // System.out.println("Camera position x:"+ Camera.x + " y:"+ Camera.y);
+                Camera.moveForward(-5);
+
+                // p1.moveForward(-2);
+            }
+            if (pressing[RT] || pressing[D]) {
+                // System.out.println("Camera position x:"+ Camera.x + " y:"+ Camera.y);
+                Camera.turnBy(5);
+                p1.turnRight(5);
+
+            }
+
+            if (pressing[LT] || pressing[A]) {
+                // System.out.println("Camera position x:"+ Camera.x + " y:"+ Camera.y);
+                Camera.turnBy(-5);
+                p1.turnLeft(5);
+
+            }
+        }
     }
 
     @Override
@@ -262,8 +292,8 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
     // make a singular button // mostly for exiting screens
     public JButton createButton() {
         JButton button = new JButton();
-        
-        //Button Stylings
+
+        // Button Stylings
         button.setBorder(border);
         button.setBackground(Color.LIGHT_GRAY);
         button.setOpaque(true);
@@ -291,13 +321,14 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
                                                                                                           // pause the
                                                                                                           // game
             if (!isPaused) {
-
+                gameRoom.pause(); // pause the timer so wa
                 pauseMenu.setVisible(true);
                 isPaused = true; // pause the game
                 titleOrGame = false; // game has already started (gonna need to go back to game)
                 System.out.println("Paused via key press");
 
             } else { // go back to the game
+                gameRoom.resume();
                 pauseMenu.setVisible(false);
                 isPaused = false; // pause the game
                 System.out.println("UnPaused via key press");
@@ -311,8 +342,6 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
         pressing[e.getKeyCode()] = false;
         // p1.moving = false;
     }
-
-   
 
     private void changeLevel(Level2 level) {
         currLevel.setVisible(false); // make previous room invisible
@@ -387,7 +416,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
             gameRoom = wellerman;
             rulesMenu.setMenu(2);
             gameRoom.reset();
-            wellerman.waterTimer.start(); // so timer doesnt go on in the title scren
+            wellerman.resume(); // so timer doesnt go on in the title scren
             isPaused = false;
 
         } else if (buttonClicked == gameSelectButtons[2]) { // start up long trip cliff

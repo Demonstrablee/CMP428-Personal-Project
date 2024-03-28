@@ -175,7 +175,7 @@ public class Rect
 	public void draw(Graphics pen)
 	{
 		pen.setColor(c);
-		pen.drawRect((int)(x - Camera.x), (int)(y-Camera.y), (int)w, (int)h);
+		pen.drawRect((int)(x - Camera.x), (int)(y-Camera.y), (int)w, (int)h); // relative to camera
 		//pen.drawRect((int)(x), (int)(y), (int)w, (int)h);
 		
 	}

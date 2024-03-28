@@ -1,6 +1,7 @@
 package Characters;
 import java.awt.*;
 
+import Objects.Camera;
 import Objects.Rect;
 
 public class Sprite extends Rect
@@ -13,29 +14,32 @@ public class Sprite extends Rect
 	final static int LT = 3;
 	final static int RT = 4;
 	
-	int pose = DN;
+	int currPose = IDLE; // starting pose
 	
-	double scale = 1.4;
+	/** Scale for adjusting the size of the image*/
+	double scale = 1.4; 
 	
-	public boolean moving = false;
+	/** Whether or not to play an animation or just show a still */
+	public boolean moving = true;
 	
-	public Sprite(String name,String gameName, String[] pose, int imagecount, int start, String filetype, int x, int y, int w, int h, int scale)
+	public Sprite(String name,String gameName, String[] pose, int numFrames, int start, String filetype, int x, int y, int w, int h, int scale)
 	{
-		super(x, y, w, h);
+		super(x, y, w, h); // location of the sprite
 		
 		this.scale = scale > 0 ? scale :1.4; // if the scale you enter is greater than zero 
 
-		animation = new Animation[pose.length];  
+		animation = new Animation[pose.length];  // animations to play
 		
+		// create an animation for each pose
 		for(int i = 0; i < pose.length; i ++)
 		{
-			animation[i] = new Animation(name, gameName, pose[i], imagecount, start,  18, filetype);
+			animation[i] = new Animation(name, gameName, pose[i], numFrames, start,  18, filetype);
 		}
 	}
 	/**Change the animation to move to the left */
 	public void goLT(int dx)
 	{
-		pose = LT;
+		currPose = LT;
 		
 		moving = true;
 		
@@ -44,7 +48,7 @@ public class Sprite extends Rect
 	/**Change the animation to move to the right */
 	public void goRT(int dx)
 	{
-		pose = RT;
+		currPose = RT;
 		
 		moving = true;
 		
@@ -53,7 +57,7 @@ public class Sprite extends Rect
 	/**Change the animation to move to the Up */
 	public void goUP(int dy)
 	{
-		pose = UP;
+		currPose = UP;
 		super.goUP(dy);
 		
 		moving = true;
@@ -63,7 +67,7 @@ public class Sprite extends Rect
 	/**Change the animation to move to the down */
 	public void goDN(int dy)
 	{
-		pose = DN;
+		currPose = DN;
 		
 		moving = true;
 		
@@ -75,23 +79,25 @@ public class Sprite extends Rect
 	{	
 		Image temp;
 		
-		if (!moving) // if you hare not moving
+		if (moving == false) // if you hare not moving
 
-			temp = animation[IDLE].getCurrentImage(); // let the idle animation play when the character isnt moving
+			temp = animation[currPose].getStaticImage(); // let the idle animation play when the character isnt moving
 		
 		else
 		
-			temp = animation[pose].getCurrentImage();
+			temp = animation[currPose].getCurrentImage();
 	
 
+		// scale the image
 		 w = scale * temp.getWidth(null);
 		 h = scale * temp.getHeight(null);
 			
 		pen.drawImage(temp, (int)(x), (int)(y), (int)w, (int)h, null);
 		
 		pen.setColor(c); // use the color set for each character type
-       // pen.drawRect((int)(x), (int)(y), (int)w, (int)h);
-		//pen.drawRect((int)(x - Camera.x), (int)(y - Camera.y), (int)w, (int)h);
+		//super.draw(pen);
+        //pen.drawRect((int)(x), (int)(y), (int)w, (int)h);
+		
 	}
 	
 }

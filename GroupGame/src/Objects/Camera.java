@@ -1,7 +1,7 @@
 package Objects;
 
 public class Camera {
-	public static double x = 1280/2;
+	public static double x = 1280/2; // center of the screen
 	public static double y = 720/2;
 	static double z = 0;
 

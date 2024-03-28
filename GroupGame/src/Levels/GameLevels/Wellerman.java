@@ -104,7 +104,7 @@ public class Wellerman extends Level2 implements ActionListener{
     int [] currSource = new int[] {startx,starty};
     int currSourcePipeType = 0;
     int milisec = 15000; // 1 sec = 1000 milisec
-    public Timer waterTimer; // thank you bro code https://www.youtube.com/watch?v=0cATENiMsBE
+    private Timer waterTimer; // thank you bro code https://www.youtube.com/watch?v=0cATENiMsBE
     
     //Over Status
     private final int NOT_OVER = 0;
@@ -161,6 +161,8 @@ public class Wellerman extends Level2 implements ActionListener{
         super("Wellerman");
         setLayout(null); // so I can use the pos from the set bounds functions to place compnents all over the panel
 
+        restartButton.setFocusable(false); // prevent from stealing focus from keyboard
+        
         // generate image icons for all pipes
         for(int i = 0; i < emptyPipes.length; ++i){
             //System.out.println(emptyPipes[i]+ " "+ i);
@@ -268,7 +270,7 @@ public class Wellerman extends Level2 implements ActionListener{
                 grid[col][row] = new JButton();
                 grid[col][row].setPreferredSize(new Dimension(40,30));
                 grid[col][row].addActionListener(this);
-                
+                grid[col][row].setFocusable(false);
                 //Constraints
                 constraints = new GridBagConstraints();
                 constraints.gridx = col + 1;
@@ -671,6 +673,18 @@ public class Wellerman extends Level2 implements ActionListener{
         
 
   
+    }
+    public void stopWaterTimer(){
+        waterTimer.stop();
+    }
+    public void startWaterTimer(){
+        waterTimer.start();
+    }
+    public void pause(){ // whats needed to pause theb game
+        stopWaterTimer();
+    }
+    public void resume(){ // whats needed to resume the game
+        startWaterTimer();
     }
 
 
