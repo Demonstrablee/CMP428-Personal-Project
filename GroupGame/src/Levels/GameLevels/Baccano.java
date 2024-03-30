@@ -804,16 +804,16 @@ public class Baccano extends Level implements ActionListener {
             dealerCards[i].setToolTipText(tempTips[i]); // change dealers tootip text
         }
 
-        // SWAP SIZES AFTER
-        playerCardsSize = dealerCardsSize;
-        dealerCardsSize = tempSize; // played the king card so reciver of hand lost a card
+        // SWAP SIZES AFTER (the update displayed cards method manages these variables)
+        //playerCardsSize = dealerCardsSize;
+        //dealerCardsSize = tempSize; // played the king card so reciver of hand lost a card
 
     }
 
     /** Steal a random card from another player */
     private void queenAction() {
-
-        int victSize = activePlayState == PLAYERS_TURN ? playerCardsSize : dealerCardsSize;
+        // they only track how many cards are in not the INDEX
+        //int victSize = activePlayState == PLAYERS_TURN ? playerCardsSize : dealerCardsSize;
         // choose a random card
         int cardStolenIndex = 0; // 0 to however many cards the victim has
         System.out.println("QUEEN IS PLAYED");
@@ -824,7 +824,7 @@ public class Baccano extends Level implements ActionListener {
                                                                                             // (if it is you get
                                                                                             // NOTHING! Your fault)
             while ("NA".equals(dealerCards[cardStolenIndex].getToolTipText())) { // TO AVOID STEALING NOTHING
-                cardStolenIndex = rand.nextInt(victSize);
+                cardStolenIndex = rand.nextInt(dealerCards.length);
             }
 
             System.out.println("Stolen Card Index: " + cardStolenIndex);
@@ -849,7 +849,7 @@ public class Baccano extends Level implements ActionListener {
                                                                                                    // losing cards)
             while ("NA".equals(playerCards[cardStolenIndex].getToolTipText())) { // TO AVOID STEALING NOTHING (AN NA
                                                                                  // tool tipped card)
-                cardStolenIndex = rand.nextInt(victSize);
+                cardStolenIndex = rand.nextInt(playerCards.length);
             }
             for (int i = 0; i < dealerCards.length; i++) { //
                 if (dealerCards[i].getToolTipText().equals("NA")) {
