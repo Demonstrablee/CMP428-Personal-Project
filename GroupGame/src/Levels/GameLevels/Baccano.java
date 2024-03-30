@@ -76,7 +76,7 @@ public class Baccano extends Level implements ActionListener {
 
     // Game State Variables
     JButton[] playerCards = new JButton[MAX_CARDS]; // oversized array (52 CARDS IN A DECK)
-    int playerCardsSize = 6; // CANNOT START AT ZERO (LOSE CONDITION)
+    int playerCardsSize = 0; // CANNOT START AT ZERO (LOSE CONDITION)
     JButton[] dealerCards = new JButton[MAX_CARDS]; // oversized array (never gonna see this)
     int dealerCardsSize = 8; // CANNOT START AT ZERO (WIN CONDITION)
 
@@ -571,6 +571,7 @@ public class Baccano extends Level implements ActionListener {
 
         // DID YOU WIN?
         // GOAL: Fill up your board first and have a higher total than the opponent
+        if (playerCardsSize <= 0) System.out.print("PLAYER AT 0");
 
         if (activePlayState == DEALERS_TURN || activePlayState == PLAYERS_TURN) { //
             // if we are still playing the game
@@ -1078,16 +1079,18 @@ public class Baccano extends Level implements ActionListener {
         JButton buttonClicked = (JButton) e.getSource();
 
         // check which card to play and play it
-        if (activePlayState != DEALERS_TURN) {
+        if (buttonClicked == restartButton) {
+            reset(); // reset the game
+        }
+        else if (activePlayState != DEALERS_TURN) {
             playCardAction(buttonClicked); // to stop player from taking a turn
             activePlayState = DEALERS_TURN; // ( only here for testing)
 
             System.out.println("-----------------------------------------------------");
             System.out.println("Draw Card Turn Ended. DEALERS TURN");
             System.out.printf("                      %s                  \n", "DEALER IS THINKING...");
-        } else if (buttonClicked == restartButton) {
-            reset(); // reset the game
-        }
+        }  
+        
 
     }
 
