@@ -286,7 +286,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
 
         pressing[e.getKeyCode()] = true;
 
-        if (e.getKeyCode() == KeyEvent.VK_P && currLevel != titleScreen && currLevel != gameSelectMenu) { // if P is
+        if (e.getKeyCode() == KeyEvent.VK_P && currLevel != titleScreen && currLevel != gameSelectMenu && optionsMenu.isVisible() == false) { // if P is
                                                                                                           // pressed
                                                                                                           // pause the
                                                                                                           // game
@@ -314,6 +314,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
     }
 
     private void changeLevel(Level level) {
+    
         currLevel.setVisible(false); // make previous room invisible
         currLevel = level; // last game room (currLevel is what is used to draw the levels in the paint
                            // method) change levels
@@ -341,7 +342,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
         } else if (buttonClicked == pauseMButtons[0]) {// go to resume
             changeLevel(gameRoom);// last game room (currLevel is what is used to draw the levels in the paint
                                   // method) change levels
-
+            gameRoom.resume();
             // which level to switch to based on what the last game room you were in
             isPaused = false;
             titleOrGame = false; // game started make option menu go to the game with pause mnenu overlay
