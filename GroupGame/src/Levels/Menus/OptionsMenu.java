@@ -1,4 +1,5 @@
 package Levels.Menus;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -13,11 +14,10 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSlider;
 
-import Levels.Managers.Level2;
+import Levels.Managers.Level;
 import fonts.fontsRegistry;
 
-
-public class OptionsMenu extends Level2 implements ActionListener {
+public class OptionsMenu extends Level implements ActionListener {
 
     JLabel title = new JLabel("OPTIONS");
 
@@ -26,41 +26,41 @@ public class OptionsMenu extends Level2 implements ActionListener {
     JLabel musicLabel = new JLabel("BGM");
     JLabel diaLabel = new JLabel("DIALOGUE");
 
-    //Subtitles
+    // Subtitles
     JRadioButton subs = new JRadioButton("Subtitles");
     JRadioButton colorBlindMode = new JRadioButton("Color Blindness Mode");
 
-    //Buttons
+    // Buttons
     JButton resoR = new JButton();
     JButton resoL = new JButton();
     JButton confirmButton = new JButton("Set");
     JButton backButton;
-    String resolutions [] = new String[] {"1280 x 720", "1920 x 1080", "2560 x 1440"}; 
+    String resolutions[] = new String[] { "1280 x 720", "1920 x 1080", "2560 x 1440" };
     int currRes = 0;
 
-    //Sliders
-    JSlider musicSlider = new JSlider(0,100);
-    JSlider diaSlider = new JSlider(0,100);
+    // Sliders
+    JSlider musicSlider = new JSlider(0, 100);
+    JSlider diaSlider = new JSlider(0, 100);
 
     GridBagConstraints constraints = new GridBagConstraints(); // constraints you will add to each element
-    
+
     JPanel pane = new JPanel();
 
     Font arcade = fontsRegistry.arcadePixel.deriveFont(30f);
 
-    public OptionsMenu(JButton backButton){
+    public OptionsMenu(JButton backButton) {
         super("optionsMenu"); // no enterance exit logic just using card manager in levelbuilder
-        
-        //BACKGROUND
+
+        // BACKGROUND
         pane.setBounds(0, 0, 1280, 720);
         pane.setLayout(new GridBagLayout());
-        pane.setBackground(new Color(90,70,60,170));
-        
-        //Get Buttons
+        pane.setBackground(new Color(90, 70, 60, 170));
+
+        // Get Buttons
         this.backButton = backButton;
         backButton.setText("BACK");
 
-        //TITLE
+        // TITLE
         constraints.anchor = GridBagConstraints.PAGE_START;
         constraints.gridx = 1;
         constraints.gridy = 0;
@@ -68,7 +68,7 @@ public class OptionsMenu extends Level2 implements ActionListener {
         title.setForeground(Color.white);
         pane.add(title, constraints);
 
-        //SUBTITLES
+        // SUBTITLES
         constraints.anchor = GridBagConstraints.LINE_START;
         constraints.gridx = 1;
         constraints.gridy = 1;
@@ -77,7 +77,7 @@ public class OptionsMenu extends Level2 implements ActionListener {
         subs.setForeground(Color.WHITE);
         pane.add(subs, constraints);
 
-        //ACESSABILITY
+        // ACESSABILITY
         constraints.anchor = GridBagConstraints.LINE_START;
         constraints.gridx = 1;
         constraints.gridy = 2;
@@ -144,7 +144,6 @@ public class OptionsMenu extends Level2 implements ActionListener {
         diaSlider.setFocusable(false);
         pane.add(diaSlider, constraints);
 
-
         constraints = new GridBagConstraints();
         constraints.gridx = 1;
         constraints.gridy = 9;
@@ -154,24 +153,21 @@ public class OptionsMenu extends Level2 implements ActionListener {
         add(pane);
     }
 
-   
-     @Override
-    public void paintComponent(Graphics pen){  //method for painting called with repaint method
+    @Override
+    public void paintComponent(Graphics pen) { // method for painting called with repaint method
         super.paintComponent(pen);
-       
 
     }
-
 
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton button = (JButton) e.getSource();
 
-        if(button == resoL){
+        if (button == resoL) {
             currRes += currRes > 0 ? -1 : 0;
 
-        }else if(button == resoR ){
-            currRes += currRes < resolutions.length -1 ?  1 : 0;
+        } else if (button == resoR) {
+            currRes += currRes < resolutions.length - 1 ? 1 : 0;
         }
 
         resoLabel.setText(resolutions[currRes]);

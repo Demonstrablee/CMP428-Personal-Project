@@ -1,6 +1,6 @@
 package Levels.GameLevels;
 
-import Levels.Managers.Level2;
+import Levels.Managers.Level;
 import fonts.fontsRegistry;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -19,7 +19,7 @@ import javax.swing.Timer;
 
 import Characters.Characters.Dealer;
 
-public class Baccano extends Level2 implements ActionListener {
+public class Baccano extends Level implements ActionListener {
     JLabel title = new JLabel("BACCANO");
     String assetDir = "GroupGame/src/images/BACCANO/";
     Image table = Toolkit.getDefaultToolkit().getImage(assetDir + "casinoTablebg_red.jpeg");
@@ -1055,15 +1055,17 @@ public class Baccano extends Level2 implements ActionListener {
     }
 
     @Override
-    public void pause(){
+    public void pause() {
         // make dealer stop moving
         dealer.moving = false;
         // timer doesnt need to stop since it doesnt start till an action occurs
     }
+
     @Override
     public void resume() {
         dealer.moving = true;
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton buttonClicked = (JButton) e.getSource();

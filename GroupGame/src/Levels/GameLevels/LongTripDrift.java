@@ -4,7 +4,7 @@ import javax.swing.*;
 
 import Characters.Characters.Car;
 import Characters.Characters.Dealer;
-import Levels.Managers.Level2;
+import Levels.Managers.Level;
 import Objects.Camera;
 import Objects.Rect;
 import Objects.Wall;
@@ -14,7 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
 
-public class LongTripDrift extends Level2 implements ActionListener {
+public class LongTripDrift extends Level implements ActionListener {
 
     // FINAL VARS
     final int MAP_WIDTH = 15280;
@@ -221,7 +221,7 @@ public class LongTripDrift extends Level2 implements ActionListener {
         }
 
         timePassed = new Timer(1000, addTime);
-        timePassed.start();
+        // timePassed.start(); // has to start on button press in level builder
     }
 
     private ActionListener addTime = new ActionListener() {
@@ -247,10 +247,9 @@ public class LongTripDrift extends Level2 implements ActionListener {
         // add the damage delt to the car
         total += damageScore;
 
-
         if (total >= 1000) // 1k +
             messageLabel.setText("Whats your deal DUDE???!!");
-        else if (total >= 600) // 
+        else if (total >= 600) //
             messageLabel.setText("MY RIMS MANN!! Last Favor, EVER!");
         else if (total >= 300)
             messageLabel.setText(" Not too bad its wild out here :)");

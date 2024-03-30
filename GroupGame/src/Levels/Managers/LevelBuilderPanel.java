@@ -52,7 +52,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
     CardLayout cLayout0 = new CardLayout();
 
     // Objects
-    Car p1 = Level2.p1; // so all levels can share same character
+    Car p1 = Level.p1; // so all levels can share same character
 
     // Menus
     static TitleScreen titleScreen;
@@ -71,7 +71,6 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
 
     /** States when the game is paused state (happens while in any menu) */
     boolean isPaused;
-    
 
     // Movement Variables
     static final int UP = KeyEvent.VK_UP;
@@ -86,10 +85,10 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
     static final int D = KeyEvent.VK_D;
 
     /** the currrent level that is being displayed */
-    Level2 currLevel; // for paintmethod
+    Level currLevel; // for paintmethod
 
     /** the current non-menu level selected in the game */
-    Level2 gameRoom;
+    Level gameRoom;
     /**
      * boolean that determines if the options menu will direct to the title screen
      * or
@@ -101,7 +100,6 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
     Border border = BorderFactory.createBevelBorder(0);
 
     public void init() {
-        // setDoubleBuffered(true); (redundant)
 
         System.out.println("Init method in LevelBuilder activated");
 
@@ -111,8 +109,6 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
         loadElements();
 
         addKeyListener(this);
-
-        // addMouseListener(this);
 
         requestFocus();
 
@@ -142,8 +138,6 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
         longTripDriftB = createButton();
 
         createButton(new String[] { buttonN[8], buttonN[9], buttonN[10], buttonN[4] }, gameSelectButtons);
-     
-      
 
         // Intializing
         titleScreen = new TitleScreen(titleButtons);
@@ -182,11 +176,11 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
         currLevel = titleScreen; // which room to draw currLevel and levLevel index are one to one (default:
         // titleScreen)
         gameRoom = longTripDrift; // track of the in game rooms that player traverses with p1 (default;
-                            // wellereman)
+        // wellereman)
 
         isPaused = true; // is the game paused or not (default: true)
         titleOrGame = true; // at game start options goes to pause menu (default: true)
-       
+
         currLevel.setVisible(true);
 
     }
@@ -211,8 +205,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
     }
 
     public void gameLoop() {
-       
-     
+
         if (isPaused == false) {
             if (pressing[UP] || pressing[W]) {
                 // System.out.println("Camera position x:"+ Camera.x + " y:"+ Camera.y);
@@ -321,7 +314,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
         // p1.moving = false;
     }
 
-    private void changeLevel(Level2 level) {
+    private void changeLevel(Level level) {
         currLevel.setVisible(false); // make previous room invisible
         currLevel = level; // last game room (currLevel is what is used to draw the levels in the paint
                            // method) change levels
@@ -353,7 +346,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
             // which level to switch to based on what the last game room you were in
             isPaused = false;
             titleOrGame = false; // game started make option menu go to the game with pause mnenu overlay
-      
+
         }
 
         else if (buttonClicked == titleButtons[1] || buttonClicked == pauseMButtons[1]) {// go to options
@@ -402,6 +395,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
             gameRoom = longTripDrift;
             rulesMenu.setMenu(1);
             gameRoom.reset();
+            longTripDrift.resume();
             isPaused = false;
 
         } else if (buttonClicked == pauseMButtons[3]) { // show the rules

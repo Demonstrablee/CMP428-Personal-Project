@@ -3,7 +3,7 @@ package Levels.Menus;
 import javax.swing.*;
 import javax.swing.border.Border;
 
-import Levels.Managers.Level2;
+import Levels.Managers.Level;
 import fonts.fontsRegistry;
 
 import java.awt.*;
@@ -11,7 +11,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 
-public class GameSelectMenu extends Level2 implements MouseListener {
+public class GameSelectMenu extends Level implements MouseListener {
     JLabel title = new JLabel("Choose a Game");
     JButton[] menuButton;
     // https://stackoverflow.com/questions/1090098/newline-in-jlabel
