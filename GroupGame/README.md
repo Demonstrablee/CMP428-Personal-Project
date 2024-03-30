@@ -38,3 +38,6 @@ moon02
 <a href="https://www.flaticon.com/free-icons/spooky" title="spooky icons">Spooky icons created by Warangkhana Sookruay - Flaticon</a>
 moon03
 <a href="https://www.flaticon.com/free-icons/spooky" title="spooky icons">Spooky icons created by Warangkhana Sookruay - Flaticon</a>
+
+Car Rental Icon
+<a href="https://www.flaticon.com/free-icons/car-rental" title="car rental icons">Car rental icons created by manshagraphics - Flaticon</a>

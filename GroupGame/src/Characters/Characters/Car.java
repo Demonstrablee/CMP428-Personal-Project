@@ -19,16 +19,18 @@ public class Car {
     BufferedImage[] carImages = new BufferedImage[carFiles.length];
 
     // points for colision polygon
-    int[] player_x = new int[] { 55, -55, -55, 55 }; // custom dimensions for the orange car and the cars that fit this
-                                                     // shape
+    int[] player_x = new int[] { 55, -55, -55, 55 }; // custom dimensions the cars
     int[] player_y = new int[] { -25, -25, 30, 30 };
 
+    // x and y after transformations
     int[] x_points = new int[4];
     int[] y_points = new int[4];
 
-    // points for for polygon rotation
+    // points after polygon rotation
     int rotation_x;
     int rotation_y;
+
+    // indixidual x and y for a vertex of a polygon
     int x_;
     int y_;
 
@@ -36,14 +38,15 @@ public class Car {
     int centerX;
     int centerY;
 
-    // POSITION
-    int x = 0;
-    int y = 0;
+    // POSITION of image
+    public int x = 0;
+    public int y = 0;
 
     int distFromX = 0;
     int distFromY = 0;
 
     AffineTransform tx = new AffineTransform();
+    Color penColor;
 
     // for rotation
     protected int A = 0;
@@ -59,10 +62,9 @@ public class Car {
             player = ImageIO.read(new File("GroupGame/src/images/LTD/cars/orgCar.png"));
 
             for (int i = 0; i < carFiles.length; i++) { // make buffred images out of all the cars in the directory
-                if (carFiles[i].getName().equals(".DS_Store")) {
-                    carFiles[i].delete();
-                } // DS.Store files messing up reading in files
-                System.out.println(carFiles[i].getName());
+                if (carFiles[i].getName().equals(".DS_Store"))carFiles[i].delete();
+                 // DS.Store files messing up reading in files
+               // System.out.println(carFiles[i].getName());
                 carImages[i] = ImageIO.read(carFiles[i]);
             }
             System.out.println("All Cars Images Sucessfully Loaded");
@@ -82,7 +84,6 @@ public class Car {
         // TESTING
         // Timer timer = new Timer(70, e -> {
         // angle = Math.toRadians(5); // Adjust rotation speed
-
         // });
         // timer.start();
     }
@@ -98,7 +99,7 @@ public class Car {
     }
 
     public boolean isColliding(Wall wall) { // colision with walls
-       
+
         return false;
     }
 
@@ -118,7 +119,7 @@ public class Car {
                 }
             }
         }
-        return false;
+        return true;
     }
 
     // Helper method to check if two line segments intersect
@@ -177,9 +178,9 @@ public class Car {
         // vector stuf itself)
 
         // print
-        System.out.println("Player A: " + A);
+       // System.out.println("Player A: " + A);
         for (int i = 0; i < 4; i++) {
-            System.out.println("Vetex of Polygon Player: " + x_points[i] + ", " + y_points[i]);
+           // System.out.println("Vetex of Polygon Player: " + x_points[i] + ", " + y_points[i]);
         }
     }
 
@@ -196,33 +197,35 @@ public class Car {
         tx.rotate(-Lookup.radianMeasureOf[dA], centerX, centerY); // turn by delta a degrees from where you are
 
         // print
-        System.out.println("Player A: " + A);
+       // System.out.println("Player A: " + A);
         for (int i = 0; i < 4; i++) {
-            System.out.println("Vetex of Polygon Player: " + x_points[i] + ", " + y_points[i]);
+           // System.out.println("Vetex of Polygon Player: " + x_points[i] + ", " + y_points[i]);
         }
 
     }
 
     public void turnToward(double mx, double my, int dA) // professors code for turning a circle
-	{
-		double Nx = -sinA;
-		double Ny =  cosA;
-		
+    {
+        double Nx = -sinA;
+        double Ny = cosA;
 
-		double dist = (mx - x) * Nx  + (my - y) * Ny;
-		
+        double dist = (mx - x) * Nx + (my - y) * Ny;
 
-		if (dist > 6)  turnRight(dA);
-		
-		if (dist < -6)  turnLeft(dA);
-	}
-    public void follow(int playerX, int playerY) {
-       
-        //turn towards the player
-        turnToward(playerY, playerX, 3);
+        if (dist > 6)
+            turnRight(dA);
+
+        if (dist < -6)
+            turnLeft(dA);
+    }
+
+    public void follow(int playerX, int playerY) { // professor follow algo for circle
+
+        // turn towards the player
+        turnToward(playerX, playerY, 3);
 
         // move towards the player if they are in range
-        if((Math.abs(x - playerX) > 60) || (Math.abs(y-playerY) > 60)) moveForward(5);
+        if ((Math.abs(x - playerX) > 60) || (Math.abs(y - playerY) > 60))
+            moveForward(5);
     }
 
     public void turnRight(int dA) {
@@ -239,9 +242,9 @@ public class Car {
         tx.rotate(Lookup.radianMeasureOf[dA], centerX, centerY);
 
         // print
-        System.out.println("Player A: " + A);
+       // System.out.println("Player A: " + A);
         for (int i = 0; i < 4; i++) {
-            System.out.println("Vetex of Polygon Player: " + x_points[i] + ", " + y_points[i]);
+            //System.out.println("Vetex of Polygon Player: " + x_points[i] + ", " + y_points[i]);
         }
 
     }
@@ -278,7 +281,7 @@ public class Car {
         pen2D.drawImage(player, tx, null);
 
         // Draw players polygon
-        pen.setColor(Color.GREEN);
+        pen2D.setColor(penColor);
         pen.drawPolygon(x_points, y_points, 4);
 
     }
@@ -303,11 +306,10 @@ public class Car {
         }
 
         // Draw image of the player
-         
-        pen2D.drawImage(player, tx, null);
+        pen2D.drawImage(player, null, null);
 
         // Draw players polygon
-        pen.setColor(Color.GREEN);
+        pen.setColor(Color.RED);
         pen.drawPolygon(x_points, y_points, 4);
 
     }
@@ -320,6 +322,10 @@ public class Car {
     /** change the player car image */
     public void setPlayerCar(int carSelect) {
         player = carImages[carSelect];
+    }
+
+    public void setColor(Color color) {
+        penColor = color;
     }
 
 }

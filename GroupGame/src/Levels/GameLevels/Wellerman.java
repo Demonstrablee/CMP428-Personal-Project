@@ -242,6 +242,9 @@ public class Wellerman extends Level2 implements ActionListener{
        constraints.gridx = 0;
        constraints.gridy = 1;
        restartButton.setText("RESTART");
+       restartButton.setBorder(exitButton.getBorder());
+       restartButton.setOpaque(true);
+       restartButton.setBackground(Color.LIGHT_GRAY);
        restartButton.addActionListener(this);
        gameOPanel.add(restartButton,constraints);
 

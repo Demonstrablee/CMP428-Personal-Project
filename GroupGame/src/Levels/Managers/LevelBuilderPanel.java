@@ -44,7 +44,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
     static JButton rulesButton = new JButton();
     static JButton[] gameSelectButtons = new JButton[4]; // the games you can select from
 
-    static JButton[] longTripDriftB = new JButton[2]; // buttons to exit
+    static JButton longTripDriftB; // button to exit
     JButton wellermanExitB;
     JButton baccanoExitB;
 
@@ -140,9 +140,11 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
 
         optionsPauseButton = createButton(); // OPTIONS
         rulesButton = createButton(); // Rules Menu
+        longTripDriftB = createButton();
 
         createButton(new String[] { buttonN[8], buttonN[9], buttonN[10], buttonN[4] }, gameSelectButtons);
-        createButton(new String[] { buttonN[2], buttonN[2] }, longTripDriftB);
+     
+      
 
         // Intializing
         titleScreen = new TitleScreen(titleButtons);
@@ -178,9 +180,9 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
 
         // Game State variables AT START
 
-        currLevel = baccano; // which room to draw currLevel and levLevel index are one to one (default:
+        currLevel = longTripDrift; // which room to draw currLevel and levLevel index are one to one (default:
         // titleScreen)
-        gameRoom = baccano; // track of the in game rooms that player traverses with p1 (default;
+        gameRoom = longTripDrift; // track of the in game rooms that player traverses with p1 (default;
                             // wellereman)
 
         isPaused = false; // is the game paused or not (default: true)
@@ -362,7 +364,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
         GameWindow2.buttonPress = true;
 
         if (buttonClicked == titleButtons[0] || buttonClicked == wellermanExitB || buttonClicked == baccanoExitB
-                || buttonClicked == longTripDriftB[0] || buttonClicked == longTripDriftB[1]) { // go to game select
+                || buttonClicked == longTripDriftB) { // go to game select
             changeLevel(gameSelectMenu);
             GameWindow2.track = 1; // change the music playing
             gameRoom.setVisible(false); // important to make whatever game is active stop showing up
@@ -419,7 +421,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
             wellerman.resume(); // so timer doesnt go on in the title scren
             isPaused = false;
 
-        } else if (buttonClicked == gameSelectButtons[2]) { // start up long trip cliff
+        } else if (buttonClicked == gameSelectButtons[2]) { // start up long trip drift
             changeLevel(longTripDrift);
             GameWindow2.track = 3; // change the music playing
             gameRoom = longTripDrift;
