@@ -105,7 +105,7 @@ public class Baccano extends Level implements ActionListener {
     private final int TIE = 5;
 
     int activePlayState = PLAYERS_TURN; // 1- Players Turn, 2- Dealers Turn, 3 - WIN OVER, 4- LOSE OVER 5-
-                                        // TIE
+                               // TIE
 
     Dictionary<String, Integer> carding = new Hashtable<>();
 
@@ -242,16 +242,23 @@ public class Baccano extends Level implements ActionListener {
         constraints.gridx = 0;
         constraints.gridy = 1;
         restartButton.setText("RESTART");
+        restartButton.setBorder(exitButton.getBorder());
+        restartButton.setBackground(Color.LIGHT_GRAY);
+        restartButton.setOpaque(true);
         restartButton.addActionListener(this);
-
         gameOPanel.add(restartButton, constraints);
 
         constraints = new GridBagConstraints();
         constraints.gridx = 0;
         constraints.gridy = 2;
+        // exitButton.setBorder(null);
+        restartButton.setBackground(Color.LIGHT_GRAY);
+        exitButton.setOpaque(true);
         exitButton.setText("ESCAPE");
+
         gameOPanel.add(exitButton, constraints);
-        add(gameOPanel);
+
+        add(gameOPanel, JLayeredPane.DRAG_LAYER);
 
         // Apply LABELS
         constraints = new GridBagConstraints();

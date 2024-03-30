@@ -95,7 +95,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
     boolean titleOrGame;
 
     // Button Stylings
-    Border border = BorderFactory.createBevelBorder(0);
+    Border border = BorderFactory.createLineBorder(Color.RED);
 
     public void init() {
 
@@ -269,6 +269,7 @@ public class LevelBuilderPanel extends JLayeredPane implements KeyListener, Runn
 
         button.addActionListener(this);
         button.setFocusable(false); // STOP FROM stealing focus from keyboard inputs
+        button.setOpaque(true);
 
         return button;
     }
