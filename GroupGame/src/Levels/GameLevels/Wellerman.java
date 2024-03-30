@@ -577,19 +577,19 @@ public class Wellerman extends Level implements ActionListener {
         System.out.println("Blub, blub, the water is rising!");
     }
 
-    private void finalScore() { // nope
-        for (int col = 0; col < gridWidth; col++) {
-            for (int row = 0; row < gridHeight; row++) {
+    // private void finalScore() { // nope
+    //     for (int col = 0; col < gridWidth; col++) {
+    //         for (int row = 0; row < gridHeight; row++) {
 
-                if (gridPipeType[col][row] == -1) { // connected pipes bonus
-                    scoreVal += 100;
-                } else {
-                    scoreVal -= 100;
-                }
+    //             if (gridPipeType[col][row] == -1) { // connected pipes bonus
+    //                 scoreVal += 100;
+    //             } else {
+    //                 scoreVal -= 100;
+    //             }
 
-            }
-        }
-    }
+    //         }
+    //     }
+    // }
 
     private void updateScore(int col, int row) {
         // if the player places a pipe on a square already occupied

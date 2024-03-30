@@ -3,7 +3,6 @@ package Levels.GameLevels;
 import javax.swing.*;
 
 import Characters.Characters.Car;
-import Characters.Characters.Dealer;
 import Levels.Managers.Level;
 import Objects.Camera;
 import Objects.Rect;

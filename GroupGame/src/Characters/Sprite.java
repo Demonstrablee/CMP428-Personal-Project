@@ -1,7 +1,5 @@
 package Characters;
 import java.awt.*;
-
-import Objects.Camera;
 import Objects.Rect;
 
 public class Sprite extends Rect

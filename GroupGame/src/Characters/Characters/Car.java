@@ -7,7 +7,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
-import Objects.Camera;
+//import Objects.Camera;
 import Objects.Lookup;
 import Objects.Wall;
 

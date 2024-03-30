@@ -15,8 +15,6 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.*;
-import java.util.Random;
-
 import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;

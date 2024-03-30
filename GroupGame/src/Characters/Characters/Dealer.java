@@ -1,10 +1,6 @@
 package Characters.Characters;
-
-import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Toolkit;
-import java.io.File;
+
 
 
 import Characters.Sprite;
